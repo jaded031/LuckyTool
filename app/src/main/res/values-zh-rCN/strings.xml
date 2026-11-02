@@ -961,6 +961,11 @@
     <string name="force_display_preferred_network_type">强制显示首选网络类型</string>
     <string name="force_display_volte_calls">强制显示 VoLTE 高清通话</string>
     <string name="enable_sound_sealed_call">启用通话隐私服务</string>
+    <string name="ai_call_spoof_region">AI 通话摘要区域</string>
+    <string name="ai_call_spoof_region_summary">在 AI 通话助手、电话、联系人与 VoiceScribe 内伪装 persist.sys.oplus.region 以通过通话摘要区域检查，这些应用的云端请求将使用所选区域</string>
+    <string name="ai_call_spoof_region_off">关闭（使用系统区域）</string>
+    <string name="force_enable_ai_call_translate">强制启用 AI 通话翻译</string>
+    <string name="force_enable_ai_call_translate_summary">启用 com.oplus.aicall.call_translate 应用特性，外版仅在部分国家开启</string>
     <!--OplusBrowser-->
     <string name="remove_ads_from_weather_page">移除天气页面底部信息流广告</string>
     <string name="remove_ads_from_weather_page_summary">通过在页面 m.weathercn.com 注入 JS 来实现屏蔽广告的效果，适用于通过天气 APP 跳转到的近 15 日天气等需要浏览器的功能</string>

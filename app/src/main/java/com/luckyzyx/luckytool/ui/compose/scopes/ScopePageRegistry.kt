@@ -25,6 +25,7 @@ import com.luckyzyx.luckytool.ui.compose.components.PrefIndexItem
 import com.luckyzyx.luckytool.ui.compose.components.PrefScopeBuilder
 import com.luckyzyx.luckytool.ui.compose.components.ScopeScreen
 import com.luckyzyx.luckytool.ui.compose.components.ScrollTarget
+import com.luckyzyx.luckytool.ui.compose.scopes.apps.OplusAICallPage
 import com.luckyzyx.luckytool.ui.compose.scopes.apps.OplusAlarmClockPage
 import com.luckyzyx.luckytool.ui.compose.scopes.apps.OplusBatteryPage
 import com.luckyzyx.luckytool.ui.compose.scopes.apps.OplusBeaconLinkPage
@@ -457,6 +458,7 @@ object ScopePageRegistry {
         "oplus_settings",
         "oplus_wireless_settings",
         "oplus_tele_service",
+        "oplus_ai_call",
         "oplus_mms",
         "oplus_browser",
         "oplus_camera",
@@ -632,6 +634,7 @@ object ScopePageRegistry {
         register(OplusSoundRecorderPage.spec)
         register(OplusSpeechAssistPage.spec)
         register(OplusTeleServicePage.spec)
+        register(OplusAICallPage.spec)
         register(OplusThemeStorePage.spec)
         register(OplusWeatherPage.spec)
         register(OplusWirelessSettingsPage.spec)

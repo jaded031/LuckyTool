@@ -5,6 +5,7 @@ import com.highcapable.yukihookapi.annotation.xposed.YukiHookLibXposedEntry
 import com.highcapable.yukihookapi.hook.factory.configure
 import com.highcapable.yukihookapi.hook.factory.encase
 import com.highcapable.yukihookapi.hook.xposed.YukiHookXposedModule
+import com.luckyzyx.luckytool.hook.hookers.HookAICall
 import com.luckyzyx.luckytool.hook.hookers.HookAlarmClock
 import com.luckyzyx.luckytool.hook.hookers.HookAndroid
 import com.luckyzyx.luckytool.hook.hookers.HookAudioEffectCenter
@@ -134,6 +135,8 @@ import java.io.File
         "com.oneplus.oshare",
         "com.android.bluetooth",
         "com.android.contacts",
+        "com.oplus.aicall",
+        "com.coloros.accessibilityassistant",
         "com.oplus.securitypermission",
         "com.coloros.filemanager",
         "com.oneplus.filemanager",
@@ -256,6 +259,12 @@ class MainHook : YukiHookXposedModule {
 
         //电话服务
         loadApp("com.android.phone", HookPhone)
+
+        //AI 通话助手（通话摘要 / 通话翻译）
+        loadApp("com.oplus.aicall", HookAICall)
+        loadApp("com.android.incallui", HookAICall)
+        loadApp("com.android.contacts", HookAICall)
+        loadApp("com.coloros.accessibilityassistant", HookAICall)
 
         //浏览器
         loadApp("com.heytap.browser", HookBrowser)

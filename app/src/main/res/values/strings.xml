@@ -1099,6 +1099,11 @@
     <string name="force_display_preferred_network_type">Force display of preferred network type</string>
     <string name="force_display_volte_calls">Force display of VoLTE calls</string>
     <string name="enable_sound_sealed_call">Enable Sound-Sealed Call</string>
+    <string name="ai_call_spoof_region">AI call summary region</string>
+    <string name="ai_call_spoof_region_summary">Spoof persist.sys.oplus.region inside AI Call Assistant, Phone, Contacts and VoiceScribe so the call summary region check passes. Cloud requests from these apps will use the selected region</string>
+    <string name="ai_call_spoof_region_off">Off (use system region)</string>
+    <string name="force_enable_ai_call_translate">Force enable AI call translation</string>
+    <string name="force_enable_ai_call_translate_summary">Enable the com.oplus.aicall.call_translate app feature, which global builds only turn on in some countries</string>
     
     <!--OplusBrowser-->
     <string name="remove_ads_from_weather_page">Remove weather page bottom information flow ads</string>
