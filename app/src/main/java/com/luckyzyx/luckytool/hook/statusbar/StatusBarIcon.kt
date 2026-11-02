@@ -4,6 +4,7 @@ import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.BluetoothIconRelated
 import com.luckyzyx.luckytool.hook.scopes.systemui.CustomFluidCloudIconBackgroundTransparency
+import com.luckyzyx.luckytool.hook.scopes.systemui.InCallCapsuleClickExpandCard
 import com.luckyzyx.luckytool.hook.scopes.systemui.HideInActiveSignalLabelsGen2x2
 import com.luckyzyx.luckytool.hook.scopes.systemui.MobileDataIconRelated
 import com.luckyzyx.luckytool.hook.scopes.systemui.RemoveGreenDotPrivacyPrompt
@@ -56,6 +57,10 @@ object StatusBarIcon : YukiBaseHooker() {
         }
         //自定义流体云图标背景透明度
         if (osCode in 30..33) loadHookerSafe(CustomFluidCloudIconBackgroundTransparency)
+        //通话流体云胶囊点击展开卡片
+        if (preferences(ModulePrefs).getBoolean("incallui_capsule_click_expand_card", false)) {
+            loadHookerSafe(InCallCapsuleClickExpandCard)
+        }
 
     }
 }

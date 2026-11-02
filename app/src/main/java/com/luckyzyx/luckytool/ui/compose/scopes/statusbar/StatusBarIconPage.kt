@@ -105,6 +105,13 @@ object StatusBarIconPage {
                 notify = true,
             )
         }
+        if (osCode >= 39) {
+            switch(
+                key = "incallui_capsule_click_expand_card",
+                title = c.getString(R.string.incallui_capsule_click_expand_card),
+                summary = c.getString(R.string.incallui_capsule_click_expand_card_summary),
+            )
+        }
         // 图标状态
         if (SDK <= A13) {
             category(c.getString(R.string.StatusBarSmallIconStatus))

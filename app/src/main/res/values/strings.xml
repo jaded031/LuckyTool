@@ -345,6 +345,8 @@
     <string name="remove_system_prompt_icon">Remove system prompt icon</string>
     <string name="remove_system_prompt_icon_summary">Remove the prompt icons in call mode, TV cast, recording, and hotspot</string>
     <string name="custom_fluid_cloud_icon_background_transparency">Custom fluid cloud icon background transparency</string>
+    <string name="incallui_capsule_click_expand_card">Tap call capsule to expand card</string>
+    <string name="incallui_capsule_click_expand_card_summary">Tapping or long-pressing the call live update capsule expands the call card instead of opening the full-screen call UI (Chinese ColorOS behavior)</string>
     
     <string name="StatusBarSmallIconStatus">StatusBar Small Icon Status</string>
     <string name="status_bar_icon_vertical_center">Statusbar icon vertical center</string>
