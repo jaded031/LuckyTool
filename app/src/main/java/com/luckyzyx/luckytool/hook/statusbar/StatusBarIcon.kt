@@ -12,6 +12,7 @@ import com.luckyzyx.luckytool.hook.scopes.systemui.RemoveHighPerformanceModeIcon
 import com.luckyzyx.luckytool.hook.scopes.systemui.RemoveStatusBarSecurePayment
 import com.luckyzyx.luckytool.hook.scopes.systemui.RemoveSystemPromptIcon
 import com.luckyzyx.luckytool.hook.scopes.systemui.StatusBarIconVerticalCenter
+import com.luckyzyx.luckytool.hook.scopes.systemui.VolteIconRelated
 import com.luckyzyx.luckytool.hook.scopes.systemui.WiFiDataIconRelated
 import com.luckyzyx.luckytool.utils.A13
 import com.luckyzyx.luckytool.utils.ModulePrefs
@@ -28,6 +29,8 @@ object StatusBarIcon : YukiBaseHooker() {
         loadHookerSafe(WiFiDataIconRelated)
         //移动数据图标相关
         loadHookerSafe(MobileDataIconRelated)
+        //VoLTE图标相关
+        if (osCode >= 39) loadHookerSafe(VolteIconRelated)
         //未连接蓝牙时隐藏图标
         loadHookerSafe(BluetoothIconRelated)
 

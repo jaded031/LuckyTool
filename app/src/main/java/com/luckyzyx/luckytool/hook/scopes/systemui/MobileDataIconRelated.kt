@@ -11,6 +11,7 @@ import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
+import com.highcapable.yukihookapi.extension.kavaref.toClassOrNull
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.utils.FlowUtils
 import com.luckyzyx.luckytool.utils.A13
@@ -88,6 +89,19 @@ object MobileDataIconRelated : YukiBaseHooker() {
                         }
                     }
                 }
+
+            //Source OplusStackedMobileIconViewModelImpl 双卡合并信号图标，上下行箭头由 Compose 读取 activityIndicatorIconResId
+            if (removeInout) {
+                "com.oplus.systemui.statusbar.pipeline.ui.viewmodel.OplusStackedMobileIconViewModelImpl".toClassOrNull()
+                    ?.resolve()?.apply {
+                        firstMethodOrNullSafe {
+                            name = "getActivityIndicatorIconResId"; emptyParameters()
+                        }?.hook { before { result = 0 } }
+                        firstMethodOrNullSafe {
+                            name = "getActivityContainerVisible"; emptyParameters()
+                        }?.hook { before { result = false } }
+                    }
+            }
 
             //Source MobileIconViewModel
             "com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconViewModel".toClass()

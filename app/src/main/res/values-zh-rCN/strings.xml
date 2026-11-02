@@ -318,6 +318,11 @@
     <string name="custom_fluid_cloud_icon_background_transparency">自定义流体云图标背景透明度</string>
     <string name="incallui_capsule_click_expand_card">点击通话胶囊展开卡片</string>
     <string name="incallui_capsule_click_expand_card_summary">点击或长按通话流体云胶囊时展开通话卡片，而不是打开全屏通话界面（国内版行为）</string>
+    <string name="hide_volte_icon_statusbar">隐藏状态栏 VoLTE 图标</string>
+    <string name="hide_volte_icon_shade">隐藏通知中心/控制中心 VoLTE 图标</string>
+    <string name="hide_volte_icon_shade_summary">隐藏通知中心与控制中心展开顶栏中的 VoLTE 图标</string>
+    <string name="mock_vonr_volte_icon">VoLTE 显示为 VoNR（仅界面，测试）</string>
+    <string name="mock_vonr_volte_icon_summary">仅修改显示：已注册 VoLTE 的卡显示为 VoNR 图标，未注册 VoLTE 的卡在 SIM 编号处显示 X，不会实际开启 VoNR</string>
     <string name="StatusBarSmallIconStatus">状态栏小图标状态</string>
     <string name="status_bar_icon_vertical_center">状态栏图标垂直居中</string>
     <!--StatusBarControlCenter-->
