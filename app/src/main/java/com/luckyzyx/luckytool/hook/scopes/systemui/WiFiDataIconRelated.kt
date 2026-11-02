@@ -28,6 +28,7 @@ import com.highcapable.yukihookapi.extension.kavaref.intercept
 import com.highcapable.yukihookapi.extension.kavaref.toClass
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
+import com.luckyzyx.luckytool.hook.utils.FlowUtils
 import com.luckyzyx.luckytool.hook.utils.sysui.AbsSettingsValueProxyUtils
 import com.luckyzyx.luckytool.hook.utils.sysui.WifiStandardIconDrawable
 import com.luckyzyx.luckytool.hook.utils.sysui.WifiUtils
@@ -102,8 +103,22 @@ object WiFiDataIconRelated : YukiBaseHooker() {
         private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
 
         override fun onHook() {
+            val removeInout = preferences(ModulePrefs).getBoolean("remove_wifi_data_inout", false)
             val forceStandard =
                 preferences(ModulePrefs).getBoolean("force_display_wifi_standard", false)
+
+            //Source OplusWifiViewModel -> OplusWifiSignalExImpl.bindEx: wifiActivityResId <= 0 时隐藏 wifi_inout
+            if (removeInout) {
+                "com.oplus.systemui.statusbar.pipeline.wifi.ui.viewmodel.OplusWifiViewModel".toClass()
+                    .resolve().firstMethod { name = "getWifiActivityResId" }.hook {
+                        before {
+                            result = FlowUtils(hostClassLoader!!).let {
+                                val mutableStateFlow = it.MutableStateFlow(0) ?: return@before
+                                it.asStateFlow(mutableStateFlow) ?: return@before
+                            }
+                        }
+                    }
+            }
 
             if (!forceStandard) return
 
