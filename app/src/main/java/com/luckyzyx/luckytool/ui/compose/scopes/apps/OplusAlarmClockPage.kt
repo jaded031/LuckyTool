@@ -3,17 +3,20 @@ package com.luckyzyx.luckytool.ui.compose.scopes.apps
 import com.luckyzyx.luckytool.R
 import com.luckyzyx.luckytool.ui.compose.scopes.ScopePageSpec
 import com.luckyzyx.luckytool.utils.ModulePrefs
+import com.luckyzyx.luckytool.utils.preferInstalledPackName
 
 /**
  * 闹钟页（旧 ui.fragment.scopes.apps.OplusAlarmClock 的 Compose 等价物）。
  */
 object OplusAlarmClockPage {
 
+    private val PACK_NAME = preferInstalledPackName("com.coloros.alarmclock", "com.oneplus.deskclock")
+
     val spec = ScopePageSpec(
         pageKey = "oplus_alarm_clock",
         prefsName = ModulePrefs,
-        packName = "com.coloros.alarmclock",
-        scopes = arrayOf("com.coloros.alarmclock"),
+        packName = PACK_NAME,
+        scopes = arrayOf(PACK_NAME),
         restartEnabled = true,
     ) {
         val c = requireNotNull(context) { "ScopeScreen 未注入 Context" }

@@ -3,6 +3,7 @@ package com.luckyzyx.luckytool.ui.compose.scopes.apps
 import com.luckyzyx.luckytool.R
 import com.luckyzyx.luckytool.ui.compose.scopes.ScopePageSpec
 import com.luckyzyx.luckytool.utils.ModulePrefs
+import com.luckyzyx.luckytool.utils.preferInstalledPackName
 
 /**
  * 旧 ui.fragment.scopes.apps.OplusPhoneManager 的 Compose 等价物（机械翻译 loadPreferences）。
@@ -10,11 +11,13 @@ import com.luckyzyx.luckytool.utils.ModulePrefs
  */
 object OplusPhoneManagerPage {
 
+    private val PACK_NAME = preferInstalledPackName("com.coloros.phonemanager", "com.oplus.phonemanager")
+
     val spec = ScopePageSpec(
         pageKey = "oplus_phone_manager",
         prefsName = ModulePrefs,
-        packName = "com.coloros.phonemanager",
-        scopes = arrayOf("com.coloros.phonemanager"),
+        packName = PACK_NAME,
+        scopes = arrayOf(PACK_NAME),
         restartEnabled = false,
     ) {
         val c = requireNotNull(context) { "ScopeScreen 未注入 Context" }

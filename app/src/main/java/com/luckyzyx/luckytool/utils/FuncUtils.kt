@@ -36,6 +36,7 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import com.drake.net.utils.withDefault
 import com.highcapable.betterandroid.system.extension.component.clipboardManager
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import com.highcapable.betterandroid.system.extension.component.copy
 import com.highcapable.betterandroid.system.extension.component.sendBroadcast
 import com.highcapable.betterandroid.ui.extension.graphics.decodeToBitmapOrNull
@@ -116,6 +117,17 @@ fun Context.getDeviceInfo(
  */
 fun Context.checkPackName(packName: String): Boolean {
     return PackageUtils(packageManager).getPackageInfo(packName, 0) != null
+}
+
+/**
+ * 内版/外版包名不同时取已安装的包名（如 com.coloros.gallery3d / com.oneplus.gallery）
+ * @param packNames String 按优先级排列，均未安装时返回第一个
+ * @return String
+ */
+fun preferInstalledPackName(vararg packNames: String): String {
+    val context = runCatching { ModuleApplication.appContext }.getOrNull()
+        ?: return packNames.first()
+    return packNames.firstOrNull { context.checkPackName(it) } ?: packNames.first()
 }
 
 /**

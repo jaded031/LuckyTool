@@ -38,6 +38,7 @@ object StatusBarRelatedPage {
             "com.android.systemui",
             "com.oplus.battery",
             "com.coloros.phonemanager",
+            "com.oplus.phonemanager",
             "com.oplus.notificationmanager",
             "com.oplus.mediacontroller",
         ),

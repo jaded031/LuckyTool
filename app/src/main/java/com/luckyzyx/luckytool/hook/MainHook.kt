@@ -81,11 +81,14 @@ import java.io.File
         "com.oneplus.camera",
         "com.oplus.camera",
         "com.coloros.gallery3d",
+        "com.oneplus.gallery",
         "com.oplus.safecenter",
         "com.coloros.safecenter",
         "com.coloros.alarmclock",
+        "com.oneplus.deskclock",
         "com.oplus.notificationmanager",
         "com.coloros.phonemanager",
+        "com.oplus.phonemanager",
         "com.oplus.aod",
         "com.oplus.uiengine",
         "com.heytap.themestore",
@@ -111,6 +114,7 @@ import java.io.File
         "com.coloros.smartsidebar",
         "com.oplus.multiapp",
         "com.coloros.soundrecorder",
+        "com.oneplus.soundrecorder",
         "com.oplus.audiomonitor",
         "com.oplus.atlas",
         "com.oplus.audio.effectcenter",
@@ -127,10 +131,12 @@ import java.io.File
         "com.heytap.health",
         "com.android.nfc",
         "com.coloros.oshare",
+        "com.oneplus.oshare",
         "com.android.bluetooth",
         "com.android.contacts",
         "com.oplus.securitypermission",
         "com.coloros.filemanager",
+        "com.oneplus.filemanager",
         "com.oplus.engineermode",
         "com.heytap.mydevices",
         "com.heytap.accessory",
@@ -188,6 +194,7 @@ class MainHook : YukiHookXposedModule {
 
         //时钟
         loadApp("com.coloros.alarmclock", HookAlarmClock)
+        loadApp("com.oneplus.deskclock", HookAlarmClock)
 
         //桌面
         loadApp("com.oppo.launcher", HookLauncher)
@@ -223,6 +230,7 @@ class MainHook : YukiHookXposedModule {
 
         //相册
         loadApp("com.coloros.gallery3d", HookGallery)
+        loadApp("com.oneplus.gallery", HookGallery)
 
         //主题商店
         loadApp("com.heytap.themestore", HookThemeStore)
@@ -284,12 +292,14 @@ class MainHook : YukiHookXposedModule {
 
         //手机管家
         loadApp("com.coloros.phonemanager", HookPhoneManager)
+        loadApp("com.oplus.phonemanager", HookPhoneManager)
 
         //应用分身
         loadApp("com.oplus.multiapp", HookMultiApp)
 
         //录音
         loadApp("com.coloros.soundrecorder", HookSoundRecorder)
+        loadApp("com.oneplus.soundrecorder", HookSoundRecorder)
 
         //三方应用通话录音 / 智慧语音
         loadApp("com.oplus.audiomonitor", HookAudioMonitor)
@@ -314,12 +324,14 @@ class MainHook : YukiHookXposedModule {
 
         //互传
         loadApp("com.coloros.oshare", HookOShare)
+        loadApp("com.oneplus.oshare", HookOShare)
 
         //权限管理
         loadApp("com.oplus.securitypermission", HookSecuritypPermission)
 
         //文件管理
         loadApp("com.coloros.filemanager", HookFileManager)
+        loadApp("com.oneplus.filemanager", HookFileManager)
 
         //工程模式
         loadApp("com.oplus.engineermode", HookEngineerMode)

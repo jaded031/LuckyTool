@@ -3,6 +3,7 @@ package com.luckyzyx.luckytool.ui.compose.scopes.apps
 import com.luckyzyx.luckytool.R
 import com.luckyzyx.luckytool.ui.compose.scopes.ScopePageSpec
 import com.luckyzyx.luckytool.utils.ModulePrefs
+import com.luckyzyx.luckytool.utils.preferInstalledPackName
 import com.luckyzyx.luckytool.utils.getOSVersionCode
 
 /**
@@ -10,11 +11,13 @@ import com.luckyzyx.luckytool.utils.getOSVersionCode
  */
 object OplusFileManagerPage {
 
+    private val PACK_NAME = preferInstalledPackName("com.coloros.filemanager", "com.oneplus.filemanager")
+
     val spec = ScopePageSpec(
         pageKey = "oplus_file_manager",
         prefsName = ModulePrefs,
-        packName = "com.coloros.filemanager",
-        scopes = arrayOf("com.coloros.filemanager"),
+        packName = PACK_NAME,
+        scopes = arrayOf(PACK_NAME),
         restartEnabled = true,
     ) {
         val c = requireNotNull(context) { "ScopeScreen 未注入 Context" }
