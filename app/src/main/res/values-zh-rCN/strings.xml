@@ -1013,6 +1013,8 @@
     <string name="remove_health_root_check_dialog">移除 Root 检测对话框</string>
     <!--OplusNfc-->
     <string name="scan_nfc_tag_auto_click">扫描NFC标签自动点击按钮</string>
+    <string name="enable_nfc_access_card">启用NFC门禁卡</string>
+    <string name="enable_nfc_access_card_summary">在海外版启用门禁卡应用(com.oplus.accesscard)及设置入口，替代 accesscardenabler 模块，需重启系统</string>
     <!--Everyimage-->
     <string name="remove_oshare_close_countdown">移除互传关闭倒计时</string>
     <string name="remove_storage_permission_exception_dialog">移除存储权限异常提示对话框</string>

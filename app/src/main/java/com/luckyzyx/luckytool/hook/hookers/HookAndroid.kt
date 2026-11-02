@@ -38,6 +38,7 @@ import com.luckyzyx.luckytool.hook.scopes.android.RemoveStatusBarTopNotification
 import com.luckyzyx.luckytool.hook.scopes.android.RemoveVPNActiveNotification
 import com.luckyzyx.luckytool.hook.scopes.android.ReplaceSystemRootStateDetection
 import com.luckyzyx.luckytool.hook.scopes.android.ScrollToTopWhiteList
+import com.luckyzyx.luckytool.hook.scopes.nfc.EnableNfcAccessCard
 import com.luckyzyx.luckytool.hook.scopes.android.SetAppUpdateDotDisplayMode
 import com.luckyzyx.luckytool.hook.scopes.android.SystemEnableVolumeKeyControlFlashlight
 import com.luckyzyx.luckytool.hook.scopes.android.ZoomWindowConfig
@@ -57,6 +58,9 @@ object HookAndroid : YukiBaseHooker() {
         loadHookerSafe(HookGlobalSystemProperties)
         loadHookerSafe(HookGlobalPmsFeature)
         loadHookerSafe(HookGlobalSystemConfig)
+
+        //启用NFC门禁卡
+        loadHookerSafe(EnableNfcAccessCard)
 
         //禁止App启动
 //        loadHookerSafe(HookAppStartForbidden)

@@ -1162,6 +1162,8 @@
     
     <!--OplusNfc-->
     <string name="scan_nfc_tag_auto_click">Scan the NFC tag to automatically click the button</string>
+    <string name="enable_nfc_access_card">Enable NFC access card</string>
+    <string name="enable_nfc_access_card_summary">Enables the Access Card app (com.oplus.accesscard) and its Settings entry outside China, replacing the accesscardenabler module. Needs a system restart</string>
     
     <!--OplusOShare-->
     <string name="remove_oshare_close_countdown">Remove oshare close countdown</string>

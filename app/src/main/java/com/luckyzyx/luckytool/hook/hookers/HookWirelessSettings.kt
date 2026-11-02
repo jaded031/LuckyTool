@@ -2,6 +2,7 @@ package com.luckyzyx.luckytool.hook.hookers
 
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.luckyzyx.luckytool.hook.scopes.nfc.EnableNfcAccessCard
 import com.luckyzyx.luckytool.hook.scopes.wirelesssettings.EnableWifiDetailsDisplayGateway
 import com.luckyzyx.luckytool.utils.DexkitUtils
 import com.luckyzyx.luckytool.utils.ModulePrefs
@@ -10,6 +11,8 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object HookWirelessSettings : YukiBaseHooker() {
     override fun onHook() {
+        //启用NFC门禁卡
+        loadHookerSafe(EnableNfcAccessCard)
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
 

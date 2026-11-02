@@ -59,6 +59,7 @@ import com.luckyzyx.luckytool.hook.hookers.HookThemeStore
 import com.luckyzyx.luckytool.hook.hookers.HookUIEngine
 import com.luckyzyx.luckytool.hook.hookers.HookWeather
 import com.luckyzyx.luckytool.hook.hookers.HookWirelessSettings
+import com.luckyzyx.luckytool.hook.scopes.nfc.EnableNfcAccessCard
 import com.luckyzyx.luckytool.hook.scopes.otherapp.HookADM
 import com.luckyzyx.luckytool.hook.scopes.otherapp.HookAlphaBackupPro
 import com.luckyzyx.luckytool.hook.scopes.otherapp.HookFakeGpsJoyStick
@@ -131,6 +132,7 @@ import java.io.File
         "com.oplus.wirelesssettings",
         "com.heytap.health",
         "com.android.nfc",
+        "com.oplus.accesscard",
         "com.coloros.oshare",
         "com.oneplus.oshare",
         "com.android.bluetooth",
@@ -330,6 +332,9 @@ class MainHook : YukiHookXposedModule {
 
         //NFC服务
         loadApp("com.android.nfc", HookNfc)
+
+        //门禁卡
+        loadApp("com.oplus.accesscard", EnableNfcAccessCard)
 
         //互传
         loadApp("com.coloros.oshare", HookOShare)

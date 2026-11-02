@@ -13,7 +13,12 @@ object OplusNfcPage {
         pageKey = "oplus_nfc",
         prefsName = ModulePrefs,
         packName = "com.android.nfc",
-        scopes = arrayOf("com.android.nfc"),
+        scopes = arrayOf(
+            "com.android.nfc",
+            "com.android.settings",
+            "com.oplus.wirelesssettings",
+            "com.oplus.accesscard"
+        ),
         restartEnabled = true,
     ) {
         val c = requireNotNull(context) { "ScopeScreen 未注入 Context" }
@@ -21,6 +26,11 @@ object OplusNfcPage {
             key = "scan_nfc_tag_auto_click",
             title = c.getString(R.string.scan_nfc_tag_auto_click),
             summary = c.getString(R.string.need_restart_system),
+        )
+        switch(
+            key = "enable_nfc_access_card",
+            title = c.getString(R.string.enable_nfc_access_card),
+            summary = c.getString(R.string.enable_nfc_access_card_summary),
         )
     }
 }
