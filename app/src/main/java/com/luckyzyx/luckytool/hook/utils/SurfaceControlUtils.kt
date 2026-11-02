@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.os.IBinder
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.toClass
@@ -11,7 +12,7 @@ class SurfaceControlUtils(val classLoader: ClassLoader?) {
     val clazz = "android.view.SurfaceControl".toClass(classLoader)
 
     fun isDisplayToken(): Boolean {
-        return clazz.resolve().firstMethodOrNull {
+        return clazz.resolve().firstMethodOrNullSafe {
             name = "getDynamicDisplayInfo"
             parameters(IBinder::class)
         } != null

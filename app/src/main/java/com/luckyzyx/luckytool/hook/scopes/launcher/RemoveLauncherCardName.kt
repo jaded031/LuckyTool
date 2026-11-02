@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.view.View
 import androidx.core.view.isVisible
@@ -34,7 +35,7 @@ object RemoveLauncherCardName : YukiBaseHooker() {
 
                         val card = firstField { name = "card" }.of(instance).get<View>()
                             ?: return@after
-                        card.asResolver().firstMethodOrNull {
+                        card.asResolver().firstMethodOrNullSafe {
                             name = "setTextVisible"; superclass()
                         }?.invoke(false)
                     }

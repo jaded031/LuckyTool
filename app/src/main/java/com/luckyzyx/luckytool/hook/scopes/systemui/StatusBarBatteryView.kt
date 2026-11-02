@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.graphics.Typeface
 import android.util.TypedValue
@@ -68,7 +69,7 @@ object StatusBarBatteryView : YukiBaseHooker() {
             //Source StatBatteryMeterView
             "com.oplus.systemui.statusbar.pipeline.battery.ui.view.StatBatteryMeterView".toClass()
                 .resolve().apply {
-                    (firstMethodOrNull { name = "setTextTypeface" }
+                    (firstMethodOrNullSafe { name = "setTextTypeface" }
                         ?: firstMethod { name = "setFontTypeface" }).hook {
                         if (userTypeface) intercept()
                     }

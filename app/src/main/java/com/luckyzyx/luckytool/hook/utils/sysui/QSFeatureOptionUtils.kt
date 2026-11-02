@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils.sysui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.toClassOrNull
 import org.lsposed.lsparanoid.Obfuscate
@@ -14,7 +15,7 @@ class QSFeatureOptionUtils(val classLoader: ClassLoader?) {
     }
 
     fun isSupportVolumeSeekBar(): Boolean {
-        return clazz?.resolve()?.firstMethodOrNull { name = "isSupportVolumeSeekBar" }
+        return clazz?.resolve()?.firstMethodOrNullSafe { name = "isSupportVolumeSeekBar" }
             ?.of(getInstance())?.invoke<Boolean>() ?: false
     }
 }

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.packageinstaller
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -18,7 +19,7 @@ object FixInstallButtonDisplayException : YukiBaseHooker() {
                     firstField { type = SecureRandom::class }.of(instance).set(SecureRandom())
                 }
             }
-            firstMethodOrNull { name = "getText" }?.hook {
+            firstMethodOrNullSafe { name = "getText" }?.hook {
                 before {
                     firstMethod { name = "setCts" }.of(instance).invoke(true)
                     firstField { type = SecureRandom::class }.of(instance).set(SecureRandom())
@@ -33,7 +34,7 @@ object FixInstallButtonDisplayException : YukiBaseHooker() {
                     firstField { type = SecureRandom::class }.of(instance).set(SecureRandom())
                 }
             }
-            firstMethodOrNull { name = "getText" }?.hook {
+            firstMethodOrNullSafe { name = "getText" }?.hook {
                 before {
                     firstMethod { name = "setCts" }.of(instance).invoke(true)
                     firstField { type = SecureRandom::class }.of(instance).set(SecureRandom())

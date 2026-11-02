@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.smartsidebar
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -11,7 +12,7 @@ object ForceEnableBuoyAutomaticallyHides : YukiBaseHooker() {
     override fun onHook() {
         //Source EdgePanelUtils
         "com.coloros.edgepanel.utils.EdgePanelUtils".toClass().resolve().apply {
-            firstMethodOrNull { name = "isMetaDataSupportByPackage";parameterCount = 2 }?.hook {
+            firstMethodOrNullSafe { name = "isMetaDataSupportByPackage";parameterCount = 2 }?.hook {
                 after {
                     val packName = firstArg().get<String>() ?: ""
                     val key = lastArg().get<String>() ?: ""

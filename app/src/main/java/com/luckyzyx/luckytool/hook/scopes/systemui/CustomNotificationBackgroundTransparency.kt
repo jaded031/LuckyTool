@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -33,14 +34,14 @@ object CustomNotificationBackgroundTransparency : YukiBaseHooker() {
             customAlpha = it
         }
 
-        val isOld = NotificationBackgroundView.toClassOrNull()?.resolve()?.firstMethodOrNull {
+        val isOld = NotificationBackgroundView.toClassOrNull()?.resolve()?.firstMethodOrNullSafe {
             name = "drawCustom"
             parameterCount = 2
         } != null
 
         //Source OplusNotificationBackgroundView
         if (!isOld) OplusNotificationBackgroundView.toClass().resolve().apply {
-            (firstMethodOrNull { name = "drawRegionBlur";parameterCount = 2 }
+            (firstMethodOrNullSafe { name = "drawRegionBlur";parameterCount = 2 }
                 ?: firstMethod { method { name = "draw";parameterCount = 2 } }).hook {
                 before {
                     if (customAlpha < 0) return@before
@@ -62,7 +63,7 @@ object CustomNotificationBackgroundTransparency : YukiBaseHooker() {
                     modifyNotifyPanelAlpha(instance(), lastArg().get<Drawable>())
                 }
             }
-            firstMethodOrNull { name = "drawCustom";parameterCount = 2 }?.hook {
+            firstMethodOrNullSafe { name = "drawCustom";parameterCount = 2 }?.hook {
                 before {
                     modifyNotifyPanelAlpha(instance(), lastArg().get<Drawable>())
                 }

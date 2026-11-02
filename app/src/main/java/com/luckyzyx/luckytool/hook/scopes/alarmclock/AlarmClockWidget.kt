@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.alarmclock
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.os.Handler
@@ -84,12 +85,12 @@ class AlarmClockWidget(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
             return
         }
         when {
-            onePlusWidget.firstMethodOrNull {
+            onePlusWidget.firstMethodOrNullSafe {
                 parameters(String::class, String::class)
                 returnType = CharSequence::class
             } != null -> loadHookerSafe(AlarmClock12)
 
-            onePlusWidget.firstMethodOrNull {
+            onePlusWidget.firstMethodOrNullSafe {
                 returnType = RemoteViews::class
             } != null -> loadHookerSafe(AlarmClock130(dexKitBridge))
         }

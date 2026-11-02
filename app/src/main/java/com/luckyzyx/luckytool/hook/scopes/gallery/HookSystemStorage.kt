@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.gallery
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import android.annotation.SuppressLint
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -157,7 +158,7 @@ class HookSystemStorage(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
                 checkDataList("WatermarkDevice HasselDevice", onlyOne = false)
                 forEachIndexed { _, classData ->
                     classData.name.toClass().resolve().apply {
-                        firstFieldOrNull { type = Boolean::class }?.let {
+                        firstFieldOrNullSafe { type = Boolean::class }?.let {
                             constructor { }.hookAll {
                                 after {
                                     it.copy().of(instance).set(true)

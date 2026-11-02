@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -37,7 +38,7 @@ object ForceEnableDockerBackgroundBlur : YukiBaseHooker() {
             }
         //Source ScreenUtils
         "com.android.common.util.ScreenUtils".toClass().resolve().apply {
-            firstMethodOrNull { name = "hasLargeDisplayFeatures"; emptyParameters() }?.hook {
+            firstMethodOrNullSafe { name = "hasLargeDisplayFeatures"; emptyParameters() }?.hook {
                 before {
                     if (forcingBlur.get() == true) result = true
                 }

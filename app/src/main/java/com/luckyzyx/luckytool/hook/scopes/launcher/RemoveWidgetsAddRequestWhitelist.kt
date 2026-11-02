@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -14,7 +15,7 @@ object RemoveWidgetsAddRequestWhitelist : YukiBaseHooker() {
         "com.android.launcher3.widget.WidgetControlHelper".toClassOrNull() ?: return
         //Source AddItemActivity
         "com.android.launcher3.dragndrop.AddItemActivity".toClass().resolve().apply {
-            firstMethodOrNull {
+            firstMethodOrNullSafe {
                 name = "isAllowedAddWidget"
                 parameterCount { it in 1..2 }
             }?.hook {

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -14,7 +15,7 @@ object ScrollToTopWhiteList : YukiBaseHooker() {
 
         //Source OplusScrollToTopRusHelper -> OplusScrollToTopSystemManager
         "com.android.server.OplusScrollToTopRusHelper".toClass().resolve().apply {
-            firstMethodOrNull { name = "isInWhiteList" }?.hook {
+            firstMethodOrNullSafe { name = "isInWhiteList" }?.hook {
                 before {
                     when (mode) {
                         "1" -> result = false

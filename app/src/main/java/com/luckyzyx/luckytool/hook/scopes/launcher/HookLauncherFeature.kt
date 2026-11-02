@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -33,7 +35,7 @@ class HookLauncherFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
             //StandardInterruptHelper.canFocusToNextPage
             "com.android.common.util.AppFeatureUtils".toClass().resolve().apply {
                 //Source OplusGridRecentsConfig isEnable
-                firstMethodOrNull {
+                firstMethodOrNullSafe {
                     name = "isSupportAutoFocusToNextPageInOverviewState"
                     parameterCount = 1
                 }?.hook {
@@ -53,7 +55,7 @@ class HookLauncherFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
             //uses to overwrite the hooked value; -1 falls back to getNextPage()
             "com.oplus.quickstep.utils.RecentInterruptAnimUtilKt".toClassOrNull()?.resolve()
                 ?.apply {
-                    firstMethodOrNull {
+                    firstMethodOrNullSafe {
                         name = "computeNonInterruptFocusToNextPageTarget"
                         parameterCount = 1
                     }?.hook {
@@ -66,7 +68,7 @@ class HookLauncherFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
             //-1 falls back to getNextPage()
             "com.oplus.quickstep.utils.tilecardfirst.policy.TileCardFirstInterruptFocusPolicy"
                 .toClassOrNull()?.resolve()?.apply {
-                    firstMethodOrNull {
+                    firstMethodOrNullSafe {
                         name = "resolveFocusPageFallback"
                         parameterCount = 2
                     }?.hook {
@@ -90,17 +92,17 @@ class HookLauncherFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
                 firstMethod { name = "initFeature" }.hook {
                     after {
                         if (appUpdateDot) {
-                            firstFieldOrNull { name = "isSupportAppUpdateDotSwitch" }?.set(true)
+                            firstFieldOrNullSafe { name = "isSupportAppUpdateDotSwitch" }?.set(true)
                         }
                     }
                 }
                 if (disableDockerMax) {
-                    firstMethodOrNull { name = "isDockerMax5" }?.hook {
+                    firstMethodOrNullSafe { name = "isDockerMax5" }?.hook {
                         intercept(false)
                     }
                 }
                 if (allowWidget) {
-                    firstMethodOrNull { name = "isSupportWhiteListControl" }?.hook {
+                    firstMethodOrNullSafe { name = "isSupportWhiteListControl" }?.hook {
                         intercept(true)
                     }
                 }
@@ -123,7 +125,7 @@ class HookLauncherFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
 
                 single().name.toClass().resolve().apply {
                     if (appUpdateDot) {
-                        firstMethodOrNull { name = "isSupportAppUpdateDot" }?.hook {
+                        firstMethodOrNullSafe { name = "isSupportAppUpdateDot" }?.hook {
                             intercept(true)
                         }
                     }

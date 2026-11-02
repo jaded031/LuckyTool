@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.games
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -15,8 +16,8 @@ object RemoveStartupAnimation : YukiBaseHooker() {
         //不能直接拦截 startAnimation：setVisibility(0)、postDelayed(q06, 5000) 和曝光日志都在它里面，拦掉浮窗就不显示了
         //入场动画是 ObjectAnimator.ofFloat(GameOptimizedNewView, "translationX", f, 0f).setDuration(500L)
         //这里只把该动画时长压成 0：原流程全部保留，仅去掉滑动过程（出场动画 183L，不受影响）
-        val setDuration = ObjectAnimator::class.resolve().firstMethodOrNull { name = "setDuration" }
-            ?: ValueAnimator::class.resolve().firstMethodOrNull { name = "setDuration" }
+        val setDuration = ObjectAnimator::class.resolve().firstMethodOrNullSafe { name = "setDuration" }
+            ?: ValueAnimator::class.resolve().firstMethodOrNullSafe { name = "setDuration" }
         if (setDuration == null) {
             YLog.error("RemoveStartupAnimation -> setDuration is null")
             return

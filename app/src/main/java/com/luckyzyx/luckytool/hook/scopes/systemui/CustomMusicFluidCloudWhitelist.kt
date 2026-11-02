@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.util.ArraySet
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -18,7 +19,7 @@ object CustomMusicFluidCloudWhitelist : YukiBaseHooker() {
         //Source OplusMediaRusUpdateManager
         "com.oplus.systemui.media.seedling.rus.OplusMediaRusUpdateManager".toClass().resolve()
             .apply {
-                (firstMethodOrNull {
+                (firstMethodOrNullSafe {
                     name = "getRusWhiteList"
                     returnType = List::class
                 } ?: firstMethod {

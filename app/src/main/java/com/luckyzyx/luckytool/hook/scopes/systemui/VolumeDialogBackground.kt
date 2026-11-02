@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.Dialog
 import android.content.DialogInterface
@@ -81,7 +83,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
 
             //Source VolumeBlurManager
             "com.oplus.systemui.volume.utils.VolumeBlurManager".toClassOrNull()?.resolve()?.apply {
-                firstMethodOrNull { name = "getBackgroundBlurDrawable" }?.hook {
+                firstMethodOrNullSafe { name = "getBackgroundBlurDrawable" }?.hook {
                     after {
                         if (customAlpha < 0) return@after
                         val value = customAlpha * 25
@@ -139,7 +141,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
             ).toClass()
 
             volumnDialogClazz.resolve().apply {
-                firstMethodOrNull { name = "isSurrealQualityOn" }?.hook {
+                firstMethodOrNullSafe { name = "isSurrealQualityOn" }?.hook {
                     intercept(false)
                 }
 
@@ -154,8 +156,8 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                     }
                 }
 
-                firstFieldOrNull { name = "mVerticalRowsLayerDrawableMap" }?.let {
-                    firstMethodOrNull { name = "updateRowsH" }?.hook {
+                firstFieldOrNullSafe { name = "mVerticalRowsLayerDrawableMap" }?.let {
+                    firstMethodOrNullSafe { name = "updateRowsH" }?.hook {
                         before {
                             if (customAlpha < 0) return@before
                             val value = customAlpha * 25
@@ -172,11 +174,11 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                         }
                     }
                 }
-                firstMethodOrNull { name = "expandPanel" }?.hook {
+                firstMethodOrNullSafe { name = "expandPanel" }?.hook {
                     before {
                         if (customAlpha < 0) return@before
                         val value = customAlpha * 25
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeBackgroundLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -214,7 +216,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
 
             //Source VolumeBlurManager
             "com.oplus.systemui.volume.utils.VolumeBlurManager".toClassOrNull()?.resolve()?.apply {
-                firstMethodOrNull { name = "getBackgroundBlurDrawable" }?.hook {
+                firstMethodOrNullSafe { name = "getBackgroundBlurDrawable" }?.hook {
                     after {
                         if (customAlpha < 0) return@after
                         val value = customAlpha * 25
@@ -260,11 +262,11 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                         if (customAlpha < 0) return@before
                         val value = customAlpha * 25
 
-                        (firstFieldOrNull { type = dialog }?.let {
+                        (firstFieldOrNullSafe { type = dialog }?.let {
                             it.of(instance).get() ?: return@before
                         } ?: instance).asResolver().apply {
 
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVerticalRowsLayerDrawable"
                             }?.get<LayerDrawable>()?.apply {
                                 val blurDrawable = getDrawable(0)
@@ -273,7 +275,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                                 }
                                 getDrawable(1)?.alpha = value
                             }
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVolumeMoreLayerDrawable"
                             }?.get<LayerDrawable>()?.apply {
                                 val blurDrawable = getDrawable(0)
@@ -285,7 +287,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                                 firstField { name = "mMoreRowStreamLl" }.get<View>()
                                     ?.background?.alpha = 255 - value
                             }
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVolumeAppAdjustLayerDrawable"
                             }?.get<LayerDrawable>()?.apply {
                                 val blurDrawable = getDrawable(0)
@@ -294,7 +296,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                                 }
                                 getDrawable(1)?.alpha = value
                             }
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVolumeCaptionLayerDrawable"
                             }?.get<LayerDrawable>()?.apply {
                                 val blurDrawable = getDrawable(0)
@@ -303,7 +305,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                                 }
                                 getDrawable(1)?.alpha = value
                             }
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVolumeBackgroundLayerDrawable"
                             }?.get<LayerDrawable>()?.apply {
                                 val blurDrawable = getDrawable(0)
@@ -316,7 +318,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                                     name = "mVolumeBackgroundBlurDrawable"
                                 }.get<Drawable>()?.alpha = value
                             }
-                            firstFieldOrNull {
+                            firstFieldOrNullSafe {
                                 name = "mVolumeBtnDrawable"
                             }?.get<Drawable>()?.apply {
                                 alpha = 255 - value
@@ -352,7 +354,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
             ).toClass()
 
             volumnDialogClazz.resolve().apply {
-                firstMethodOrNull { name = "isSurrealQualityOn" }?.hook {
+                firstMethodOrNullSafe { name = "isSurrealQualityOn" }?.hook {
                     intercept(false)
                 }
 
@@ -360,7 +362,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                     before {
                         if (customAlpha < 0) return@before
                         val value = customAlpha * 25
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVerticalRowsLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -369,7 +371,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                             }
                             getDrawable(1)?.alpha = value
                         }
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeMoreLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -378,7 +380,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                             }
                             getDrawable(1)?.alpha = value
                         }
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeAppAdjustLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -387,7 +389,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                             }
                             getDrawable(1)?.alpha = value
                         }
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeCaptionLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -396,7 +398,7 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                             }
                             getDrawable(1)?.alpha = value
                         }
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeBackgroundLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)
@@ -405,15 +407,15 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                             }
                             getDrawable(1)?.alpha = value
                         }
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeBtnDrawable"
                         }?.of(instance)?.get<Drawable>()?.apply {
                             alpha = 255 - value
                         }
                     }
                 }
-                firstFieldOrNull { name = "mVerticalRowsLayerDrawableMap" }?.let {
-                    (firstMethodOrNull { name = "addVerticalContainerBg" } ?: firstMethod {
+                firstFieldOrNullSafe { name = "mVerticalRowsLayerDrawableMap" }?.let {
+                    (firstMethodOrNullSafe { name = "addVerticalContainerBg" } ?: firstMethod {
                         name = "updateVolumeRowBgForSide"
                     }).hook {
                         before {
@@ -432,8 +434,8 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                         }
                     }
                 }
-                firstFieldOrNull { name = "mVerticalRowsLayerDrawableMap" }?.let {
-                    firstMethodOrNull { name = "updateRowsH" }?.hook {
+                firstFieldOrNullSafe { name = "mVerticalRowsLayerDrawableMap" }?.let {
+                    firstMethodOrNullSafe { name = "updateRowsH" }?.hook {
                         before {
                             if (customAlpha < 0) return@before
                             val value = customAlpha * 25
@@ -450,11 +452,11 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                         }
                     }
                 }
-                firstMethodOrNull { name = "expandPanel" }?.hook {
+                firstMethodOrNullSafe { name = "expandPanel" }?.hook {
                     before {
                         if (customAlpha < 0) return@before
                         val value = customAlpha * 25
-                        firstFieldOrNull {
+                        firstFieldOrNullSafe {
                             name = "mVolumeBackgroundLayerDrawable"
                         }?.of(instance)?.get<LayerDrawable>()?.apply {
                             val blurDrawable = getDrawable(0)

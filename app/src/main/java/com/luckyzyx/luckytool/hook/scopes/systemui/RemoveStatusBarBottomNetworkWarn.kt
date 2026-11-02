@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -29,7 +30,7 @@ object RemoveStatusBarBottomNetworkWarn : YukiBaseHooker() {
                 firstMethod { name = "showDeviceMonitoringDialog" }.hook {
                     if (removeMode == "1" || removeMode == "2") intercept()
                 }
-                (firstMethodOrNull { name = "handleRefreshState" }
+                (firstMethodOrNullSafe { name = "handleRefreshState" }
                     ?: firstMethod { name { it.contains("handleRefreshState") } }).hook {
                     if (removeMode == "2") intercept()
                 }

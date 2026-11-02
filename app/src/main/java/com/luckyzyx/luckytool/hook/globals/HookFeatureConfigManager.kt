@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClassOrNull
@@ -44,7 +45,7 @@ class HookFeatureConfigManager(private val features: Map<String, Boolean>) : Yuk
                         if (value != null) result = value
                     }
                 }
-                firstMethodOrNull {
+                firstMethodOrNullSafe {
                     name = "hasFeatureMap"
                     parameters(String::class, Int::class)
                     returnType = Boolean::class

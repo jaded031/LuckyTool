@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -35,7 +37,7 @@ object FingerPrintIconAnim : YukiBaseHooker() {
     private val opticalUiUpdateHandler: Handler? by lazy {
         runCatching {
             VariousClass("com.oplus.systemui.biometrics.finger.KeyguardFingerprintUtils")
-                .toClass().resolve().firstFieldOrNull { name = "opticalUiUpdateHandler" }
+                .toClass().resolve().firstFieldOrNullSafe { name = "opticalUiUpdateHandler" }
                 ?.get<Handler>()
         }.getOrNull()
     }
@@ -74,19 +76,19 @@ object FingerPrintIconAnim : YukiBaseHooker() {
                 }
             }
             //C13-C15 旧版的独立 fade 方法（C16 起不存在，仅作旧版本回退兼容）
-            firstMethodOrNull { name = "startFadeInAnimation" }?.hook {
+            firstMethodOrNullSafe { name = "startFadeInAnimation" }?.hook {
                 if (isReplaceIcon) before {
                     instance<Any>().setCustomDrawable(iconPath, false)
                     result = null
                 } else if (removeMode == "1" || removeMode == "3") intercept()
             }
-            firstMethodOrNull { name = "startFadeOutAnimation" }?.hook {
+            firstMethodOrNullSafe { name = "startFadeOutAnimation" }?.hook {
                 if (isReplaceIcon) intercept()
                 else if (removeMode == "1" || removeMode == "3") intercept()
             }
             //C16：宿主恢复图标（RunnableC32041 case0/1 setImageDrawable(ImMobileDrawable)）后，
             //替换模式重设自定义图，模式1保持移除，防止恢复链抹掉我们的设置
-            firstMethodOrNull { name = "restoreIconDrawable" }?.hook {
+            firstMethodOrNullSafe { name = "restoreIconDrawable" }?.hook {
                 after {
                     when {
                         isReplaceIcon -> instance<Any>().setCustomDrawable(iconPath, false)
@@ -94,7 +96,7 @@ object FingerPrintIconAnim : YukiBaseHooker() {
                     }
                 }
             }
-            firstMethodOrNull { name = "restoreIconDrawableDark" }?.hook {
+            firstMethodOrNullSafe { name = "restoreIconDrawableDark" }?.hook {
                 after {
                     when {
                         isReplaceIcon -> instance<Any>().setCustomDrawable(iconPath, false)
@@ -125,9 +127,9 @@ object FingerPrintIconAnim : YukiBaseHooker() {
     /** 清除指纹图标 drawable 的颜色滤镜（C15 及之前为 Dark，C17 起改名 HY） */
     private fun Any.clearFpIconColorFilter() {
         asResolver().apply {
-            firstFieldOrNull { name = "imMobileDrawable" }?.get<Drawable>()?.clearColorFilter()
-            firstFieldOrNull { name = "imMobileDrawableDark" }?.get<Drawable>()?.clearColorFilter()
-            firstFieldOrNull { name = "imMobileDrawableHY" }?.get<Drawable>()?.clearColorFilter()
+            firstFieldOrNullSafe { name = "imMobileDrawable" }?.get<Drawable>()?.clearColorFilter()
+            firstFieldOrNullSafe { name = "imMobileDrawableDark" }?.get<Drawable>()?.clearColorFilter()
+            firstFieldOrNullSafe { name = "imMobileDrawableHY" }?.get<Drawable>()?.clearColorFilter()
         }
     }
 
@@ -155,8 +157,8 @@ object FingerPrintIconAnim : YukiBaseHooker() {
                 //最终都 setImageDrawable(imMobileDrawable/Dark)，把自定义图注入这些原生字段，
                 //让一切恢复链写回的都是自定义图，无需逐点对抗
                 firstField { name = "imMobileDrawable" }.set(drawable)
-                firstFieldOrNull { name = "imMobileDrawableDark" }?.set(drawable)
-                firstFieldOrNull { name = "imMobileDrawableHY" }?.set(drawable)
+                firstFieldOrNullSafe { name = "imMobileDrawableDark" }?.set(drawable)
+                firstFieldOrNullSafe { name = "imMobileDrawableHY" }?.set(drawable)
             }
             firstField { type = fpIconType.toClass() }.get<ImageView>()?.setImageDrawable(drawable)
             if (update) firstMethod { name = "updateFpIconColor"; emptyParameters() }.invoke()

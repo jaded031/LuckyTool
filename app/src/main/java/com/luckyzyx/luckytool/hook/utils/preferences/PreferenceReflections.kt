@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils.preferences
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -17,7 +18,7 @@ object PreferenceReflections {
         fun callFinder(
             preference: Any, vararg args: Any, condition: MethodCondition<Any>.() -> Unit = {}
         ): Any? {
-            val isSuper = preference.asResolver().firstMethodOrNull(condition) == null
+            val isSuper = preference.asResolver().firstMethodOrNullSafe(condition) == null
             return preference.asResolver().firstMethod {
                 apply(condition)
                 if (isSuper) superclass()
@@ -27,7 +28,7 @@ object PreferenceReflections {
         fun <T> invokeFinder(
             preference: Any, vararg args: Any, condition: MethodCondition<Any>.() -> Unit = {}
         ): T? {
-            val isSuper = preference.asResolver().firstMethodOrNull(condition) == null
+            val isSuper = preference.asResolver().firstMethodOrNullSafe(condition) == null
             return preference.asResolver().firstMethod {
                 apply(condition)
                 if (isSuper) superclass()

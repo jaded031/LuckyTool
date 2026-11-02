@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.view.View
 import android.view.ViewGroup
@@ -87,7 +89,7 @@ object ControlCenterTiles : YukiBaseHooker() {
                 "com.android.systemui.qs.TileLayout",
                 "com.android.systemui.qs.deprecated.TileLayout"
             ).toClass().resolve().apply {
-                val updateMaxRowsMethod = firstMethodOrNull { name = "updateMaxRows" }
+                val updateMaxRowsMethod = firstMethodOrNullSafe { name = "updateMaxRows" }
                 if (updateMaxRowsMethod != null) {
                     val mRows = firstField { name = "mRows" }
                     updateMaxRowsMethod.intercept {
@@ -103,14 +105,14 @@ object ControlCenterTiles : YukiBaseHooker() {
                     //再夹取到 [mMinRows, mMaxAllowedRows]，故测量前临时改写首页这两个字段，测量后还原
                     //mMinRows/mMaxAllowedRows 声明在 TileLayout，页面实例本身是 TileLayout 子类，
                     //故这两个字段从 TileLayout 取，只有 mPages 来自 PagedTileLayout
-                    val mMinRows = firstFieldOrNull { name = "mMinRows" } ?: return@apply
+                    val mMinRows = firstFieldOrNullSafe { name = "mMinRows" } ?: return@apply
                     val mMaxAllowedRows =
-                        firstFieldOrNull { name = "mMaxAllowedRows" } ?: return@apply
+                        firstFieldOrNullSafe { name = "mMaxAllowedRows" } ?: return@apply
                     val pagedScope = VariousClass(
                         "com.android.systemui.qs.PagedTileLayout",
                         "com.android.systemui.qs.deprecated.PagedTileLayout"
                     ).toClassOrNull()?.resolve() ?: return@apply
-                    val mPages = pagedScope.firstFieldOrNull { name = "mPages" } ?: return@apply
+                    val mPages = pagedScope.firstFieldOrNullSafe { name = "mPages" } ?: return@apply
                     pagedScope.firstMethod { name = "onMeasure" }.intercept {
                         //onMeasure 无返回值，恒走原实现，仅在测量期间临时改字段
                         val view = instanceOrNull<ViewGroup>() ?: return@intercept proceed()
@@ -138,7 +140,7 @@ object ControlCenterTiles : YukiBaseHooker() {
                 }
 
                 val mColumns = firstField { name = "mColumns" }
-                (firstMethodOrNull { name = "updateColumns" }
+                (firstMethodOrNullSafe { name = "updateColumns" }
                     ?: firstMethod { name = "setMaxColumns" }).intercept {
                     val view = instance<ViewGroup>()
                     var vertical = true

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.ActivityManager.RunningTaskInfo
 import android.app.ActivityOptions
@@ -65,7 +66,7 @@ object HookFloatMirageWindow : YukiBaseHooker() {
 
             //Source OplusFlexibleDCSManager
             "com.android.server.wm.OplusFlexibleDCSManager".toClass().resolve().apply {
-                (firstMethodOrNull { name = "onFloatHandleEnter" }
+                (firstMethodOrNullSafe { name = "onFloatHandleEnter" }
                     ?: firstMethod { name = "startMinimize" }).hook {
                     after {
                         val info = firstArg().get() ?: return@after

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -28,7 +29,7 @@ object VibrateWhenOpeningTheStatusBar : YukiBaseHooker() {
             "com.android.systemui.statusbar.phone.StatusBarCommandQueueCallbacks", //C13
             "com.android.systemui.statusbar.phone.CentralSurfacesCommandQueueCallbacks" //C14
         ).toClass().resolve().apply {
-            firstFieldOrNull { name = "mVibrateOnOpening" }?.let {
+            firstFieldOrNullSafe { name = "mVibrateOnOpening" }?.let {
                 firstConstructor().hook {
                     after {
                         it.copy().of(instance).set(true)
@@ -39,7 +40,7 @@ object VibrateWhenOpeningTheStatusBar : YukiBaseHooker() {
 
         //Source PanelViewController -> config_vibrateOnIconAnimation
         "com.android.systemui.statusbar.phone.StatusBar".toClassOrNull()?.resolve()?.apply {
-            firstFieldOrNull { name = "mVibrateOnOpening" }?.let {
+            firstFieldOrNullSafe { name = "mVibrateOnOpening" }?.let {
                 firstMethod { name = "start" }.hook {
                     after {
                         it.copy().of(instance).set(true)

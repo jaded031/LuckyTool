@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.hardware.display.DisplayManager
 import android.view.Display
@@ -43,7 +44,7 @@ class DisplayManagerUtils(val classLoader: ClassLoader?) {
     }
 
     fun getPhysicalDisplayId(address: Any): Long? {
-        return address.asResolver().firstMethodOrNull {
+        return address.asResolver().firstMethodOrNullSafe {
             name = "getPhysicalDisplayId"
             emptyParameters()
         }?.invoke<Long>()

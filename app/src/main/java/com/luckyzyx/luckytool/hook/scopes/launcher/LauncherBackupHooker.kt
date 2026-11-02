@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.BroadcastReceiver
@@ -292,7 +293,7 @@ object LauncherBackupHooker : YukiBaseHooker() {
         mountInstalled = true
         runCatching {
             "com.android.common.LauncherApplication".toClass().resolve()
-                .firstMethodOrNull { name = "onCreate"; emptyParameters() } ?: error("no onCreate")
+                .firstMethodOrNullSafe { name = "onCreate"; emptyParameters() } ?: error("no onCreate")
         }.onSuccess { method ->
             runCatching {
                 method.hook {
@@ -513,10 +514,10 @@ object LauncherBackupHooker : YukiBaseHooker() {
     /** 布局是否加载完成：ROM 里 LauncherModel.mModelLoaded 由 LoaderTransaction.commit() 置位 */
     private fun isModelLoaded(): Boolean = runCatching {
         val context = hostContext ?: return false
-        val model = launcherAppState(context)?.asResolver()?.firstMethodOrNull {
+        val model = launcherAppState(context)?.asResolver()?.firstMethodOrNullSafe {
             name = "getModel"; superclass()
         }?.invoke() ?: return false
-        model.asResolver().firstMethodOrNull { name = "isModelLoaded"; superclass() }
+        model.asResolver().firstMethodOrNullSafe { name = "isModelLoaded"; superclass() }
             ?.invoke() as? Boolean ?: false
     }.getOrElse {
         LogUtils.d(TAG, "isModelLoaded", "读取布局加载状态失败: " + it.message)
@@ -529,7 +530,7 @@ object LauncherBackupHooker : YukiBaseHooker() {
      */
     private fun launcherAppState(context: Context): Any? = runCatching {
         LAUNCHER_APP_STATE.toClass(launcherClassLoader()).resolve()
-            .firstMethodOrNull { name = "getInstance"; parameters(Context::class); superclass() }
+            .firstMethodOrNullSafe { name = "getInstance"; parameters(Context::class); superclass() }
             ?.invoke(context)
     }.getOrNull()
 
@@ -890,7 +891,7 @@ object LauncherBackupHooker : YukiBaseHooker() {
         val context = hostContext ?: return "hidden=skip(no context)"
         val manager = protectedAppsManager(context)
         //I(String, boolean, UserHandle)：布尔参数按原始类型 boolean 找，跟 getMethod 时的语义一致
-        val method = manager?.asResolver()?.firstMethodOrNull {
+        val method = manager?.asResolver()?.firstMethodOrNullSafe {
             parameters(String::class, java.lang.Boolean.TYPE, UserHandle::class)
             returnType = Void.TYPE
             superclass()
@@ -989,7 +990,7 @@ object LauncherBackupHooker : YukiBaseHooker() {
     /** 用户句柄：UserHandle.of(int) 在部分 SDK 上不可直接引用，反射取；拿不到退回当前用户（真机 profile 基本都是 0） */
     private fun userHandle(userId: Int): UserHandle = runCatching {
         UserHandle::class.resolve()
-            .firstMethodOrNull { name = "of"; parameters(Integer.TYPE) }
+            .firstMethodOrNullSafe { name = "of"; parameters(Integer.TYPE) }
             ?.invoke(userId) as? UserHandle
     }.getOrNull() ?: Process.myUserHandle()
 
@@ -1020,9 +1021,9 @@ object LauncherBackupHooker : YukiBaseHooker() {
         val context = hostContext ?: return "no context"
         return runCatching {
             val appState = launcherAppState(context) ?: error("no LauncherAppState")
-            val model = appState.asResolver().firstMethodOrNull { name = "getModel"; superclass() }
+            val model = appState.asResolver().firstMethodOrNullSafe { name = "getModel"; superclass() }
                 ?.invoke() ?: error("no LauncherModel")
-            model.asResolver().firstMethodOrNull { name = "forceReload"; superclass() }?.invoke()
+            model.asResolver().firstMethodOrNullSafe { name = "forceReload"; superclass() }?.invoke()
             null
         }.getOrElse { throwable ->
             YLog.debug("$TAG forceReload 失败", throwable)
@@ -1033,8 +1034,8 @@ object LauncherBackupHooker : YukiBaseHooker() {
     /** 当前桌面模式（Standard 0 / Drawer 2 / Simple 3）；取不到返回 null */
     private fun currentLauncherMode(): Int? = runCatching {
         LAUNCHER_MODE_MANAGER.toClass(launcherClassLoader()).resolve()
-            .firstMethodOrNull { name = "getInstance"; emptyParameters() }?.invoke()?.asResolver()
-            ?.firstMethodOrNull { name = "getCurType"; superclass() }
+            .firstMethodOrNullSafe { name = "getInstance"; emptyParameters() }?.invoke()?.asResolver()
+            ?.firstMethodOrNullSafe { name = "getCurType"; superclass() }
             ?.invoke() as? Int
     }.getOrElse {
         YLog.debug("$TAG 读取 launcher_mode 失败", it)

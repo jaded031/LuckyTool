@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -15,13 +16,13 @@ object RemoveLowBatteryDialogWarning : YukiBaseHooker() {
             "com.oplusos.systemui.notification.power.OplusPowerNotificationWarnings", //C13
             "com.oplus.systemui.statusbar.notification.power.OplusPowerNotificationWarnings" //C14
         ).toClass().resolve().apply {
-            firstMethodOrNull { name = "createSavePowerDialog" }?.hook {
+            firstMethodOrNullSafe { name = "createSavePowerDialog" }?.hook {
                 intercept()
             }
-            firstMethodOrNull { name = "createSuperSavePowerDialog" }?.hook {
+            firstMethodOrNullSafe { name = "createSuperSavePowerDialog" }?.hook {
                 intercept()
             }
-            firstMethodOrNull { name = "showLowBatteryWarning" }?.hook {
+            firstMethodOrNullSafe { name = "showLowBatteryWarning" }?.hook {
                 intercept(false)
             }
         }

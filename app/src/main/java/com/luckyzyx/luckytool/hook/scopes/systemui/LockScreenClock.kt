@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.Context
@@ -97,7 +98,7 @@ object LockScreenClock : YukiBaseHooker() {
                                 .get<View>()?.isVisible = false
                         }
                     }
-                    firstMethodOrNull { name = "updateLockScreenMode" }?.hook {
+                    firstMethodOrNullSafe { name = "updateLockScreenMode" }?.hook {
                         after {
                             firstField { name = "mSmallClockFrame" }.of(instance)
                                 .get<View>()?.isVisible = false
@@ -145,7 +146,7 @@ object LockScreenClock : YukiBaseHooker() {
                         }
                     }
                 }
-                (firstMethodOrNull { name = "updateKeyguardLandClock" }
+                (firstMethodOrNullSafe { name = "updateKeyguardLandClock" }
                     ?: firstMethod { name { it.contains("updateKeyguardLandClock") } }).hook {
                     after {
                         if (isCenter) instance<ViewGroup>().setPadding(0, 20.dp, 0, 0)
@@ -261,7 +262,7 @@ object LockScreenClock : YukiBaseHooker() {
                         }
                     }
                 }
-                (firstMethodOrNull { name = "setTextFont" }
+                (firstMethodOrNullSafe { name = "setTextFont" }
                     ?: firstMethod { name { it.contains("setTextFont") } }).hook {
                     if (userTypeface) intercept()
                 }
@@ -280,7 +281,7 @@ object LockScreenClock : YukiBaseHooker() {
                             }
                     }
                 }
-                val locateTime = firstMethodOrNull {
+                val locateTime = firstMethodOrNullSafe {
                     parameters { it.contains(timeInfoClazz) }
                     parameterCount = 3
                 }

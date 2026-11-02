@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.toClass
@@ -19,7 +20,7 @@ object BatteryOptimizationWhitelist : YukiBaseHooker() {
         //Source oplus-service-jobscheduler -> OplusDeviceIdleHelper
         //Search sys_deviceidle_whitelist
         "com.android.server.OplusDeviceIdleHelper".toClass().resolve().apply {
-            (firstMethodOrNull { name = "getNewWhiteList" }
+            (firstMethodOrNullSafe { name = "getNewWhiteList" }
                 ?: firstMethod { name = "getNewWhiteListLocked" }).hook {
                 before {
                     val whiteListAll = firstArg().get<ArrayList<String>>()

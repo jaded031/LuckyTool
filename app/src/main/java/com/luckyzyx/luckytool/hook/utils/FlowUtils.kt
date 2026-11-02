@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.toClass
@@ -21,7 +22,7 @@ class FlowUtils(val classLoader: ClassLoader?) {
 
     inline fun <reified T> getValue(flow: Any): T? {
         return flow.asResolver().let {
-            (it.firstMethodOrNull { name = "getValue" }
+            (it.firstMethodOrNullSafe { name = "getValue" }
                 ?: it.firstMethod { name = "getValue" }).invoke<T>()
         }
     }

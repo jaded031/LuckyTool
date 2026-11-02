@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.Pair
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
@@ -102,17 +103,17 @@ class LauncherLayoutRowColume(val dexKitBridge: DexKitBridge) : YukiBaseHooker()
                     val option = options.firstOrNull() ?: return@after
                     //选项实际是 OplusDisplayOption, grid 字段声明在父类 DisplayOption 上
                     val gridOption = option.asResolver()
-                        .firstFieldOrNull { name = "grid"; superclass() }?.get<Any>()
+                        .firstFieldOrNullSafe { name = "grid"; superclass() }?.get<Any>()
                         ?: return@after
                     //官方已存在该组合时不处理, 只改写回落出来的那个选项
                     val currentName = gridOption.asResolver()
-                        .firstFieldOrNull { name = "name"; type = String::class }?.get<String>()
+                        .firstFieldOrNullSafe { name = "name"; type = String::class }?.get<String>()
                     if (currentName == gridName) return@after
                     gridOption.asResolver().apply {
-                        firstFieldOrNull { name = "name"; type = String::class }?.set(gridName)
-                        firstFieldOrNull { name = "numColumns"; type = Int::class }?.set(column)
-                        firstFieldOrNull { name = "numRows"; type = Int::class }?.set(row)
-                        firstFieldOrNull { name = "isEnabled"; type = Boolean::class }?.set(true)
+                        firstFieldOrNullSafe { name = "name"; type = String::class }?.set(gridName)
+                        firstFieldOrNullSafe { name = "numColumns"; type = Int::class }?.set(column)
+                        firstFieldOrNullSafe { name = "numRows"; type = Int::class }?.set(row)
+                        firstFieldOrNullSafe { name = "isEnabled"; type = Boolean::class }?.set(true)
                     }
                     result = arrayListOf(option)
                 }

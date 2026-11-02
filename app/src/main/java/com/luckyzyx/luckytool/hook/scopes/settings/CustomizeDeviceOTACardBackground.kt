@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -103,7 +105,7 @@ object CustomizeDeviceOTACardBackground : YukiBaseHooker() {
                             //onSurfaceTextureAvailable 拿去 setDataSource 抛 IOException，先清掉免得崩
                             if (videoPath.isNotEmpty() && !hasPlayableVideo()) {
                                 runCatching {
-                                    firstFieldOrNull { name = "mCachedVideoPath" }
+                                    firstFieldOrNullSafe { name = "mCachedVideoPath" }
                                         ?.of(instance<Any>())?.set(null)
                                 }
                             }
@@ -149,19 +151,19 @@ object CustomizeDeviceOTACardBackground : YukiBaseHooker() {
 
                 //官方在彩蛋/视频收敛时会把封面写回 bg，这三个方法都是 void 且自己写视图，
                 //所以用拦截器表达 after 语义：先跑官方实现，再把自定义图补回去
-                firstMethodOrNull { name = "getTopDrawableBg" }?.intercept {
+                firstMethodOrNullSafe { name = "getTopDrawableBg" }?.intercept {
                     proceed()
                     //此处官方可能刚把 bg 置 GONE 去露彩蛋视频，可见性按现状判断，不能硬顶上来
                     restoreTopBackground(false)
                     null
                 }
-                val showTopVideoLastFrame = firstMethodOrNull { name = "showTopVideoLastFrame" }
+                val showTopVideoLastFrame = firstMethodOrNullSafe { name = "showTopVideoLastFrame" }
                 showTopVideoLastFrame?.intercept {
                     proceed()
                     restoreTopBackground(true)
                     null
                 }
-                firstMethodOrNull { name = "showEasterEggVideo" }?.intercept {
+                firstMethodOrNullSafe { name = "showEasterEggVideo" }?.intercept {
                     //show=true 是刚露出彩蛋视频，show=false 才是收回静态背景
                     val show = arg<Boolean>(0) ?: false
                     proceed()
@@ -172,7 +174,7 @@ object CustomizeDeviceOTACardBackground : YukiBaseHooker() {
                     //开关开着就没有官方视频的位置：有自定义文件时放行官方流程，没有（或文件已被删）
                     //就挡掉，onBindViewHolder 于是改走 showStaticTopBackground 分支，
                     //正好落到上面 getTopDrawableBg 的收尾里，背景图照常补回去
-                    firstMethodOrNull { name = "isSupportTopVideo" }?.intercept {
+                    firstMethodOrNullSafe { name = "isSupportTopVideo" }?.intercept {
                         if (hasPlayableVideo()) proceed() else false
                     }
                 }
@@ -218,13 +220,13 @@ object CustomizeDeviceOTACardBackground : YukiBaseHooker() {
                     //原实现会顺带置位 mTopVideoIsWithMask，这里直接给路径并跳过原实现；
                     //文件已经没了就返回 null，让官方走「路径为空」的 showTopVideoLastFrame 分支，
                     //死路径绝不能进到 MediaPlayer.setDataSource（那里只 catch IllegalStateException）
-                    firstMethodOrNull { name = "getColorOSVideoPath" }?.intercept {
+                    firstMethodOrNullSafe { name = "getColorOSVideoPath" }?.intercept {
                         if (hasPlayableVideo()) videoPath else null
                     }
                     //官方在 onPrepared 里 start() 之前调用它，正好用来静音，并用自己算的 centerCrop 换掉官方 Matrix
-                    firstMethodOrNull { name = "applyTopVideoDisplayTransform" }?.intercept {
+                    firstMethodOrNullSafe { name = "applyTopVideoDisplayTransform" }?.intercept {
                         val textureView = arg<TextureView>(0) ?: return@intercept null
-                        val player = firstFieldOrNull { name = "mAboutDeviceTopMediaPlayer" }
+                        val player = firstFieldOrNullSafe { name = "mAboutDeviceTopMediaPlayer" }
                             ?.of(instance)?.get<MediaPlayer>()
                         runCatching { player?.setVolume(0F, 0F) }
                         textureView.setTransform(createCenterCropMatrix(textureView, player))

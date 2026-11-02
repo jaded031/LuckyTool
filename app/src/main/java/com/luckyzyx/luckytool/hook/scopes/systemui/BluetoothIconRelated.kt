@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -27,7 +29,7 @@ object BluetoothIconRelated : YukiBaseHooker() {
             "com.oplusos.systemui.statusbar.phone.PhoneStatusBarPolicyEx", //C13
             "com.oplus.systemui.statusbar.phone.OplusPhoneStatusBarPolicyExImpl" //C14
         ).toClass().resolve().apply {
-            firstMethodOrNull { name = "updateBluetoothIcon";parameterCount = 4 }?.hook {
+            firstMethodOrNullSafe { name = "updateBluetoothIcon";parameterCount = 4 }?.hook {
                 before {
                     if (!isHide) return@before
                     val isBluetoothEnabled = lastArg().get<Boolean>() ?: false
@@ -41,7 +43,7 @@ object BluetoothIconRelated : YukiBaseHooker() {
                     lastArg().set(isBluetoothEnabled && isBluetoothConnected)
                 }
             } ?: run {
-                (firstMethodOrNull {
+                (firstMethodOrNullSafe {
                     name = "updateBluetooth"
                     emptyParameters()
                 } ?: firstMethod {
@@ -50,7 +52,7 @@ object BluetoothIconRelated : YukiBaseHooker() {
                 }).hook {
                     before {
                         if (!isHide) return@before
-                        val bluetoothController = (firstFieldOrNull { type = BluetoothController }
+                        val bluetoothController = (firstFieldOrNullSafe { type = BluetoothController }
                             ?: firstField { type = BluetoothController }).of(instance).get()
                             ?: return@before
                         val statusBarIconController = firstField { type = StatusBarIconController }

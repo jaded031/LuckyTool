@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -24,10 +25,10 @@ object DisableHighVolumeWarningNotifications : YukiBaseHooker() {
         ).toClass().resolve().apply {
             firstMethod { name = "start" }.hook {
                 after {
-                    val context = (firstFieldOrNull { type = Context::class }
+                    val context = (firstFieldOrNullSafe { type = Context::class }
                         ?: firstField { type = Context::class;superclass() }).of(instance)
                         .get<Context>() ?: return@after
-                    val mVolumeReceiver = (firstFieldOrNull { type = volumeReceiver }
+                    val mVolumeReceiver = (firstFieldOrNullSafe { type = volumeReceiver }
                         ?: firstField {
                             name { it.contains("VolumeReceiver", true) }
                         }).of(instance).get() ?: return@after

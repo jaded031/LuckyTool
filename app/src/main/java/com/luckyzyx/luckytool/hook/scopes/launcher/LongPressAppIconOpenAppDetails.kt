@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Intent
 import android.view.View
 import android.widget.TextView
@@ -37,7 +38,7 @@ object LongPressAppIconOpenAppDetails : YukiBaseHooker() {
                         ?: return@after
                     val packName = intent.component?.packageName ?: intent.`package`
                     val userId =
-                        task.asResolver().firstMethodOrNull { name = "getUserId" }?.invoke<Int>()
+                        task.asResolver().firstMethodOrNullSafe { name = "getUserId" }?.invoke<Int>()
                             ?: key.asResolver().firstField { name = "userId" }.get<Int>()
                     iconView.setLongClick(packName, userId)
                     titleView.setLongClick(packName, userId)
@@ -59,7 +60,7 @@ object LongPressAppIconOpenAppDetails : YukiBaseHooker() {
                         ?: return@after
                     val packName = intent.component?.packageName ?: intent.`package`
                     val userId =
-                        task.asResolver().firstMethodOrNull { name = "getUserId" }?.invoke<Int>()
+                        task.asResolver().firstMethodOrNullSafe { name = "getUserId" }?.invoke<Int>()
                             ?: key.asResolver().firstField { name = "userId" }.get<Int>()
                     instance<View>().setLongClick(packName, userId)
                 }

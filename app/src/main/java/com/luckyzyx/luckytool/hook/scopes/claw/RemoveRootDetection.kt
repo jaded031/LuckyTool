@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.claw
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.os.SystemProperties
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -50,7 +51,7 @@ class RemoveRootDetection(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
         }.singleOrNull()
 
         when {
-            modern != null -> modern.className.toClass().resolve().firstMethodOrNull {
+            modern != null -> modern.className.toClass().resolve().firstMethodOrNullSafe {
                 name = modern.methodName
                 parameters(Context::class)
                 returnType = Boolean::class
@@ -59,7 +60,7 @@ class RemoveRootDetection(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
                 false
             }
 
-            legacy != null -> legacy.className.toClass().resolve().firstMethodOrNull {
+            legacy != null -> legacy.className.toClass().resolve().firstMethodOrNullSafe {
                 name = legacy.methodName
                 parameters(Context::class)
             }?.hook {

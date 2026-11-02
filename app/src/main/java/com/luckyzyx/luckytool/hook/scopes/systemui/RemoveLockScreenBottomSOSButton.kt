@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.view.View
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -17,9 +18,9 @@ object RemoveLockScreenBottomSOSButton : YukiBaseHooker() {
             "com.oplus.systemui.keyguard.OplusEmergencyButtonControllExImpl", //C13
             "com.oplus.keyguard.OplusEmergencyButtonExImpl" //C14 C15
         ).toClass().resolve().apply {
-            firstMethodOrNull { name = "disableShowEmergencyButton" }?.hook {
+            firstMethodOrNullSafe { name = "disableShowEmergencyButton" }?.hook {
                 intercept(true)
-            } ?: firstMethodOrNull { name = "shouldUpdateEmergencyCallButton" }?.hook {
+            } ?: firstMethodOrNullSafe { name = "shouldUpdateEmergencyCallButton" }?.hook {
                 before {
                     firstField { name = "mEmergencyButton" }.of(instance).get<View>()
                         ?.isVisible = false

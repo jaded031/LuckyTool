@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.phonemanager
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import android.os.CountDownTimer
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -26,7 +27,7 @@ class RemoveCountdownAddVirusAppWhitelist(val dexKitBridge: DexKitBridge) : Yuki
             val resolver = single().name.toClass().resolve()
             //Old version: field typed CountDownTimer directly;
             //new version: field typed com.oplus.phonemanager.common.h (extends CountDownTimer)
-            resolver.firstFieldOrNull {
+            resolver.firstFieldOrNullSafe {
                 type { it isSubclassOf classOf<CountDownTimer>() }
             } ?: return
 

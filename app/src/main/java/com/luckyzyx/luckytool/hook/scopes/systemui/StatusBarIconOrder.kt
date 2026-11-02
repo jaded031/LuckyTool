@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
@@ -256,10 +257,10 @@ object StatusBarIconOrder : YukiBaseHooker() {
                 after { iconController = instance }
             }
             // addIconGroup 在状态栏初始化时必然被调用一次；setIcon 兜底（模块晚加载时）
-            firstMethodOrNull { name = "addIconGroup" }?.hook {
+            firstMethodOrNullSafe { name = "addIconGroup" }?.hook {
                 before { iconController = instance }
             }
-            firstMethodOrNull { name = "setIcon" }?.hook {
+            firstMethodOrNullSafe { name = "setIcon" }?.hook {
                 before { if (iconController == null) iconController = instance }
             }
         }

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.util.LayoutDirection
 import android.view.ViewGroup
 import android.widget.TextView
@@ -107,7 +108,7 @@ object ControlCenterDateStyle : YukiBaseHooker() {
             "com.oplusos.systemui.qs.OplusQSFooterImpl", //C13
             "com.oplus.systemui.qs.OplusQSFooterImpl" //C14
         ).toClass().resolve().apply {
-            firstMethodOrNull { name = "updateQsDateView" }?.hook {
+            firstMethodOrNullSafe { name = "updateQsDateView" }?.hook {
                 after {
                     val res = instance<ViewGroup>().resources
                     val mTmpConstraintSet =

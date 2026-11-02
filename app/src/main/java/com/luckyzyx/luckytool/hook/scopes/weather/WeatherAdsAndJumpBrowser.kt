@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.weather
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
@@ -73,7 +74,7 @@ class WeatherAdsAndJumpBrowser(
                 method { name = "startBrowserForUrl" }.hookAll {
                     hookBefore(removeAds, disableJump)
                 }
-                firstMethodOrNull { name = "isBrowserSupportJump" }?.hook {
+                firstMethodOrNullSafe { name = "isBrowserSupportJump" }?.hook {
                     intercept(false)
                 }
                 firstMethod { name = "getH5StringBuffer" }.hook {

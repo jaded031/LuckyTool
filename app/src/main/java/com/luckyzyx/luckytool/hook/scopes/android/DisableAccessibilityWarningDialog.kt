@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -12,7 +13,7 @@ object DisableAccessibilityWarningDialog : YukiBaseHooker() {
     override fun onHook() {
         //Source FraudBehaviorDetectManager
         "com.android.server.am.FraudBehaviorDetectManager".toClass().resolve().apply {
-            firstMethodOrNull {
+            firstMethodOrNullSafe {
                 name = "updateGlobalCloseConfigToXmlFile"
                 parameters(Boolean::class, Int::class)
             }?.hook {
@@ -21,7 +22,7 @@ object DisableAccessibilityWarningDialog : YukiBaseHooker() {
                     mConfig.asResolver().firstField { name = "enabled" }.set(false)
                 }
             }
-            firstMethodOrNull {
+            firstMethodOrNullSafe {
                 name = "handleChangedApps"
                 parameterCount = 3
             }?.hook {

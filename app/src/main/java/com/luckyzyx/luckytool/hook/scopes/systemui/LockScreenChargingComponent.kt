@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.content.Intent
@@ -97,18 +98,18 @@ object LockScreenChargingComponent : YukiBaseHooker() {
             }
 
             val ChargeUtilCLazz = ChargeUtil.toClass()
-            val hasShowWattage = ChargeUtilCLazz.resolve().firstMethodOrNull {
+            val hasShowWattage = ChargeUtilCLazz.resolve().firstMethodOrNullSafe {
                 name = "getShowWattage"
             } != null
-            val hasTechnologyStrForFrameCharge = ChargeUtilCLazz.resolve().firstMethodOrNull {
+            val hasTechnologyStrForFrameCharge = ChargeUtilCLazz.resolve().firstMethodOrNullSafe {
                 name = "getTechnologyStrForFrameCharge"
             } != null
-            val hasShowWattageForFrameCharge = ChargeUtilCLazz.resolve().firstMethodOrNull {
+            val hasShowWattageForFrameCharge = ChargeUtilCLazz.resolve().firstMethodOrNullSafe {
                 name = "getShowWattageForFrameCharge"
             } != null
 
             val ChargeLevelAndLogoView = ChargeLevelAndLogoView.toClass()
-            val hasUpdateChargeTechImage = ChargeLevelAndLogoView.resolve().firstMethodOrNull {
+            val hasUpdateChargeTechImage = ChargeLevelAndLogoView.resolve().firstMethodOrNullSafe {
                 name = "updateChargeTechImage"
             } != null
 
@@ -223,7 +224,7 @@ object LockScreenChargingComponent : YukiBaseHooker() {
 
             //Source FrameChargeLevelAndLogoView
             FrameChargeLevelAndLogoView.toClass().resolve().apply {
-                firstMethodOrNull { name = "shouldShowTextLogo" }?.hook {
+                firstMethodOrNullSafe { name = "shouldShowTextLogo" }?.hook {
                     before {
                         result = when (textLogo) {
                             "1" -> true
@@ -316,7 +317,7 @@ object LockScreenChargingComponent : YukiBaseHooker() {
                     }
                 }
                 if (hasShowWattageForFrameCharge) {
-                    firstMethodOrNull {
+                    firstMethodOrNullSafe {
                         name = "getShowWattageForFrameCharge"
                         parameterCount = 3
                     }?.hook {
@@ -467,7 +468,7 @@ object LockScreenChargingComponent : YukiBaseHooker() {
                         intercept(true)
                     }
                 }
-                firstMethodOrNull { name = "getTechnologyStr" }?.hook {
+                firstMethodOrNullSafe { name = "getTechnologyStr" }?.hook {
                     before {
                         if (!showRealTech) return@before
                         val chargeInfoObserver = lastArg().get() ?: return@before
@@ -489,7 +490,7 @@ object LockScreenChargingComponent : YukiBaseHooker() {
 
             //Source OplusChargeAnimImpl
             OplusChargeAnimImpl.toClass().resolve().apply {
-                firstMethodOrNull { name = "getTechnologyStr" }?.hook {
+                firstMethodOrNullSafe { name = "getTechnologyStr" }?.hook {
                     before {
                         if (!showRealTech) return@before
                         val chargeInfoObserver = lastArg().get() ?: return@before
@@ -725,7 +726,7 @@ object LockScreenChargingComponent : YukiBaseHooker() {
                             }
                         }
                     }
-                    firstMethodOrNull { name = "isLocaleZhCN" }?.hook {
+                    firstMethodOrNullSafe { name = "isLocaleZhCN" }?.hook {
                         before {
                             result = when (textLogo) {
                                 "1" -> true

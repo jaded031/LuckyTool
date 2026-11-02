@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -18,7 +19,7 @@ object RemoveUSBConnectDialog : YukiBaseHooker() {
             "com.oplusos.systemui.notification.usb.UsbService",
             "com.oplus.systemui.usb.UsbService" //C14 C15
         ).toClass().resolve().apply {
-            (firstMethodOrNull { name = "onUsbConnected" }
+            (firstMethodOrNullSafe { name = "onUsbConnected" }
                 ?: firstMethod { name { it.contains("onUsbConnected") } }).hook {
                 before {
                     val instance = instanceOrNull ?: firstArg().get()

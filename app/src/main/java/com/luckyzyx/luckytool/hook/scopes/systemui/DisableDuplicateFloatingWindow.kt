@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.view.View
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -17,7 +18,7 @@ object DisableDuplicateFloatingWindow : YukiBaseHooker() {
         //Source ClipboardOverlayController C13
         "com.android.systemui.clipboardoverlay.ClipboardOverlayController".toClass().resolve()
             .apply {
-                firstMethodOrNull { name = "showSinglePreview" }?.hook {
+                firstMethodOrNullSafe { name = "showSinglePreview" }?.hook {
                     after {
                         firstArg().get<View>()?.isVisible = false
                         firstField { name = "mView" }.of(instance).get<View>()?.isVisible = false
@@ -29,7 +30,7 @@ object DisableDuplicateFloatingWindow : YukiBaseHooker() {
 
         //Source ClipboardOverlayView C14
         "com.android.systemui.clipboardoverlay.ClipboardOverlayView".toClass().resolve().apply {
-            firstMethodOrNull { name = "showSinglePreview" }?.hook {
+            firstMethodOrNullSafe { name = "showSinglePreview" }?.hook {
                 after {
                     firstArg().get<View>()?.isVisible = false
                     instance<View>().isVisible = false

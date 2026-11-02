@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.market
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.animation.ValueAnimator
 import android.content.Context
 import android.view.LayoutInflater
@@ -82,7 +83,7 @@ class RemoveMarketUpdateDownloadPageAppRecommend(val dexKitBridge: DexKitBridge)
         }.apply {
             checkDataList("RemoveMarketUpdatePageAppRecommend APPUpdateItemHolder")
             single().name.toClass().resolve().apply {
-                firstMethodOrNull {
+                firstMethodOrNullSafe {
                     parameters(
                         cardDto, String::class, VagueType,
                         Map::class, Boolean::class, Long::class

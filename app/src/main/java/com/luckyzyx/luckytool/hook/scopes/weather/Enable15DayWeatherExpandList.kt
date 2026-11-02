@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.weather
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.extension.kavaref.hookAll
@@ -12,7 +13,7 @@ object Enable15DayWeatherExpandList : YukiBaseHooker() {
     override fun onHook() {
         //Source FutureDayWeatherItem
         "com.oplus.weather.main.view.itemview.FutureDayWeatherItem".toClass().resolve().apply {
-            firstFieldOrNull { name = "isAllow15DayExpand";type = Boolean::class } ?: return@apply
+            firstFieldOrNullSafe { name = "isAllow15DayExpand";type = Boolean::class } ?: return@apply
             constructor {
                 parameters { it.contains(classOf<Boolean>()) }
             }.hookAll {

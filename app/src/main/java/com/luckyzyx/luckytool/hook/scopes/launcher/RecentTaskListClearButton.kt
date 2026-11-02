@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.widget.Button
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -16,7 +17,7 @@ object RecentTaskListClearButton : YukiBaseHooker() {
     override fun onHook() {
         //Source OplusClearAllPanelView
         "com.oplus.quickstep.views.OplusClearAllPanelView".toClass().resolve().apply {
-            (firstMethodOrNull { name = "inflateIfNeeded" }
+            (firstMethodOrNullSafe { name = "inflateIfNeeded" }
                 ?: firstMethod { name = "onFinishInflate" }).hook {
                 after {
                     //C17字段名被混淆(mClearAllBtn -> f30408a), 按类型获取:
@@ -27,7 +28,7 @@ object RecentTaskListClearButton : YukiBaseHooker() {
             }
             //C17 setAlpha 在 alpha>0 时会重新 setVisibility(0) 撤销隐藏
             //(C15 C16的setAlpha仅super调用不碰按钮, 此处重复隐藏无害)
-            firstMethodOrNull {
+            firstMethodOrNullSafe {
                 name = "setAlpha"
                 parameters(Float::class)
             }?.hook {

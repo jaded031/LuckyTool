@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -15,7 +16,7 @@ object RemovePowerMenuSOSButton : YukiBaseHooker() {
             "com.oplusos.systemui.controls.GlobalActionsUtils", //C13
             "com.oplusos.systemui.common.util.GlobalActionsUtils" //C14 C15
         ).toClass().resolve().apply {
-            firstMethodOrNull { name = "isShowSosButton" }?.hook {
+            firstMethodOrNullSafe { name = "isShowSosButton" }?.hook {
                 intercept(false)
             }
         }

@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Handler
@@ -124,7 +126,7 @@ class StatusBarClock : YukiBaseHooker() {
                     }
                 }
             }
-            firstMethodOrNull { name = "onMeasure" }?.hook {
+            firstMethodOrNullSafe { name = "onMeasure" }?.hook {
                 before {
                     val clockView = instance<TextView>().apply {
                         val clockName = safeOfNull { resources.getResourceEntryName(id) }
@@ -154,9 +156,9 @@ class StatusBarClock : YukiBaseHooker() {
                 //胶囊出现时被判成相交，官方直接把整个时钟 setVisibility(INVISIBLE)。
                 //故多排时按各行最宽重设测量宽；用户设置了最小宽度就直接用换算后的值，不再与真实宽度取大。
                 //不能用反射调父类 onMeasure：KavaRef 的 superclass() 是本类优先的包含式搜索，会命中本类自己造成递归。
-                val paddingEndField = firstFieldOrNull { name = "paddingEnd" }
-                val cachedMinutesWidthField = firstFieldOrNull { name = "cachedMinutesLayoutWidth" }
-                val setMeasuredDimension = firstMethodOrNull {
+                val paddingEndField = firstFieldOrNullSafe { name = "paddingEnd" }
+                val cachedMinutesWidthField = firstFieldOrNullSafe { name = "cachedMinutesLayoutWidth" }
+                val setMeasuredDimension = firstMethodOrNullSafe {
                     name = "setMeasuredDimension"
                     superclass()
                     parameterCount = 2
@@ -176,7 +178,7 @@ class StatusBarClock : YukiBaseHooker() {
                     return textWidth + clockView.paddingStart + padEnd
                 }
 
-                firstMethodOrNull { name = "onMeasure" }?.intercept {
+                firstMethodOrNullSafe { name = "onMeasure" }?.intercept {
                     val clockView = instanceOrNull<TextView>()
                         ?: return@intercept proceed()
                     val clockName =
@@ -211,7 +213,7 @@ class StatusBarClock : YukiBaseHooker() {
                 }
                 //流体云胶囊出现/消失时走 setHideSecBySeeding -> refreshWidth，会把上报宽度改回整串测量值；
                 //用户设置了最小宽度时在这里再写回一次，避免胶囊一出现时钟就被判成相交。
-                firstMethodOrNull { name = "refreshWidth" }?.hook {
+                firstMethodOrNullSafe { name = "refreshWidth" }?.hook {
                     after {
                         if (customMinimumWidth <= 0) return@after
                         val targetWidth = customMinimumWidth * 10
@@ -222,7 +224,7 @@ class StatusBarClock : YukiBaseHooker() {
                         instanceOrNull<View>()?.requestLayout()
                     }
                 }
-                firstMethodOrNull { name = "updateMinWidth" }?.hook {
+                firstMethodOrNullSafe { name = "updateMinWidth" }?.hook {
                     before {
                         firstField { name = "mShowSeconds"; superclass() }.of(instance).set(true)
                     }

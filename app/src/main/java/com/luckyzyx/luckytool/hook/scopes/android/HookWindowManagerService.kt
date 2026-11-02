@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.provider.Settings
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
@@ -80,7 +81,7 @@ object HookWindowManagerService : YukiBaseHooker() {
 
         //Source OplusResolutionSwitchImpl
         "com.android.server.wm.OplusResolutionSwitchImpl".toClass().resolve().apply {
-            firstMethodOrNull { name = "resetDensityIfNeed" }?.hook {
+            firstMethodOrNullSafe { name = "resetDensityIfNeed" }?.hook {
                 before {
                     if (isDpi) result = null
                 }
@@ -90,7 +91,7 @@ object HookWindowManagerService : YukiBaseHooker() {
                         if (isDpi) firstArg().set(false)
                     }
                 }
-                firstMethodOrNull {
+                firstMethodOrNullSafe {
                     name = "onFakeResolutionSettingsChange"
                     parameterCount = 1
                 }?.hook {

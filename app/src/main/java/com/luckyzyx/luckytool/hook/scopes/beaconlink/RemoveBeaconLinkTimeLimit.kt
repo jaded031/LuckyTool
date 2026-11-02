@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.beaconlink
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -39,7 +40,7 @@ class RemoveBeaconLinkTimeLimit(val dexKitBridge: DexKitBridge) : YukiBaseHooker
             checkDataList("IDs")
 
             single().name.toClass().resolve().apply {
-                firstMethodOrNull {
+                firstMethodOrNullSafe {
                     parameters(String::class)
                     returnType = Boolean::class
                 }?.hook {

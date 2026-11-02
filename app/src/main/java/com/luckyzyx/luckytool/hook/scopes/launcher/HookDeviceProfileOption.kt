@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.hookAll
@@ -64,10 +66,10 @@ object HookDeviceProfileOption : YukiBaseHooker() {
                 after {
                     if (enableFolder) {
 //                        field { name = "numFolderRows" }.get(instance).set(3)
-                        (firstFieldOrNull { name = "numFolderRows" } ?: firstField {
+                        (firstFieldOrNullSafe { name = "numFolderRows" } ?: firstField {
                             name = "numFolderRows"; superclass()
                         }).of(instance).set(folderRow)
-                        (firstFieldOrNull { name = "numFolderColumns" } ?: firstField {
+                        (firstFieldOrNullSafe { name = "numFolderColumns" } ?: firstField {
                             name = "numFolderColumns"; superclass()
                         }).of(instance).set(folderColumn)
                         if (syncPreview && folderColumn > 3) {
@@ -84,7 +86,7 @@ object HookDeviceProfileOption : YukiBaseHooker() {
 
         //Source FolderInfo
         "com.android.launcher3.model.data.FolderInfo".toClass().resolve().apply {
-            firstMethodOrNull { name = "getPreviewRow" }?.hook {
+            firstMethodOrNullSafe { name = "getPreviewRow" }?.hook {
                 before {
                     if (!(enableFolder && syncPreview)) return@before
                     val spanX = firstField { name = "spanX"; superclass() }.of(instance).get<Int>()
@@ -92,7 +94,7 @@ object HookDeviceProfileOption : YukiBaseHooker() {
                     if (spanX == 1 && spanY == 1) result = folderRow
                 }
             }
-            firstMethodOrNull { name = "getPreviewColumn" }?.hook {
+            firstMethodOrNullSafe { name = "getPreviewColumn" }?.hook {
                 before {
                     if (!(enableFolder && syncPreview)) return@before
                     val spanX = firstField { name = "spanX"; superclass() }.of(instance).get<Int>()

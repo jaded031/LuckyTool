@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.cloudservice
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -28,7 +29,7 @@ object DisableForcedBackupAppList : YukiBaseHooker() {
 
         //Source BackupRestoreOpt
         "com.heytap.cloud.backuprestore.bswitch.BackupRestoreOpt".toClass().resolve().apply {
-            firstMethodOrNull { name = "getForceSelect" }?.hook {
+            firstMethodOrNullSafe { name = "getForceSelect" }?.hook {
                 intercept(false)
             }
         }

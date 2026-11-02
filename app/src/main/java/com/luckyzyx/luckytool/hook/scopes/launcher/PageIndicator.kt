@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.graphics.Canvas
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +27,7 @@ object PageIndicator : YukiBaseHooker() {
 
         //Source OplusPageIndicator
         "com.android.launcher.pageindicators.OplusPageIndicator".toClass().resolve().apply {
-            (firstMethodOrNull { name = "dispatchDraw"; parameters(Canvas::class) }
+            (firstMethodOrNullSafe { name = "dispatchDraw"; parameters(Canvas::class) }
                 ?: firstMethod { name = "onDraw"; parameters(Canvas::class) }).hook {
                 before {
                     val view = instance<View>()

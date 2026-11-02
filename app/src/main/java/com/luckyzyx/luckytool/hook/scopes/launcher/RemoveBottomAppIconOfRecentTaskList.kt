@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.view.View
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -15,7 +16,7 @@ object RemoveBottomAppIconOfRecentTaskList : YukiBaseHooker() {
     override fun onHook() {
         //Source DockView
         "com.oplus.quickstep.dock.DockView".toClass().resolve().apply {
-            firstMethodOrNull { name = "setVisibilityAlpha" }?.hook {
+            firstMethodOrNullSafe { name = "setVisibilityAlpha" }?.hook {
                 after {
                     instance<View>().isVisible = false
                 }
@@ -26,7 +27,7 @@ object RemoveBottomAppIconOfRecentTaskList : YukiBaseHooker() {
                     }
                 }
             }
-            firstMethodOrNull { name = "hideDockView" }?.hook {
+            firstMethodOrNullSafe { name = "hideDockView" }?.hook {
                 before {
                     firstArg().set(true)
                 }

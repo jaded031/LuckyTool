@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -66,11 +68,11 @@ object StatusBarNetWorkSpeed : YukiBaseHooker() {
                 "com.oplus.systemui.statusbar.phone.netspeed.OplusNetworkSpeedControllExImpl", //C13
                 "com.oplus.systemui.statusbar.phone.netspeed.OplusNetworkSpeedControllerExImpl" //C14 C15
             ).toClass().resolve().apply {
-                val updateNetworkSpeed = firstMethodOrNull { name = "updateNetworkSpeed" }
+                val updateNetworkSpeed = firstMethodOrNullSafe { name = "updateNetworkSpeed" }
                 if (updateNetworkSpeed == null) {
                     // ColorOS 17 将更新逻辑合入静态 access$updateNetworkSpeed。
                     // 只调整调度间隔，保留系统新增的暂停、挂起与销售模式判断。
-                    val schedule = firstMethodOrNull {
+                    val schedule = firstMethodOrNullSafe {
                         name = "postUpdateNetworkSpeedDelay"
                         parameters(Long::class)
                     }
@@ -219,11 +221,11 @@ object StatusBarNetWorkSpeed : YukiBaseHooker() {
                 "com.oplus.systemui.statusbar.phone.netspeed.widget.NetworkSpeedView" //C14 C15
             ).toClass().resolve().apply {
                 val mState = firstField { type = networkSpeedIconState }
-                val mBlocked = firstFieldOrNull { name = "mBlocked" }
+                val mBlocked = firstFieldOrNullSafe { name = "mBlocked" }
                 val mSpeed = firstField { name = "mSpeed" }
                 val mSpeedNumber = firstField { name = "mSpeedNumber" }
                 val mSpeedUnit = firstField { name = "mSpeedUnit" }
-                val mDefaultBoldFont = firstFieldOrNull { type = Typeface::class }
+                val mDefaultBoldFont = firstFieldOrNullSafe { type = Typeface::class }
 
                 //onFinishInflate 时的系统字体，关闭用户字体后用它还原
                 var defaultTypeface: Typeface? = null

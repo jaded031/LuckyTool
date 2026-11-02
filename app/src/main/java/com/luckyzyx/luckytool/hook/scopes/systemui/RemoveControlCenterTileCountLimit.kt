@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -33,7 +34,7 @@ class RemoveControlCenterTileCountLimit(val dexKitBridge: DexKitBridge) : YukiBa
             //Source OplusSeparateQSCustomizer
             "com.oplus.systemui.plugins.qs.customize.OplusSeparateQSCustomizer".toClass().resolve()
                 .apply {
-                    (firstMethodOrNull { name = "handleCheckLimitCount" }
+                    (firstMethodOrNullSafe { name = "handleCheckLimitCount" }
                         ?: firstMethod { name { it.contains("handleCheckLimitCount") } }).hook {
                         intercept(false)
                     }

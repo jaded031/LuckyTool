@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.utils.sysui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -17,7 +18,7 @@ class MediaPlayerDataUtils(val classLoader: ClassLoader?) {
     fun getMediaDataStatus(): Any? {
         val mediaPlayerData = clazz.resolve().firstField { name = "INSTANCE" }.get() ?: return null
         val firstActiveMediaKey = mediaPlayerData.asResolver().let {
-            (it.firstMethodOrNull { name = "getFirstActiveMediaSortKey" }
+            (it.firstMethodOrNullSafe { name = "getFirstActiveMediaSortKey" }
                 ?: it.firstMethod { name = "firstActiveMedia" }).invoke()
         } ?: return null
         val mediaDataKey = mediaPlayerData.asResolver().firstMethod { name = "getMediaDataKey" }

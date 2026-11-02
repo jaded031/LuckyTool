@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.firstFieldOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.view.View
 import android.widget.TextView
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -36,24 +38,24 @@ object DisableAppArchiveButton : YukiBaseHooker() {
         dataChannel.wait<Boolean>("disable_app_archive_button") { isEnable = it }
 
         "com.oplus.settings.feature.appmanager.AppInfoFeature".toClass().resolve().apply {
-            firstMethodOrNull { name = "isArchiveActionEnabled" }?.intercept {
+            firstMethodOrNullSafe { name = "isArchiveActionEnabled" }?.intercept {
                 if (!isEnable) return@intercept proceed()
                 //判定为不可归档：原生随后会把按钮 setEnabled(false)
                 false
             }
-            firstMethodOrNull { name = "updateAppArchiveAndRestoreButtonStatus" }?.intercept {
+            firstMethodOrNullSafe { name = "updateAppArchiveAndRestoreButtonStatus" }?.intercept {
                 if (!isEnable) return@intercept proceed()
                 //先让原生刷新按钮文案与可用性
                 val ret = proceed()
-                val button = firstFieldOrNull { name = "mRecoverButton" }?.of(instance)
+                val button = firstFieldOrNullSafe { name = "mRecoverButton" }?.of(instance)
                     ?.get<TextView>() ?: return@intercept ret
                 //仅归档态（不可用）隐藏，保留已归档应用的"恢复"按钮
                 if (!button.isEnabled) button.visibility = View.GONE
                 ret
             }
-            firstMethodOrNull { name = "performOpenButton" }?.intercept {
+            firstMethodOrNullSafe { name = "performOpenButton" }?.intercept {
                 if (!isEnable) return@intercept proceed()
-                val openButton = firstFieldOrNull { name = "mOpenButton" }?.of(instance)
+                val openButton = firstFieldOrNullSafe { name = "mOpenButton" }?.of(instance)
                     ?.get<TextView>() ?: return@intercept proceed()
                 //原生"支持归档就隐藏"改回"有启动意图才显示"
                 openButton.visibility = if (args.getOrNull(0) == null) View.GONE else View.VISIBLE

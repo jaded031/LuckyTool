@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -29,7 +30,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
             "com.oplusos.systemui.qs.OplusQSTileMediaContainer", //C13.1
             "com.oplus.systemui.qs.OplusQSTileMediaContainer" //C14
         ).toClassOrNull()?.let {
-            it.resolve().firstMethodOrNull { name = "setMediaMode" } != null
+            it.resolve().firstMethodOrNullSafe { name = "setMediaMode" } != null
         } ?: true
 
         if (isAutoDisplay) loadHookerSafe(MediaPlayerDisplayMode)
@@ -58,7 +59,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
             //把期望状态补推给媒体模式监听器：宿主自己只在 无媒体↔有媒体 翻转时才回调
             fun callbackWish(listener: Any?) {
                 val status = wishStatus() ?: return
-                listener?.asResolver()?.firstMethodOrNull { name = "onChanged" }?.invoke(status)
+                listener?.asResolver()?.firstMethodOrNullSafe { name = "onChanged" }?.invoke(status)
             }
 
             //Source OplusQsMediaCarouselController（C13.0~C16）
@@ -67,7 +68,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
                 "com.oplus.systemui.qs.media.OplusQsMediaCarouselController".toClassOrNull()
             if (carousel != null) {
                 carousel.resolve().apply {
-                    firstMethodOrNull { name = "setCurrentMediaData" }?.hook {
+                    firstMethodOrNullSafe { name = "setCurrentMediaData" }?.hook {
                         intercept {
                             val original = callOriginal()
                             callbackWish(
@@ -76,7 +77,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
                             original
                         }
                     }
-                    firstMethodOrNull { name = "setMediaModeChangeListener" }?.hook {
+                    firstMethodOrNullSafe { name = "setMediaModeChangeListener" }?.hook {
                         intercept {
                             val original = callOriginal()
                             callbackWish(firstArg().get())
@@ -90,7 +91,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
             //Source OplusQsMediaControllerExImpl（C17）：取代上面的类，注册监听时会立刻回调一次当前状态
             //走到这里说明宿主已经没有 carousel 了（C17+），容器侧不会再被监听器正确驱动，只能自己兜
             "com.oplus.systemui.qs.media.OplusQsMediaControllerExImpl".toClass().resolve().apply {
-                firstMethodOrNull { name = "setMediaModeChangeListener" }?.hook {
+                firstMethodOrNullSafe { name = "setMediaModeChangeListener" }?.hook {
                     intercept {
                         val original = callOriginal()
                         callbackWish(firstArg().get())
@@ -102,7 +103,7 @@ object MediaPlayerPanel : YukiBaseHooker() {
             //容器侧的最终开关，只改参数不接管实现
             fun hookMediaPanelShown(classNames: List<String>, methodName: String) {
                 classNames.firstNotNullOfOrNull { it.toClassOrNull() }?.resolve()
-                    ?.firstMethodOrNull { name = methodName }?.hook {
+                    ?.firstMethodOrNullSafe { name = methodName }?.hook {
                         intercept {
                             val status = wishStatus()
                             if (status != null) args[0] = status

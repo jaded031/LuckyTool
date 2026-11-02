@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.telephony.SubscriptionManager
 import android.view.View
@@ -147,7 +148,7 @@ object MobileDataIconRelated : YukiBaseHooker() {
             //Source OplusStatusBarSignalPolicy
             "com.oplus.systemui.statusbar.phone.signal.OplusStatusBarSignalPolicy".toClass()
                 .resolve().apply {
-                    (firstMethodOrNull {
+                    (firstMethodOrNullSafe {
                         name = "updateSlotIconVisibility"
                         parameterCount { it in 3..4 }
                     } ?: firstMethod {
@@ -234,7 +235,7 @@ object MobileDataIconRelated : YukiBaseHooker() {
                 firstMethod { name = "setNoSims"; parameterCount = 3 }.hook {
                     after {
                         if (!hideNoSS) return@after
-                        val iconController = firstMethodOrNull { name = "getIconController" }
+                        val iconController = firstMethodOrNullSafe { name = "getIconController" }
                             ?.of(instance)?.invoke() ?: firstField { name = "iconController" }
                             .of(instance).get() ?: return@after
                         val slotNoSim =
@@ -242,7 +243,7 @@ object MobileDataIconRelated : YukiBaseHooker() {
                         iconController.asResolver().apply {
                             firstMethod {
                                 name = "setIconVisibility"
-                                firstMethodOrNull { name = "setIconVisibility" } ?: superclass()
+                                firstMethodOrNullSafe { name = "setIconVisibility" } ?: superclass()
                             }.invoke(slotNoSim, false)
                         }
                     }

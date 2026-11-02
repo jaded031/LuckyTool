@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -77,7 +78,7 @@ object LockScreenBottomButton : YukiBaseHooker() {
             //Source KeyguardBottomAreaViewBinder
             "com.android.systemui.keyguard.ui.binder.KeyguardBottomAreaViewBinder".toClass()
                 .resolve().apply {
-                    (firstMethodOrNull { name = "updateButton" }
+                    (firstMethodOrNullSafe { name = "updateButton" }
                         ?: firstMethod { name { it.endsWith("updateButton") } }).hook {
                         before {
                             val viewModel = args.find {

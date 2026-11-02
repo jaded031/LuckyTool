@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -33,7 +34,7 @@ object FullScreenGestureSideSlideBar : YukiBaseHooker() {
             firstMethod { name = "onDraw";parameterCount = 1 }.hook {
                 if (removeView) intercept()
             }
-            (firstMethodOrNull { name = "initPaint" } ?: firstConstructor()).hook {
+            (firstMethodOrNullSafe { name = "initPaint" } ?: firstConstructor()).hook {
                 after {
                     if (!removeBackground) return@after
                     firstField {

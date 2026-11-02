@@ -1,5 +1,7 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.firstConstructorOrNullSafe
+import com.luckyzyx.luckytool.hook.utils.firstMethodOrNullSafe
 import android.content.Context
 import android.view.View
 import androidx.core.view.isVisible
@@ -25,7 +27,7 @@ object RemoveRotateScreenButton : YukiBaseHooker() {
             //mKeyButtonView 在构造器内部就已赋值）。
             //C17 的 FloatingRotationButton 连构造器都没有，逻辑内联在 NavigationBarView 里，
             //所以构造器钩子必须用 OrNull：firstConstructor 匹配不到会直接抛异常。
-            if (firstMethodOrNull { name = "updateDimensionResources"; emptyParameters() } != null) {
+            if (firstMethodOrNullSafe { name = "updateDimensionResources"; emptyParameters() } != null) {
                 firstMethod { name = "updateDimensionResources"; emptyParameters() }.hook {
                     after {
                         firstField { name = "mKeyButtonView" }.of(instance).get<View>()
@@ -33,7 +35,7 @@ object RemoveRotateScreenButton : YukiBaseHooker() {
                     }
                 }
             } else {
-                firstConstructorOrNull {
+                firstConstructorOrNullSafe {
                     parameters { it.isNotEmpty() && it[0] == classOf<Context>() }
                 }?.hook {
                     after {
