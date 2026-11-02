@@ -44,32 +44,35 @@ class AutoStartControllerService : Service() {
 
     @SuppressLint("WrongConstant", "InlinedApi")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        scope(Dispatchers.Default) {
-            try {
-                val channel = NotificationChannel(
-                    channelId = CHANNEL_ID, importance = NotificationImportance.LOW
-                ) {
-                    name = getString(R.string.auto_start_service_channel_name)
-                }
-                val notify = Notification(
-                    context = this@AutoStartControllerService, channel = channel
-                ) {
-                    smallIconResId = R.mipmap.ic_launcher_round
-                    contentTitle = getString(R.string.auto_start_service_channel_title)
-                    autoCancel(false)
-                    ongoing(true)
-                }
-                if (SDK >= A14) startForeground(
-                    NOTIFY_ID, notify, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-                ) else startForeground(NOTIFY_ID, notify)
-            } catch (@SuppressLint("NewApi") _: ForegroundServiceStartNotAllowedException) {
-                showToast(getString(R.string.service_auto_start_controller_not_allow_tips))
-                return@scope
-            } catch (_: Exception) {
-                showToast("AutoStartControllerService cannot be started!")
-                return@scope
+        //startForeground 必须在主线程同步调用，放进协程在开机高负载时会超出 FGS 启动时限导致崩溃
+        try {
+            val channel = NotificationChannel(
+                channelId = CHANNEL_ID, importance = NotificationImportance.LOW
+            ) {
+                name = getString(R.string.auto_start_service_channel_name)
             }
+            val notify = Notification(
+                context = this@AutoStartControllerService, channel = channel
+            ) {
+                smallIconResId = R.mipmap.ic_launcher_round
+                contentTitle = getString(R.string.auto_start_service_channel_title)
+                autoCancel(false)
+                ongoing(true)
+            }
+            if (SDK >= A14) startForeground(
+                NOTIFY_ID, notify, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+            ) else startForeground(NOTIFY_ID, notify)
+        } catch (@SuppressLint("NewApi") _: ForegroundServiceStartNotAllowedException) {
+            showToast(getString(R.string.service_auto_start_controller_not_allow_tips))
+            stopSelf()
+            return START_NOT_STICKY
+        } catch (_: Exception) {
+            showToast("AutoStartControllerService cannot be started!")
+            stopSelf()
+            return START_NOT_STICKY
+        }
 
+        scope(Dispatchers.Default) {
             val command = ArrayList<String>()
             //FPS自启
             if (getBoolean(SettingsPrefs, keyFpsAutoStart, false)) {
