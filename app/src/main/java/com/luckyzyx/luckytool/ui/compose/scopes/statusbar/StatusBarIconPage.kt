@@ -73,16 +73,7 @@ object StatusBarIconPage {
             switch(
                 key = "hide_volte_icon_statusbar",
                 title = c.getString(R.string.hide_volte_icon_statusbar),
-            )
-            switch(
-                key = "hide_volte_icon_shade",
-                title = c.getString(R.string.hide_volte_icon_shade),
-                summary = c.getString(R.string.hide_volte_icon_shade_summary),
-            )
-            switch(
-                key = "mock_vonr_volte_icon",
-                title = c.getString(R.string.mock_vonr_volte_icon),
-                summary = c.getString(R.string.mock_vonr_volte_icon_summary),
+                summary = c.getString(R.string.hide_volte_icon_statusbar_summary),
             )
         }
         // 蓝牙

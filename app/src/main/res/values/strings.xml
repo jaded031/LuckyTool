@@ -348,10 +348,7 @@
     <string name="incallui_capsule_click_expand_card">Tap call capsule to expand card</string>
     <string name="incallui_capsule_click_expand_card_summary">Tapping or long-pressing the call live update capsule expands the call card instead of opening the full-screen call UI (Chinese ColorOS behavior)</string>
     <string name="hide_volte_icon_statusbar">Hide VoLTE icon in status bar</string>
-    <string name="hide_volte_icon_shade">Hide VoLTE icon in notification/control center</string>
-    <string name="hide_volte_icon_shade_summary">Hides the VoLTE icon in the expanded header of the notification center and control center</string>
-    <string name="mock_vonr_volte_icon">Show VoLTE as VoNR (UI only, test)</string>
-    <string name="mock_vonr_volte_icon_summary">Cosmetic only: SIM cards with VoLTE registered are shown with the VoNR icon, SIM cards without VoLTE show an X instead of the SIM number. Does not enable VoNR</string>
+    <string name="hide_volte_icon_statusbar_summary">Only hides it in the status bar, the notification/control center header still shows it</string>
     
     <string name="StatusBarSmallIconStatus">StatusBar Small Icon Status</string>
     <string name="status_bar_icon_vertical_center">Statusbar icon vertical center</string>
