@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.os.SystemProperties
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalSystemProperties
@@ -15,7 +16,7 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object HookOplusOta : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookGlobalSystemProperties)
+        loadHookerSafe(HookGlobalSystemProperties)
 
         val osCode = getOSVersionCode
 
@@ -30,17 +31,17 @@ object HookOplusOta : YukiBaseHooker() {
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //HookOTANotification
-            loadHooker(HookNotificationHelper(dexKitBridge))
+            loadHookerSafe(HookNotificationHelper(dexKitBridge))
             //HookOTADialog
-            loadHooker(HookOTADialogHelper(dexKitBridge))
+            loadHookerSafe(HookOTADialogHelper(dexKitBridge))
             //移除OTA本地更新校验
             if (preferences(ModulePrefs).getBoolean("remove_ota_local_update_verity", false)) {
-                loadHooker(RemoveOTALocalUpdateVerity(dexKitBridge))
+                loadHookerSafe(RemoveOTALocalUpdateVerity(dexKitBridge))
             }
             //启用Opex本地安装
             if (preferences(ModulePrefs).getBoolean("enable_opex_local_install", false)) {
                 val opex = SystemProperties.getBoolean("oplus.opex.merge", false)
-                if (osCode >= 30 && opex) loadHooker(EnableOpexLocalInstall(dexKitBridge))
+                if (osCode >= 30 && opex) loadHookerSafe(EnableOpexLocalInstall(dexKitBridge))
             }
         }
 

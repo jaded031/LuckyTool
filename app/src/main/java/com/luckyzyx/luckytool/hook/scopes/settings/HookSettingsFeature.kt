@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.pm.ApplicationInfo
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -15,7 +16,7 @@ import org.luckypray.dexkit.DexKitBridge
 
 class HookSettingsFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        if (SDK < A13) loadHooker(HookExpUst(dexKitBridge))
+        if (SDK < A13) loadHookerSafe(HookExpUst(dexKitBridge))
     }
 
     @Obfuscate

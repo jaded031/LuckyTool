@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -28,16 +29,16 @@ class HookSystemUIFeature(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
 
-        loadHooker(HookGlobalFeatureConfig)
-        loadHooker(HookGlobalSystemProperties)
-        loadHooker(HookGlobalFeatureProvider(dexKitBridge))
+        loadHookerSafe(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalSystemProperties)
+        loadHookerSafe(HookGlobalFeatureProvider(dexKitBridge))
 
-        loadHooker(HookFeatureOption)
-//        if (osCode >= 34) loadHooker(HookFeatureFlags)
-        if (osCode < 34) loadHooker(HookStatusBarFeature)
-        loadHooker(HookFlavorOneFeature)
-        if (osCode >= 30) loadHooker(HookVolumeFeatureOption)
-        if (osCode >= 31) loadHooker(HookQSFeatureOption)
+        loadHookerSafe(HookFeatureOption)
+//        if (osCode >= 34) loadHookerSafe(HookFeatureFlags)
+        if (osCode < 34) loadHookerSafe(HookStatusBarFeature)
+        loadHookerSafe(HookFlavorOneFeature)
+        if (osCode >= 30) loadHookerSafe(HookVolumeFeatureOption)
+        if (osCode >= 31) loadHookerSafe(HookQSFeatureOption)
     }
 
     @Obfuscate

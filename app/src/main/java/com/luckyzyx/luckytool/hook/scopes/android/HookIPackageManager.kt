@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Intent
 import android.content.pm.ParceledListSlice
 import android.content.pm.ResolveInfo
@@ -39,8 +40,8 @@ class HookIPackageManager : YukiBaseHooker() {
         initData()
         initDataChannel()
 
-        if (osCode >= 26) loadHooker(HookQueryIntentActivitie())
-        else loadHooker(HookQueryIntentActivitieV12())
+        if (osCode >= 26) loadHookerSafe(HookQueryIntentActivitie())
+        else loadHookerSafe(HookQueryIntentActivitieV12())
     }
 
     private fun initData() {

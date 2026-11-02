@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.view.View
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -15,11 +16,11 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveSeparateControlCenterButton : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 37) loadHooker(SeparateControlCenterButton)
-        else loadHooker(SeparateControlCenterButtonV15)
+        if (osCode >= 37) loadHookerSafe(SeparateControlCenterButton)
+        else loadHookerSafe(SeparateControlCenterButtonV15)
 
         if (preferences(ModulePrefs).getBoolean("remove_control_center_settings_button", false)) {
-            loadHooker(RemoveSeparateControlCenterSettingsButton)
+            loadHookerSafe(RemoveSeparateControlCenterSettingsButton)
         }
     }
 

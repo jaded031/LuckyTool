@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.calendar.RemoveAlmanacPageInformationFlow
 import com.luckyzyx.luckytool.hook.scopes.calendar.RemoveHolidayPageInformationFlow
@@ -12,15 +13,15 @@ object HookCalendar : YukiBaseHooker() {
     override fun onHook() {
         //移除节假日页面信息流
         if (preferences(ModulePrefs).getBoolean("remove_holiday_page_information_flow", false)) {
-            loadHooker(RemoveHolidayPageInformationFlow)
+            loadHookerSafe(RemoveHolidayPageInformationFlow)
         }
         //移除黄历页面信息流
         if (preferences(ModulePrefs).getBoolean("remove_almanac_page_information_flow", false)) {
-            loadHooker(RemoveAlmanacPageInformationFlow)
+            loadHookerSafe(RemoveAlmanacPageInformationFlow)
         }
         //移除星座页面信息流
         if (preferences(ModulePrefs).getBoolean("remove_horoscope_page_information_flow", false)) {
-            loadHooker(RemoveHoroscopePageInformationFlow)
+            loadHookerSafe(RemoveHoroscopePageInformationFlow)
         }
     }
 }

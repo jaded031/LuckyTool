@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -15,7 +16,7 @@ object HookGlobalPmsFeature : YukiBaseHooker() {
         val list = ArrayMap<String, Boolean>().apply {
 
         }
-        loadHooker(PmsFeature(list))
+        loadHookerSafe(PmsFeature(list))
     }
 
     @Obfuscate

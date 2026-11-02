@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.graphics.Typeface
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -16,8 +17,8 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object LockScreenCarriers : YukiBaseHooker() {
     override fun onHook() {
-        if (SDK >= A14) loadHooker(LockScreenCarrier)
-        else loadHooker(LockScreenCarrierV13)
+        if (SDK >= A14) loadHookerSafe(LockScreenCarrier)
+        else loadHookerSafe(LockScreenCarrierV13)
     }
 
     @Obfuscate

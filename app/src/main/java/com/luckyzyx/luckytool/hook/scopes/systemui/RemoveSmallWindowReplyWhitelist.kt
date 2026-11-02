@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArraySet
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -14,8 +15,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveSmallWindowReplyWhitelist : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 34) loadHooker(SmallWindowReplyWhitelist)
-        else loadHooker(SmallWindowReplyWhitelistV14)
+        if (osCode >= 34) loadHookerSafe(SmallWindowReplyWhitelist)
+        else loadHookerSafe(SmallWindowReplyWhitelistV14)
     }
 
     @Obfuscate

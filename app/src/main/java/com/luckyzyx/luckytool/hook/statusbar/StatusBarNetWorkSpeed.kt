@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.net.TrafficStats
@@ -30,8 +31,8 @@ import kotlin.math.pow
 object StatusBarNetWorkSpeed : YukiBaseHooker() {
 
     override fun onHook() {
-        loadHooker(NetWorkSpeedDelay)
-        loadHooker(NetWorkSpeedView)
+        loadHookerSafe(NetWorkSpeedDelay)
+        loadHookerSafe(NetWorkSpeedView)
     }
 
     @Obfuscate

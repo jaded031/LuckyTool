@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object FixTileAlignBothSides : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode <= 26) loadHooker(HookTileAlignVertical)
-        loadHooker(HookTileAlignHorizontal)
+        if (osCode <= 26) loadHookerSafe(HookTileAlignVertical)
+        loadHookerSafe(HookTileAlignHorizontal)
     }
 
     @Obfuscate

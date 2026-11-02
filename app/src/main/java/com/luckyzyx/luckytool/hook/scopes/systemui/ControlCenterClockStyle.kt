@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -30,12 +31,12 @@ object ControlCenterClockStyle : YukiBaseHooker() {
 
         val rmClock = preferences(ModulePrefs).getBoolean("remove_control_center_clock_view", false)
         if (rmClock) {
-            if (osCode >= 40) loadHooker(RemoveControlCenterClock)
-            else if (osCode >= 34) loadHooker(RemoveControlCenterClockV16)
+            if (osCode >= 40) loadHookerSafe(RemoveControlCenterClock)
+            else if (osCode >= 34) loadHookerSafe(RemoveControlCenterClockV16)
         }
 
-        if (SDK == A11) loadHooker(ControlCenterClockStyleA11)
-        else loadHooker(ControlCenterClock)
+        if (SDK == A11) loadHookerSafe(ControlCenterClockStyleA11)
+        else loadHookerSafe(ControlCenterClock)
     }
 
     @Obfuscate

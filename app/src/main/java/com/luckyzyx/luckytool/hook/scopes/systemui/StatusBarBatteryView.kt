@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.TextView
@@ -18,8 +19,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object StatusBarBatteryView : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 30) loadHooker(StatusBarPowerStyle)
-        else loadHooker(StatusBarPowerStyleC13)
+        if (osCode >= 30) loadHookerSafe(StatusBarPowerStyle)
+        else loadHookerSafe(StatusBarPowerStyleC13)
     }
 
     @Obfuscate

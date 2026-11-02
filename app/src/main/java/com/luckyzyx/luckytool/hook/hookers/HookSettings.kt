@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureConfig
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureProvider
@@ -46,65 +47,65 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object HookSettings : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookGlobalFeatureConfig)
-        loadHooker(HookGlobalSystemProperties)
+        loadHookerSafe(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalSystemProperties)
 
         val osCode = getOSVersionCode
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //HookAppFeatureProvider
-            loadHooker(HookGlobalFeatureProvider(dexKitBridge))
+            loadHookerSafe(HookGlobalFeatureProvider(dexKitBridge))
             //HookSettingsFeature
-            loadHooker(HookSettingsFeature(dexKitBridge))
+            loadHookerSafe(HookSettingsFeature(dexKitBridge))
             //移除DPI重启恢复
             if (preferences(ModulePrefs).getBoolean("remove_dpi_restart_recovery", false)) {
-                if (osCode >= 24) loadHooker(RemoveDpiRestartRecovery(dexKitBridge))
+                if (osCode >= 24) loadHookerSafe(RemoveDpiRestartRecovery(dexKitBridge))
             }
             //暗色模式列表
             if (preferences(ModulePrefs).getBoolean("dark_mode_list_enable", false)) {
-                loadHooker(DarkModeList(dexKitBridge))
+                loadHookerSafe(DarkModeList(dexKitBridge))
             }
             //自动解锁受限制的设置
             if (preferences(ModulePrefs).getBoolean("auto_unlock_restricted_settings", false)) {
-                if (SDK >= A13) loadHooker(AutoUnlockRestrictedSettings(dexKitBridge))
+                if (SDK >= A13) loadHookerSafe(AutoUnlockRestrictedSettings(dexKitBridge))
             }
             //启用应用专属媒体音量
             if (preferences(ModulePrefs).getBoolean("enable_app_specific_media_volume", false)) {
-                if (osCode >= 27) loadHooker(FixAppSpecificMediaVolumePage(dexKitBridge))
+                if (osCode >= 27) loadHookerSafe(FixAppSpecificMediaVolumePage(dexKitBridge))
             }
             //启用Google自动填充
             if (preferences(ModulePrefs).getBoolean("enable_google_auto_fill", false)) {
-                loadHooker(EnableGoogleAutoFill(dexKitBridge))
+                loadHookerSafe(EnableGoogleAutoFill(dexKitBridge))
             }
         }
 
         //HookSettingsPreferenceFragment removePreference
-        loadHooker(HookSettingsPreferenceFragment)
+        loadHookerSafe(HookSettingsPreferenceFragment)
 
         //应用详情页
-        loadHooker(HookAppDetails)
+        loadHookerSafe(HookAppDetails)
 
         //移除顶部账号显示
         if (preferences(ModulePrefs).getBoolean("remove_top_account_display", false)) {
-            loadHooker(RemoveTopAccountDisplay)
+            loadHookerSafe(RemoveTopAccountDisplay)
         }
         //视频动态插帧2K 120
         if (preferences(ModulePrefs).getBoolean("enable_video_memc_frame_insertion", false)) {
             if (preferences(ModulePrefs).getBoolean("video_frame_insertion_support_2K120", false)) {
-                loadHooker(HookIris5Controller)
+                loadHookerSafe(HookIris5Controller)
             }
         }
         //强制显示设置底部Google
         if (preferences(ModulePrefs).getBoolean("force_display_bottom_google_settings", false)) {
-            loadHooker(ForceDisplayBottomGoogleSettings)
+            loadHookerSafe(ForceDisplayBottomGoogleSettings)
         }
         //移除设置底部实验室
         if (preferences(ModulePrefs).getBoolean("remove_settings_bottom_laboratory", false)) {
-            loadHooker(RemoveSettingsBottomLaboratory)
+            loadHookerSafe(RemoveSettingsBottomLaboratory)
         }
         //启用状态栏时钟格式
         if (preferences(ModulePrefs).getBoolean("enable_statusbar_clock_format", false)) {
-            if (osCode < 40) loadHooker(EnableStatusBarClockFormat)
+            if (osCode < 40) loadHookerSafe(EnableStatusBarClockFormat)
         }
         //自定义设备分享页面参数
         if (preferences(ModulePrefs).getBoolean(
@@ -112,27 +113,27 @@ object HookSettings : YukiBaseHooker() {
                 false
             )
         ) {
-            if (SDK >= A13) loadHooker(CustomizeDeviceSharingPageParameters)
+            if (SDK >= A13) loadHookerSafe(CustomizeDeviceSharingPageParameters)
         }
         //强制开启进程管理
         if (preferences(ModulePrefs).getBoolean("force_display_process_management", false)) {
-            loadHooker(ForceDisplayProcessManagement)
+            loadHookerSafe(ForceDisplayProcessManagement)
         }
         //允许停用系统应用
         if (preferences(ModulePrefs).getBoolean("allow_disabling_system_apps", false)) {
-            loadHooker(AllowDisablingSystemApps)
+            loadHookerSafe(AllowDisablingSystemApps)
         }
         //强制显示已停用应用管理器
         if (preferences(ModulePrefs).getBoolean("force_display_disabled_apps_manager", false)) {
-            loadHooker(ForceDisplayDisabledAppsManager)
+            loadHookerSafe(ForceDisplayDisabledAppsManager)
         }
         //强制显示内容推荐
         if (preferences(ModulePrefs).getBoolean("force_display_content_recommend", false)) {
-            loadHooker(ForceDisplayContentRecommend)
+            loadHookerSafe(ForceDisplayContentRecommend)
         }
         //启用自定义应用语言
         if (preferences(ModulePrefs).getBoolean("enable_custom_app_language", false)) {
-            if (SDK >= A14) loadHooker(EnableCustomAppLanguage)
+            if (SDK >= A14) loadHookerSafe(EnableCustomAppLanguage)
         }
         //强制显示密码管理设置项
         if (preferences(ModulePrefs).getBoolean(
@@ -140,56 +141,56 @@ object HookSettings : YukiBaseHooker() {
                 false
             )
         ) {
-            loadHooker(ForceDisplayPasswordManagementSettings)
+            loadHookerSafe(ForceDisplayPasswordManagementSettings)
         }
         //自定义设备OTA卡片背景/视频：两个开关任一开启都要加载，视频开关本身不能靠背景开关兜着
         if (preferences(ModulePrefs).getBoolean("customize_device_ota_card_background", false) ||
             preferences(ModulePrefs).getBoolean("customize_device_ota_card_video", false)
         ) {
-            loadHooker(CustomizeDeviceOTACardBackground)
+            loadHookerSafe(CustomizeDeviceOTACardBackground)
         }
         //禁用OTG自动关闭
         if (preferences(ModulePrefs).getBoolean("disable_otg_auto_off", false)) {
-            if (osCode >= 30) loadHooker(DisableSettingOtgAutoOff)
+            if (osCode >= 30) loadHookerSafe(DisableSettingOtgAutoOff)
         }
         //修复设置CN特供版默认应用跳转
         if (preferences(ModulePrefs).getBoolean("disable_cn_special_edition_setting", false)) {
             if (preferences(ModulePrefs).getBoolean("fix_default_app_jump_problem", false)) {
-                loadHooker(FixDefaultAppJumpProblem)
+                loadHookerSafe(FixDefaultAppJumpProblem)
             }
             if (preferences(ModulePrefs).getBoolean(
                     "force_display_auto_launch_jump_option", false
                 )
             ) {
-                loadHooker(ForceDisplayAutoLaunchJumpOption)
+                loadHookerSafe(ForceDisplayAutoLaunchJumpOption)
             }
         }
         //移除设备名称更改限制
         if (preferences(ModulePrefs).getBoolean("remove_device_name_change_limit", false)) {
-            if (osCode >= 30) loadHooker(RemoveDeviceNameChangeLimit)
+            if (osCode >= 30) loadHookerSafe(RemoveDeviceNameChangeLimit)
         }
         //自定义处理器页面介绍参数
         if (preferences(ModulePrefs).getString("set_processor_click_page", "0") == "3") {
-            loadHooker(CustomProcessorPageIntroductionParameters)
+            loadHookerSafe(CustomProcessorPageIntroductionParameters)
         }
         //启用上滑导航手势
         if (preferences(ModulePrefs).getBoolean("enable_swipe_up_navigation_gesture", false)) {
-            if (osCode >= 30) loadHooker(EnableSwipeUpNavigationGesture)
+            if (osCode >= 30) loadHookerSafe(EnableSwipeUpNavigationGesture)
         }
         //自动跳转无障碍设置
         if (preferences(ModulePrefs).getBoolean("auto_jump_accessibility_settings", false)) {
-            loadHooker(AutoJumpAccessibilitySettings)
+            loadHookerSafe(AutoJumpAccessibilitySettings)
         }
 
         //《自动释放应用空间》默认关闭 - 开关 UI 显示
-        if (osCode >= 36) loadHooker(DisableAppArchivingUI)
+        if (osCode >= 36) loadHookerSafe(DisableAppArchivingUI)
 
         //隐藏应用详情页的归档按钮
-        if (osCode >= 36) loadHooker(DisableAppArchiveButton)
+        if (osCode >= 36) loadHookerSafe(DisableAppArchiveButton)
 
         //禁用无障碍对话框 C17（与 framework 侧共用同一开关）
         if (preferences(ModulePrefs).getBoolean("disable_accessibility_warning_dialog", false)) {
-            if (osCode >= 40) loadHooker(DisableAccessibilityDialog)
+            if (osCode >= 40) loadHookerSafe(DisableAccessibilityDialog)
         }
 
         //电源键

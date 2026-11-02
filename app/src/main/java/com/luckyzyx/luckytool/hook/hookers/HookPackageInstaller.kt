@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.packageinstaller.DisableStartAppDetail
 import com.luckyzyx.luckytool.hook.scopes.packageinstaller.FixInstallButtonDisplayException
@@ -29,28 +30,28 @@ object HookPackageInstaller : YukiBaseHooker() {
             }.singleOrNull() ?: return@create
 
             //Source OPlusPackageInstallerActivity
-            loadHooker(HookOplusPackageInstallerActivity(dexKitBridge))
+            loadHookerSafe(HookOplusPackageInstallerActivity(dexKitBridge))
 
             //Source InstallAppProgress
-            loadHooker(HookInstallAppProgress(dexKitBridge))
+            loadHookerSafe(HookInstallAppProgress(dexKitBridge))
 
             //Source UninstallerActivity
-            loadHooker(HookUninstallerActivity(dexKitBridge))
+            loadHookerSafe(HookUninstallerActivity(dexKitBridge))
 
             //Source OPlusUninstallAppProgress
-            loadHooker(HookOPlusUninstallAppProgress(dexKitBridge))
+            loadHookerSafe(HookOPlusUninstallAppProgress(dexKitBridge))
 
             //禁止启动AppDetail
             if (preferences(ModulePrefs).getBoolean("disable_start_app_detail", false)) {
-                loadHooker(DisableStartAppDetail(dexKitBridge))
+                loadHookerSafe(DisableStartAppDetail(dexKitBridge))
             }
             //修复App安装页面底部按钮异常
             if (preferences(ModulePrefs).getBoolean("fix_install_button_display_exception", false)) {
-                loadHooker(FixInstallButtonDisplayException)
+                loadHookerSafe(FixInstallButtonDisplayException)
             }
             //显示更多Apk包信息
             if (preferences(ModulePrefs).getBoolean("show_more_apk_package_information", false)) {
-                loadHooker(ShowMoreApkPackageInformation(dexKitBridge))
+                loadHookerSafe(ShowMoreApkPackageInformation(dexKitBridge))
             }
         }
     }

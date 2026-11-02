@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.telephony.SubscriptionManager
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +23,9 @@ object MobileDataIconRelated : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
         when (osCode) {
-            in 34..Int.MAX_VALUE -> loadHooker(MobileDataIcon)
-            in 23..33 -> loadHooker(MobileDataIconV14)
-            else -> loadHooker(MobileDataIconV120)
+            in 34..Int.MAX_VALUE -> loadHookerSafe(MobileDataIcon)
+            in 23..33 -> loadHookerSafe(MobileDataIconV14)
+            else -> loadHookerSafe(MobileDataIconV120)
         }
     }
 

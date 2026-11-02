@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureConfig
 import com.luckyzyx.luckytool.hook.scopes.safecenter.UnlockStartupLimitOld
@@ -12,12 +13,12 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object HookSafeCenter : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalFeatureConfig)
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //移除自启数量限制
             if (SDK < A13 && preferences(ModulePrefs).getBoolean("unlock_startup_limit", false)) {
-                loadHooker(UnlockStartupLimitOld(dexKitBridge))
+                loadHookerSafe(UnlockStartupLimitOld(dexKitBridge))
             }
         }
     }

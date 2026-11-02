@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.nfc
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -15,8 +16,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object ScanNfcTagAutoClick : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 40) loadHooker(NfcTagAutoClick)
-        else loadHooker(NfcTagAutoClickV16)
+        if (osCode >= 40) loadHookerSafe(NfcTagAutoClick)
+        else loadHookerSafe(NfcTagAutoClickV16)
     }
 
     @Obfuscate

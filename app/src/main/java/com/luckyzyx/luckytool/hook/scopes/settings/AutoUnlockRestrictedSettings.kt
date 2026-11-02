@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.content.Intent
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -18,8 +19,8 @@ class AutoUnlockRestrictedSettings(val dexKitBridge: DexKitBridge) : YukiBaseHoo
     override fun onHook() {
         val osCode = getOSVersionCode
 
-        if (osCode >= 34) loadHooker(RestrictedSettings)
-        else loadHooker(RestrictedSettingsV14(dexKitBridge))
+        if (osCode >= 34) loadHookerSafe(RestrictedSettings)
+        else loadHookerSafe(RestrictedSettingsV14(dexKitBridge))
     }
 
     @Obfuscate

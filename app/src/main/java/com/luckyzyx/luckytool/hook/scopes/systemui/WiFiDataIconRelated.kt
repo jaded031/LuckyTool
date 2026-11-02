@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -39,8 +40,8 @@ import java.lang.ref.WeakReference
 object WiFiDataIconRelated : YukiBaseHooker() {
     override fun onHook() {
         when (getOSVersionCode) {
-            in 34..Int.MAX_VALUE -> loadHooker(WiFiDataIcon)
-            else -> loadHooker(WiFiDataIconV14)
+            in 34..Int.MAX_VALUE -> loadHookerSafe(WiFiDataIcon)
+            else -> loadHookerSafe(WiFiDataIconV14)
         }
     }
 

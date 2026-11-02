@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.speechassist.ForceEnableAISpeechAssistCall
 import com.luckyzyx.luckytool.utils.ModulePrefs
@@ -13,7 +14,7 @@ object HookSpeechAssist : YukiBaseHooker() {
 
         //强制启用小布通话
         if (preferences(ModulePrefs).getBoolean("force_enable_ai_speechassist_call", false)) {
-            if (osCode >= 30) loadHooker(ForceEnableAISpeechAssistCall)
+            if (osCode >= 30) loadHookerSafe(ForceEnableAISpeechAssistCall)
         }
     }
 }

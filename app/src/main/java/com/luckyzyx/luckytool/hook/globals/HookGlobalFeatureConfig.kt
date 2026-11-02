@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.provider.Settings
 import android.util.ArrayMap
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
@@ -258,6 +259,6 @@ object HookGlobalFeatureConfig : YukiBaseHooker() {
                 if (osCode >= 27) put("oplus.software.background_stream_tileservice_enabled", true)
             }
         }
-        loadHooker(HookFeatureConfigManager(list))
+        loadHookerSafe(HookFeatureConfigManager(list))
     }
 }

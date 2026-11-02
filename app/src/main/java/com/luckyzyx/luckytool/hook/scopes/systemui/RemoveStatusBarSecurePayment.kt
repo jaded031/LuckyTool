@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.os.Message
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
@@ -13,8 +14,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveStatusBarSecurePayment : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 40) loadHooker(StatusBarSecurePayment)
-        else loadHooker(StatusBarSecurePaymentV16)
+        if (osCode >= 40) loadHookerSafe(StatusBarSecurePayment)
+        else loadHookerSafe(StatusBarSecurePaymentV16)
     }
 
     @Obfuscate

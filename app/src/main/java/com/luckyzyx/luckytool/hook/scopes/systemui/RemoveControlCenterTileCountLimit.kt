@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.kavaref.extension.classOf
@@ -18,11 +19,11 @@ class RemoveControlCenterTileCountLimit(val dexKitBridge: DexKitBridge) : YukiBa
     override fun onHook() {
         val osCode = getOSVersionCode
         if (osCode < 26) {
-            loadHooker(RemoveReceiveItemLimitV12(dexKitBridge))
+            loadHookerSafe(RemoveReceiveItemLimitV12(dexKitBridge))
         } else {
-            if (osCode >= 34) loadHooker(RemoveLimitNumberHint)
-            else loadHooker(RemoveLimitNumberHintV14)
-            loadHooker(RemoveReceiveItemLimit(dexKitBridge))
+            if (osCode >= 34) loadHookerSafe(RemoveLimitNumberHint)
+            else loadHookerSafe(RemoveLimitNumberHintV14)
+            loadHookerSafe(RemoveReceiveItemLimit(dexKitBridge))
         }
     }
 

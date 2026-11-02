@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.keyguardpersonality.KeyGuardPersonalityRedMode
 import com.luckyzyx.luckytool.utils.getOSVersionCode
@@ -11,7 +12,7 @@ object HookKeyguardPersonality : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //锁屏红一
-        if (osCode >= 40) loadHooker(KeyGuardPersonalityRedMode)
+        if (osCode >= 40) loadHookerSafe(KeyGuardPersonalityRedMode)
 
     }
 }

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureConfig
 import com.luckyzyx.luckytool.hook.globals.HookGlobalPmsFeature
@@ -52,122 +53,122 @@ object HookAndroid : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
 
-        loadHooker(HookGlobalFeatureConfig)
-        loadHooker(HookGlobalSystemProperties)
-        loadHooker(HookGlobalPmsFeature)
-        loadHooker(HookGlobalSystemConfig)
+        loadHookerSafe(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalSystemProperties)
+        loadHookerSafe(HookGlobalPmsFeature)
+        loadHookerSafe(HookGlobalSystemConfig)
 
         //禁止App启动
-//        loadHooker(HookAppStartForbidden)
+//        loadHookerSafe(HookAppStartForbidden)
 
         //移除状态栏上层警告
-        loadHooker(RemoveStatusBarTopNotification)
+        loadHookerSafe(RemoveStatusBarTopNotification)
 
         //移除VPN已激活通知
-        loadHooker(RemoveVPNActiveNotification)
+        loadHookerSafe(RemoveVPNActiveNotification)
 
         //Oplus Wifi Service
-        loadHooker(HookOplusWifiService)
+        loadHookerSafe(HookOplusWifiService)
 
         //Hook HookWindowManagerService
-        if (osCode >= 23) loadHooker(HookWindowManagerService)
+        if (osCode >= 23) loadHookerSafe(HookWindowManagerService)
 
         //音量阶数
-        loadHooker(MediaVolumeLevel)
+        loadHookerSafe(MediaVolumeLevel)
 
         //应用分身限制
-        loadHooker(MultiAppConfig)
+        loadHookerSafe(MultiAppConfig)
 
         // APK 默认安装器选择。
-        loadHooker(AllowThirdPartyInstaller)
+        loadHookerSafe(AllowThirdPartyInstaller)
 
         //USB安装确认
-        loadHooker(ADBInstallConfirm)
+        loadHookerSafe(ADBInstallConfirm)
 
         //移除72小时密码验证
-        loadHooker(RemovePasswordTimeoutVerification)
+        loadHookerSafe(RemovePasswordTimeoutVerification)
 
         //移除系统截屏延迟
-//        loadHooker(RemoveSystemScreenshotDelay)
+//        loadHookerSafe(RemoveSystemScreenshotDelay)
 
         //移除遮罩Splash Screen
-        if (osCode >= 26) loadHooker(AppSplashScreen)
+        if (osCode >= 26) loadHookerSafe(AppSplashScreen)
 
         //允许不受信任的触摸
-        if (osCode >= 23) loadHooker(AllowUntrustedTouch)
+        if (osCode >= 23) loadHookerSafe(AllowUntrustedTouch)
 
         //浮窗
-        loadHooker(ZoomWindowConfig())
+        loadHookerSafe(ZoomWindowConfig())
 
         //暗色模式服务
-        loadHooker(DarkModeService)
+        loadHookerSafe(DarkModeService)
 
         //电池优化白名单
-        loadHooker(BatteryOptimizationWhitelist)
+        loadHookerSafe(BatteryOptimizationWhitelist)
 
         //允许APP回到顶部
-        if (osCode >= 26) loadHooker(ScrollToTopWhiteList)
+        if (osCode >= 26) loadHookerSafe(ScrollToTopWhiteList)
 
         //禁用访问设备日志对话框
-        if (osCode >= 26) loadHooker(RemoveAccessDeviceLogDialog)
+        if (osCode >= 26) loadHookerSafe(RemoveAccessDeviceLogDialog)
 
         //LTPO动态刷新率
-        loadHooker(LTPODynamicRefreshRate)
+        loadHookerSafe(LTPODynamicRefreshRate)
 
         //启用音量键控制手电筒手势
-        loadHooker(SystemEnableVolumeKeyControlFlashlight)
+        loadHookerSafe(SystemEnableVolumeKeyControlFlashlight)
 
         //快捷键拦截（无操作接管 / 自定义响铃切换）
-        if (osCode >= 36) loadHooker(ActionButtonKeyInterceptor)
+        if (osCode >= 36) loadHookerSafe(ActionButtonKeyInterceptor)
 
         //全局关闭应用自动归档（空间不足自动卸载应用）
-        if (osCode >= 36) loadHooker(DisableAppArchiving)
+        if (osCode >= 36) loadHookerSafe(DisableAppArchiving)
 
         //强制所有应用支持分屏
-        if (osCode in 26..33) loadHooker(ForceAllAppsSupportSplitScreen)
+        if (osCode in 26..33) loadHookerSafe(ForceAllAppsSupportSplitScreen)
 
         //移除应用禁止卸载黑名单
-        if (osCode >= 26) loadHooker(RemoveAppUninstallButtonBlackList)
+        if (osCode >= 26) loadHookerSafe(RemoveAppUninstallButtonBlackList)
 
         //三方应用通话录音保护
-        if (osCode == 30) loadHooker(HookMediaProjectionManager)
+        if (osCode == 30) loadHookerSafe(HookMediaProjectionManager)
 
         //视频动态插帧
-        loadHooker(EnableVideoMemcFrameInsertion)
+        loadHookerSafe(EnableVideoMemcFrameInsertion)
 
         //安全窗口标志
-//        loadHooker(OplusWindowSecureFlag)
+//        loadHookerSafe(OplusWindowSecureFlag)
 
         //App图标更新圆点
-        if (osCode >= 33) loadHooker(SetAppUpdateDotDisplayMode)
+        if (osCode >= 33) loadHookerSafe(SetAppUpdateDotDisplayMode)
 
-        loadHooker(HookFloatMirageWindow)
+        loadHookerSafe(HookFloatMirageWindow)
 
-        loadHooker(ReplaceSystemRootStateDetection)
+        loadHookerSafe(ReplaceSystemRootStateDetection)
 
-        if (SDK >= A13) loadHooker(ForceEnable32BitSupport)
+        if (SDK >= A13) loadHookerSafe(ForceEnable32BitSupport)
 
-        loadHooker(HookGMSRestrict)
+        loadHookerSafe(HookGMSRestrict)
 
-        loadHooker(EnableKeepNotificationWhenAppStop)
+        loadHookerSafe(EnableKeepNotificationWhenAppStop)
 
-        loadHooker(HookIPackageManager())
+        loadHookerSafe(HookIPackageManager())
 
-        loadHooker(RemoveAlwaysAllowAppStartList)
+        loadHookerSafe(RemoveAlwaysAllowAppStartList)
 
         //禁用风险应用拦截
         if (preferences(ModulePrefs).getBoolean("disable_malicious_app_intercept", false)) {
-            if (osCode >= 38) loadHooker(DisableMaliciousAppIntercept)
+            if (osCode >= 38) loadHookerSafe(DisableMaliciousAppIntercept)
         }
 
         //禁用无障碍警告对话框
         if (preferences(ModulePrefs).getBoolean("disable_accessibility_warning_dialog", false)) {
-            if (osCode >= 38) loadHooker(DisableAccessibilityWarningDialog)
+            if (osCode >= 38) loadHookerSafe(DisableAccessibilityWarningDialog)
         }
 
         //禁用音频焦点
         if (preferences(ModulePrefs).getBoolean("disable_audio_focus", false)) {
-            loadHooker(DisableAudioFocus)
+            loadHookerSafe(DisableAudioFocus)
         }
 
         //Source OplusMediaControlService
@@ -198,7 +199,7 @@ object HookAndroid : YukiBaseHooker() {
 
 
         //三段式按键
-//        loadHooker(HookAlertSlider)
+//        loadHookerSafe(HookAlertSlider)
 
 //Source ScanPackageUtils
 //        findClass("com.android.server.pm.ScanPackageUtils").hook {
@@ -230,7 +231,7 @@ object HookAndroid : YukiBaseHooker() {
 //        }
 
 //电源菜单显示延迟
-//loadHooker(ReducePowerMenuDisplayDelay)
+//loadHookerSafe(ReducePowerMenuDisplayDelay)
 
 //OPLUS_FEATURE_POWERKEY_SHORT_PRESS_SHUTDOWN = "oplus.software.short_press_powerkey_shutdown";
 //OPLUS_FEATURE_POWERKEY_SHUTDOWN = "oplus.software.long_press_powerkey_shutdown";

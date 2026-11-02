@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.oshare.RemoveOShareCloseCountDown
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -14,7 +15,7 @@ object HookOShare : YukiBaseHooker() {
 
             //移除互传关闭倒计时
             if (preferences(ModulePrefs).getBoolean("remove_oshare_close_countdown", false)) {
-                loadHooker(RemoveOShareCloseCountDown(dexKitBridge))
+                loadHookerSafe(RemoveOShareCloseCountDown(dexKitBridge))
             }
 
         }

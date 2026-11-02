@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureConfig
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureProvider
@@ -40,112 +41,112 @@ object HookLauncher : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
 
-        loadHooker(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalFeatureConfig)
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
 
-            loadHooker(HookGlobalFeatureProvider(dexKitBridge))
+            loadHookerSafe(HookGlobalFeatureProvider(dexKitBridge))
 
             //HookLauncherFeature
-            loadHooker(HookLauncherFeature(dexKitBridge))
+            loadHookerSafe(HookLauncherFeature(dexKitBridge))
 
             //强制启用最近任务内存显示
             if (preferences(ModulePrefs).getBoolean("force_enable_recent_task_memory_display", false)) {
-                if (osCode >= 30) loadHooker(ForceEnableRecentTaskMemoryDisplay(dexKitBridge))
+                if (osCode >= 30) loadHookerSafe(ForceEnableRecentTaskMemoryDisplay(dexKitBridge))
             }
 
             //应用徽章
-            if (SDK >= A13) loadHooker(HookAppBadge(dexKitBridge))
+            if (SDK >= A13) loadHookerSafe(HookAppBadge(dexKitBridge))
 
             //解锁后台任务锁定限制
             if (preferences(ModulePrefs).getBoolean("unlock_task_locks", false)) {
-                loadHooker(UnlockTaskLocks(dexKitBridge))
+                loadHookerSafe(UnlockTaskLocks(dexKitBridge))
             }
 
             //设置桌面布局行列数
             if (preferences(ModulePrefs).getBoolean("launcher_layout_enable", false)) {
-                loadHooker(LauncherLayoutRowColume(dexKitBridge))
+                loadHookerSafe(LauncherLayoutRowColume(dexKitBridge))
             }
         }
 
         //HookLauncherFeatureFlags
-//        if (osCode >= 27) loadHooker(HookLauncherFeatureFlags)
+//        if (osCode >= 27) loadHookerSafe(HookLauncherFeatureFlags)
 
         //HookDeviceProfileOption
-        loadHooker(HookDeviceProfileOption)
+        loadHookerSafe(HookDeviceProfileOption)
 
         //分页组件
-        loadHooker(PageIndicator)
+        loadHookerSafe(PageIndicator)
 
         //堆叠布局
-//        loadHooker(StackedTaskLayout)
+//        loadHookerSafe(StackedTaskLayout)
 
         //桌面图标相关
-        loadHooker(HookOplusBubbleTextView)
+        loadHookerSafe(HookOplusBubbleTextView)
 
 
         //移除文件夹名称输入限制
         if (preferences(ModulePrefs).getBoolean("remove_folder_name_input_limit", false)) {
-            loadHooker(RemoveFolderNameInputLimit)
+            loadHookerSafe(RemoveFolderNameInputLimit)
         }
         //移除文件夹预览背景
         if (preferences(ModulePrefs).getBoolean("remove_folder_preview_background", false)) {
-            loadHooker(RemoveFolderPreviewBackground)
+            loadHookerSafe(RemoveFolderPreviewBackground)
         }
         //最近任务列表清除按钮
         if (preferences(ModulePrefs).getBoolean("remove_recent_task_list_clear_button", false)) {
-            loadHooker(RecentTaskListClearButton)
+            loadHookerSafe(RecentTaskListClearButton)
         }
         //最近任务列表长按APP图标打开应用详情
         if (preferences(ModulePrefs).getBoolean("long_press_app_icon_open_app_details", false)) {
-            loadHooker(LongPressAppIconOpenAppDetails)
+            loadHookerSafe(LongPressAppIconOpenAppDetails)
         }
         //移除最近任务列表底部APP图标
         if (preferences(ModulePrefs).getBoolean("remove_bottom_app_icon_of_recent_task_list", false)) {
-            loadHooker(RemoveBottomAppIconOfRecentTaskList)
+            loadHookerSafe(RemoveBottomAppIconOfRecentTaskList)
         }
         //启用Docker背景显示
         if (preferences(ModulePrefs).getBoolean("enable_docker_background", false)) {
-            if (osCode >= 26) loadHooker(EnableDockerBackground)
+            if (osCode >= 26) loadHookerSafe(EnableDockerBackground)
         }
         //强制启用Docker背景模糊
         if (preferences(ModulePrefs).getBoolean("force_enable_docker_background_blur", false)) {
-            if (osCode >= 37) loadHooker(ForceEnableDockerBackgroundBlur)
+            if (osCode >= 37) loadHookerSafe(ForceEnableDockerBackgroundBlur)
         }
         //允许锁定或解锁已排除活动
         if (preferences(ModulePrefs).getBoolean("allow_locking_unlocking_of_excluded_activity", false)) {
-            loadHooker(AllowLockingUnLockingOfExcludedActivity)
+            loadHookerSafe(AllowLockingUnLockingOfExcludedActivity)
         }
         //移除App更新圆点
-        if (osCode >= 33) loadHooker(RemoveAppUpdateGreenDot)
+        if (osCode >= 33) loadHookerSafe(RemoveAppUpdateGreenDot)
 
         //启用自动关闭文件夹
         if (preferences(ModulePrefs).getBoolean("enable_auto_close_folder", false)) {
-            if (osCode >= 34) loadHooker(EnableAutoCloseFolder)
+            if (osCode >= 34) loadHookerSafe(EnableAutoCloseFolder)
         }
         //移除小组件添加请求白名单
         if (preferences(ModulePrefs).getBoolean("remove_widgets_add_request_whitelist", false)) {
-            if (osCode >= 30) loadHooker(RemoveWidgetsAddRequestWhitelist)
+            if (osCode >= 30) loadHookerSafe(RemoveWidgetsAddRequestWhitelist)
         }
         //移除桌面卡片名称
         if (preferences(ModulePrefs).getBoolean("remove_launcher_card_name", false)) {
-            if (osCode >= 26) loadHooker(RemoveLauncherCardName)
+            if (osCode >= 26) loadHookerSafe(RemoveLauncherCardName)
         }
         //禁用长按应用图标二级菜单
         if (preferences(ModulePrefs).getBoolean("disable_long_press_app_icon_secondary_menu", false)) {
-            if (osCode >= 37) loadHooker(DisableLongPressAppIconSecondaryMenu)
+            if (osCode >= 37) loadHookerSafe(DisableLongPressAppIconSecondaryMenu)
         }
         //自定义桌面默认主页
-        loadHooker(CustomDesktopDefaultHomePage)
+        loadHookerSafe(CustomDesktopDefaultHomePage)
         //桌面布局备份/恢复（无开关：指令通道常驻，未使用时不做任何事）
-        loadHooker(LauncherBackupHooker)
+        loadHookerSafe(LauncherBackupHooker)
         //启用桌面下方按钮选择项
         if (preferences(ModulePrefs).getBoolean("enable_launcher_indicator_entry", false)) {
-            if (osCode >= 37) loadHooker(EnableLauncherIndicatorEntry)
+            if (osCode >= 37) loadHookerSafe(EnableLauncherIndicatorEntry)
         }
         //移除Docker最大数量限制
         if (preferences(ModulePrefs).getBoolean("remove_docker_max_number_limit", false)) {
-            if (osCode >= 38) loadHooker(RemoveDockerMaxNumberLimit)
+            if (osCode >= 38) loadHookerSafe(RemoveDockerMaxNumberLimit)
         }
 
         //com.android.quickstep.views.OplusTaskMenuViewImpl

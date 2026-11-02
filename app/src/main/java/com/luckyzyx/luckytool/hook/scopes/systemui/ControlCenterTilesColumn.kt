@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.view.View
 import android.view.ViewGroup
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -25,8 +26,8 @@ object ControlCenterTiles : YukiBaseHooker() {
     override fun onHook() {
         val isEnable = preferences(ModulePrefs).getBoolean("control_center_tile_enable", false)
         if (!isEnable) return
-        if (SDK >= A13) loadHooker(ControlCenterTilesLayout)
-        else loadHooker(ControlCenterTilesLayoutC12)
+        if (SDK >= A13) loadHookerSafe(ControlCenterTilesLayout)
+        else loadHookerSafe(ControlCenterTilesLayoutC12)
     }
 
     @Obfuscate

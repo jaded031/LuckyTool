@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.ActivityManager.RunningTaskInfo
 import android.app.ActivityOptions
 import android.app.PendingIntent
@@ -28,8 +29,8 @@ object HookFloatMirageWindow : YukiBaseHooker() {
 
     override fun onHook() {
         if (preferences(ModulePrefs).getBoolean("run_floating_window_tasks_in_foreground", false)) {
-//            if (SDK >= A15) loadHooker(FloatWindowBackRun)
-            loadHooker(MultiAppFloatWindowBackRun)
+//            if (SDK >= A15) loadHookerSafe(FloatWindowBackRun)
+            loadHookerSafe(MultiAppFloatWindowBackRun)
         }
     }
 

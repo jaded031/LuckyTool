@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.os.Bundle
 import android.util.ArraySet
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -51,8 +52,8 @@ class ZoomWindowConfig : YukiBaseHooker() {
         loadData()
 
         val osCode = getOSVersionCode
-        loadHooker(HookZoomWindow())
-        if (osCode >= 33) loadHooker(HookFlexibleWindow())
+        loadHookerSafe(HookZoomWindow())
+        if (osCode >= 33) loadHookerSafe(HookFlexibleWindow())
     }
 
     @Obfuscate

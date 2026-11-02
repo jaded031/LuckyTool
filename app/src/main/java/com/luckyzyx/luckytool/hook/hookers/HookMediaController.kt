@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.mediacontroller.ForceEnableMediaMusicFluidCloudRipple
 import com.luckyzyx.luckytool.utils.getOSVersionCode
@@ -11,6 +12,6 @@ object HookMediaController : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //强制启用媒体音乐流体云波纹
-        if (osCode >= 33) loadHooker(ForceEnableMediaMusicFluidCloudRipple)
+        if (osCode >= 33) loadHookerSafe(ForceEnableMediaMusicFluidCloudRipple)
     }
 }

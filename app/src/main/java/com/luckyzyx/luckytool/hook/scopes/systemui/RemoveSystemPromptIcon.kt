@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -12,7 +13,7 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveSystemPromptIcon : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        loadHooker(SystemPromptIconV13)
+        loadHookerSafe(SystemPromptIconV13)
     }
 
     @Obfuscate

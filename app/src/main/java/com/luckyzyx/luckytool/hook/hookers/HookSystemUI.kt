@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.HookSystemUIFeature
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -11,29 +12,29 @@ object HookSystemUI : YukiBaseHooker() {
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //系统界面Feature
-            loadHooker(HookSystemUIFeature(dexKitBridge))
+            loadHookerSafe(HookSystemUIFeature(dexKitBridge))
 
             //状态栏功能
-            loadHooker(HookSystemUIStatusBar(dexKitBridge))
+            loadHookerSafe(HookSystemUIStatusBar(dexKitBridge))
 
             //全面屏手势相关
-            loadHooker(HookSystemUIGesture(dexKitBridge))
+            loadHookerSafe(HookSystemUIGesture(dexKitBridge))
         }
 
         //锁屏
-        loadHooker(HookSystemUILockScreen)
+        loadHookerSafe(HookSystemUILockScreen)
 
         //对话框相关
-        loadHooker(HookSystemUIDialog)
+        loadHookerSafe(HookSystemUIDialog)
 
         //指纹相关
-        loadHooker(HookSystemUIFingerPrint)
+        loadHookerSafe(HookSystemUIFingerPrint)
 
         //杂项
-        loadHooker(HookSystemUiMiscellaneous)
+        loadHookerSafe(HookSystemUiMiscellaneous)
 
         //自启
-        loadHooker(HookSystemUIAutoStart)
+        loadHookerSafe(HookSystemUIAutoStart)
 
     }
 }

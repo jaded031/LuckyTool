@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
@@ -43,9 +44,9 @@ object LockScreenClock : YukiBaseHooker() {
     override fun onHook() {
         val removeClock = preferences(ModulePrefs).getBoolean("remove_lock_screen_clock_component", false)
         if (removeClock) {
-            if (SDK >= A15) loadHooker(RemoveLockScreenClock)
-            else loadHooker(RemoveLockScreenClockV14)
-        } else loadHooker(LockScreenClockStyleV14)
+            if (SDK >= A15) loadHookerSafe(RemoveLockScreenClock)
+            else loadHookerSafe(RemoveLockScreenClockV14)
+        } else loadHookerSafe(LockScreenClockStyleV14)
     }
 
     @Obfuscate

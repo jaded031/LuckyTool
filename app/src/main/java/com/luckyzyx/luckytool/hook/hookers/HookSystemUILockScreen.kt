@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.AutoWakeUpFaceUnlockNotification
 import com.luckyzyx.luckytool.hook.scopes.systemui.ForceEnableScreenOffMusicSupport
@@ -26,51 +27,51 @@ object HookSystemUILockScreen : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //锁屏时钟
-        loadHooker(LockScreenClock)
+        loadHookerSafe(LockScreenClock)
 
         //锁屏时钟组件样式
-        loadHooker(LockScreenComponentStyle)
+        loadHookerSafe(LockScreenComponentStyle)
 
         //锁屏充电组件
-        loadHooker(LockScreenChargingComponent)
+        loadHookerSafe(LockScreenChargingComponent)
 
         //锁屏底部按钮
-        loadHooker(LockScreenBottomButton)
+        loadHookerSafe(LockScreenBottomButton)
 
         //锁屏状态栏运营商
-        loadHooker(LockScreenCarriers)
+        loadHookerSafe(LockScreenCarriers)
 
         //隐藏锁屏状态栏显示
         if (preferences(ModulePrefs).getBoolean("hide_lock_screen_status_bar_display", false)) {
-            loadHooker(HideLockScreenStatusBarDisplay)
+            loadHookerSafe(HideLockScreenStatusBarDisplay)
         }
         //隐藏全景息屏状态栏
         if (preferences(ModulePrefs).getBoolean("hide_panoramic_aod_status_bar", false)) {
-            if (osCode >= 37) loadHooker(HidePanoramicAodStatusBar)
+            if (osCode >= 37) loadHookerSafe(HidePanoramicAodStatusBar)
         }
         //移除SOS紧急联络按钮
         if (preferences(ModulePrefs).getBoolean("remove_lock_screen_bottom_sos_button", false)) {
-            if (SDK >= A13) loadHooker(RemoveLockScreenBottomSOSButton)
+            if (SDK >= A13) loadHookerSafe(RemoveLockScreenBottomSOSButton)
         }
         //移除锁屏顶部图标
         if (preferences(ModulePrefs).getBoolean("remove_top_lock_screen_icon", false)) {
-            loadHooker(RemoveTopLockScreenIcon)
+            loadHookerSafe(RemoveTopLockScreenIcon)
         }
         //移除锁屏关闭通知按钮
         if (preferences(ModulePrefs).getBoolean("remove_lock_screen_close_notification_button", false)) {
-            if (osCode < 33) loadHooker(RemoveLockScreenCloseNotificationButton)
+            if (osCode < 33) loadHookerSafe(RemoveLockScreenCloseNotificationButton)
         }
         //移除息屏音乐白名单
         if (preferences(ModulePrefs).getBoolean("remove_aod_music_whitelist", false)) {
-            if (SDK >= A13) loadHooker(RemoveAodMusicWhitelist)
+            if (SDK >= A13) loadHookerSafe(RemoveAodMusicWhitelist)
         }
         //强制启用息屏音乐支持
         if (preferences(ModulePrefs).getBoolean("force_enable_screen_off_music_support", false)) {
-            if (osCode in 26..33) loadHooker(ForceEnableScreenOffMusicSupport)
+            if (osCode in 26..33) loadHookerSafe(ForceEnableScreenOffMusicSupport)
         }
         //通知自动唤醒面部解锁
         if (preferences(ModulePrefs).getBoolean("auto_wake_up_face_unlock_notification", false)) {
-            loadHooker(AutoWakeUpFaceUnlockNotification)
+            loadHookerSafe(AutoWakeUpFaceUnlockNotification)
         }
     }
 }

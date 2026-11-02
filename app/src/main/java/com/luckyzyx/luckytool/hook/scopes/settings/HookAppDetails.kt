@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageInfo
@@ -29,9 +30,9 @@ import org.lsposed.lsparanoid.Obfuscate
 object HookAppDetails : YukiBaseHooker() {
 
     override fun onHook() {
-        loadHooker(HookAppInfos)
+        loadHookerSafe(HookAppInfos)
 
-        loadHooker(HookAppInfoDashboard)
+        loadHookerSafe(HookAppInfoDashboard)
     }
 
     @Obfuscate

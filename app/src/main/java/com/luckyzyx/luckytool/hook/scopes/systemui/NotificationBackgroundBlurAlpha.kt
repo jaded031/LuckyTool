@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -19,8 +20,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object NotificationBackgroundBlurAlpha : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 34) loadHooker(NotificationBackgroundBlurAlphaV15)
-        else loadHooker(NotificationBackgroundBlurAlphaV14)
+        if (osCode >= 34) loadHookerSafe(NotificationBackgroundBlurAlphaV15)
+        else loadHookerSafe(NotificationBackgroundBlurAlphaV14)
     }
 
     @Obfuscate

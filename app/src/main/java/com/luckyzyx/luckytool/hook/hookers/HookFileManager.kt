@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.filemanager.RemoveWordLimitForCompressFiles
 import com.luckyzyx.luckytool.hook.scopes.filemanager.RemoveWordLimitForLabelNameFiles
@@ -18,15 +19,15 @@ object HookFileManager : YukiBaseHooker() {
 
             //移除文件保存字数限制
             if (preferences(ModulePrefs).getBoolean("remove_word_limit_for_saving_files", false)) {
-                if (osCode >= 37) loadHooker(RemoveWordLimitForSavingFiles(dexKitBridge))
+                if (osCode >= 37) loadHookerSafe(RemoveWordLimitForSavingFiles(dexKitBridge))
             }
             //移除压缩文件字数限制
             if (preferences(ModulePrefs).getBoolean("remove_word_limit_for_compress_files", false)) {
-                if (osCode >= 37) loadHooker(RemoveWordLimitForCompressFiles(dexKitBridge))
+                if (osCode >= 37) loadHookerSafe(RemoveWordLimitForCompressFiles(dexKitBridge))
             }
             //移除重命名文件字数限制
             if (preferences(ModulePrefs).getBoolean("remove_word_limit_for_label_name_files", false)) {
-                if (osCode >= 37) loadHooker(RemoveWordLimitForLabelNameFiles(dexKitBridge))
+                if (osCode >= 37) loadHookerSafe(RemoveWordLimitForLabelNameFiles(dexKitBridge))
             }
         }
     }

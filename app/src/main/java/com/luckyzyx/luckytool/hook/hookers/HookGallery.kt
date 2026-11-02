@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.camera.HookCameraConfig
 import com.luckyzyx.luckytool.hook.scopes.gallery.GalleryWaterMarkWordDialog
@@ -23,25 +24,25 @@ object HookGallery : YukiBaseHooker() {
         if (osCode < 27) return
 
         //HookCameraConfig
-        if (SDK >= A13) loadHooker(HookCameraConfig)
+        if (SDK >= A13) loadHookerSafe(HookCameraConfig)
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //HookOtherSystemStorage
-            loadHooker(HookSystemStorage(dexKitBridge))
+            loadHookerSafe(HookSystemStorage(dexKitBridge))
             //HookFunctionManager
-            if (osCode < 34) loadHooker(HookFunctionManager(dexKitBridge))
+            if (osCode < 34) loadHookerSafe(HookFunctionManager(dexKitBridge))
 
             //替换OnePlus机型水印
             if (preferences(ModulePrefs).getBoolean("replace_oneplus_model_watermark", false)) {
-                if (osCode >= 34) loadHooker(ReplaceOnePlusModelWatermark(dexKitBridge))
+                if (osCode >= 34) loadHookerSafe(ReplaceOnePlusModelWatermark(dexKitBridge))
             }
             //移除自定义水印字数限制
             if (preferences(ModulePrefs).getBoolean("remove_gallery_watermark_word_limit", false)) {
-                if (osCode < 30) loadHooker(GalleryWaterMarkWordDialog(dexKitBridge))
+                if (osCode < 30) loadHookerSafe(GalleryWaterMarkWordDialog(dexKitBridge))
             }
             //移除AIGC消除限制
             if (preferences(ModulePrefs).getBoolean("remove_aigc_elimination_limit", false)) {
-                if (SDK < A15) loadHooker(RemoveAIGCEliminationLimit(dexKitBridge))
+                if (SDK < A15) loadHookerSafe(RemoveAIGCEliminationLimit(dexKitBridge))
             }
         }
     }

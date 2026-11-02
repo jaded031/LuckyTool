@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -23,7 +24,7 @@ object HookGlobalSystemConfig : YukiBaseHooker() {
                 add("com.google.android.feature.services_updater")
             }
         }
-        loadHooker(SystemConfigFeature(list))
+        loadHookerSafe(SystemConfigFeature(list))
     }
 
     @Obfuscate

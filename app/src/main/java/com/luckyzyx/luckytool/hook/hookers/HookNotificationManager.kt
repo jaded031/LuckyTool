@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.notificationmanager.ForceDisplayClockStyleOptionsV14
 import com.luckyzyx.luckytool.hook.scopes.notificationmanager.RemoveNotificationManagerLimit
@@ -17,15 +18,15 @@ object HookNotificationManager : YukiBaseHooker() {
 
         //移除通知管理限制
         if (preferences(ModulePrefs).getBoolean("remove_notification_manager_limit", false)) {
-            loadHooker(RemoveNotificationManagerLimit)
+            loadHookerSafe(RemoveNotificationManagerLimit)
         }
         //移除通知置顶数量限制
         if (preferences(ModulePrefs).getBoolean("remove_notification_pin_number_limit", false)) {
-            if (osCode >= 33) loadHooker(RemoveNotificationPinNumberLimit)
+            if (osCode >= 33) loadHookerSafe(RemoveNotificationPinNumberLimit)
         }
         //强制显示时钟样式选项
         if (preferences(ModulePrefs).getBoolean("force_display_clock_style_options", false)) {
-            if (SDK == A14) loadHooker(ForceDisplayClockStyleOptionsV14)
+            if (SDK == A14) loadHookerSafe(ForceDisplayClockStyleOptionsV14)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -26,8 +27,8 @@ object ShowManualLockButtonPowerMenu : YukiBaseHooker() {
 
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 35) loadHooker(ManualLockButton)
-        else loadHooker(ManualLockButtonV14)
+        if (osCode >= 35) loadHookerSafe(ManualLockButton)
+        else loadHookerSafe(ManualLockButtonV14)
     }
 
     @Obfuscate

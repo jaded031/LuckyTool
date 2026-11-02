@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.beaconlink.RemoveBeaconLinkTimeLimit
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -16,7 +17,7 @@ object HookBeaconLink : YukiBaseHooker() {
 
             //移除无网畅聊时间限制
             if (preferences(ModulePrefs).getBoolean("remove_beacon_link_time_limit", false)) {
-             if (osCode >= 33)   loadHooker(RemoveBeaconLinkTimeLimit(dexKitBridge))
+             if (osCode >= 33)   loadHookerSafe(RemoveBeaconLinkTimeLimit(dexKitBridge))
             }
 
         }

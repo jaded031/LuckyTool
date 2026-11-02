@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.utils.ModulePrefs
 import org.lsposed.corepatch.Config
@@ -35,22 +36,22 @@ object HookCorePatch : YukiBaseHooker() {
         Config.bind(preferences(ModulePrefs))
 //        Config.printAllConfig()
 
-        loadHooker(ApkSignatureVerifierHook)
-        loadHooker(ApkSigningBlockUtilsHook)
-        loadHooker(ApplicationInfoHook)
-        loadHooker(AssetManagerHook)
-        loadHooker(InstallPackageHelperHook)
-        loadHooker(KeySetManagerServiceHook)
-        loadHooker(MessageDigestHook)
-        loadHooker(NtConfigListServiceImplHook)
-        loadHooker(PackageManagerServiceHook)
-        loadHooker(PackageManagerServiceUtilsHook)
-        loadHooker(ReconcilePackageUtilsHook)
-        loadHooker(ScanPackageUtilsHook)
-        loadHooker(SharedUserSettingHook)
-        loadHooker(SigningDetailsHook)
-        loadHooker(StrictJarVerifierHook)
-        loadHooker(VerificationParamsHook)
-        loadHooker(VerifyingSessionHook)
+        loadHookerSafe(ApkSignatureVerifierHook)
+        loadHookerSafe(ApkSigningBlockUtilsHook)
+        loadHookerSafe(ApplicationInfoHook)
+        loadHookerSafe(AssetManagerHook)
+        loadHookerSafe(InstallPackageHelperHook)
+        loadHookerSafe(KeySetManagerServiceHook)
+        loadHookerSafe(MessageDigestHook)
+        loadHookerSafe(NtConfigListServiceImplHook)
+        loadHookerSafe(PackageManagerServiceHook)
+        loadHookerSafe(PackageManagerServiceUtilsHook)
+        loadHookerSafe(ReconcilePackageUtilsHook)
+        loadHookerSafe(ScanPackageUtilsHook)
+        loadHookerSafe(SharedUserSettingHook)
+        loadHookerSafe(SigningDetailsHook)
+        loadHookerSafe(StrictJarVerifierHook)
+        loadHookerSafe(VerificationParamsHook)
+        loadHookerSafe(VerifyingSessionHook)
     }
 }

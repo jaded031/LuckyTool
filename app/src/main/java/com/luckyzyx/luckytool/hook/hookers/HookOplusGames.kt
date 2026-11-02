@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalFeatureConfig
 import com.luckyzyx.luckytool.hook.scopes.games.CloudConditionFeature
@@ -32,60 +33,60 @@ object HookOplusGames : YukiBaseHooker() {
         if (appVer?.versionCommit == "0") return
         val isNew = (appVer?.versionName?.substringBefore(".")?.toIntOrNull() ?: 10) >= 10
 
-        loadHooker(HookGlobalFeatureConfig)
+        loadHookerSafe(HookGlobalFeatureConfig)
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //HookCloudConditionFeature
-            if (!isNew) loadHooker(CloudConditionFeature(appVer, dexKitBridge))
+            if (!isNew) loadHookerSafe(CloudConditionFeature(appVer, dexKitBridge))
             //游戏滤镜-->Root检测
             if (preferences(ModulePrefs).getBoolean("remove_root_check", false)) {
-                loadHooker(RemoveRootCheck(dexKitBridge))
+                loadHookerSafe(RemoveRootCheck(dexKitBridge))
             }
             //移除启动动画
             if (preferences(ModulePrefs).getBoolean("remove_startup_animation", false)) {
-                loadHooker(RemoveStartupAnimation)
+                loadHookerSafe(RemoveStartupAnimation)
             }
             //启用赛事支持模式
             if (preferences(ModulePrefs).getBoolean("enable_support_competition_mode", false)) {
-                loadHooker(EnableSupportCompetitionMode(dexKitBridge))
+                loadHookerSafe(EnableSupportCompetitionMode(dexKitBridge))
             }
             //移除赛事模式音效
             if (preferences(ModulePrefs).getBoolean("remove_competition_mode_sound", false)) {
-                loadHooker(CompetitionModeSound(dexKitBridge))
+                loadHookerSafe(CompetitionModeSound(dexKitBridge))
             }
             //移除游戏助手福利页面
             if (!isNew && preferences(ModulePrefs).getBoolean("remove_welfare_page", false)) {
-                loadHooker(RemoveWelfarePage(dexKitBridge))
+                loadHookerSafe(RemoveWelfarePage(dexKitBridge))
             }
             //启用游戏助手后台挂机
             if (preferences(ModulePrefs).getBoolean("enable_game_run_in_background", false)) {
-                if (osCode >= 27) loadHooker(EnableGameRunInBackground(dexKitBridge))
+                if (osCode >= 27) loadHookerSafe(EnableGameRunInBackground(dexKitBridge))
             }
             //自定义媒体播放器支持
-            loadHooker(CustomMediaPlayerSupport(dexKitBridge))
+            loadHookerSafe(CustomMediaPlayerSupport(dexKitBridge))
         }
 
         //启用开发者选项
         if (preferences(ModulePrefs).getBoolean("enable_developer_page", false)) {
-            loadHooker(EnableDeveloperPage)
+            loadHookerSafe(EnableDeveloperPage)
         }
         //启用X模式
         if (preferences(ModulePrefs).getBoolean("enable_x_mode_feature", false)) {
-            loadHooker(EnableXModeFeature)
+            loadHookerSafe(EnableXModeFeature)
         }
         //移除部分VIP限制
         if (preferences(ModulePrefs).getBoolean("remove_some_vip_limit", false)) {
-            loadHooker(RemoveSomeVipLimit)
+            loadHookerSafe(RemoveSomeVipLimit)
         }
         //移除游戏助手温度检测
         if (preferences(ModulePrefs).getBoolean("remove_game_assistant_temperature_detection", false)) {
-            loadHooker(RemoveGameAssistantTemperatureDetection)
+            loadHookerSafe(RemoveGameAssistantTemperatureDetection)
         }
         //自定义弹幕通知白名单
-        loadHooker(CustomBarrageNotificationWhitelist)
+        loadHookerSafe(CustomBarrageNotificationWhitelist)
         //移除游戏助手工具推荐卡片
         if (!isNew && preferences(ModulePrefs).getBoolean("remove_tool_recommendation_card")) {
-            if ((appVer?.versionCode ?: 0) >= 90000000) loadHooker(RemoveToolRecommendationCard)
+            if ((appVer?.versionCode ?: 0) >= 90000000) loadHookerSafe(RemoveToolRecommendationCard)
         }
 
         //Source GameEyeProtectionFeature cosa_version_not_support

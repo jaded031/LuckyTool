@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.oshare
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -17,8 +18,8 @@ class RemoveOShareCloseCountDown(val dexKitBridge: DexKitBridge) : YukiBaseHooke
     override fun onHook() {
         val osCode = getOSVersionCode
 
-        if (osCode >= 27) loadHooker(HookOShareFeatureConfig(dexKitBridge))
-        loadHooker(HookOShareSpUtils(dexKitBridge))
+        if (osCode >= 27) loadHookerSafe(HookOShareFeatureConfig(dexKitBridge))
+        loadHookerSafe(HookOShareSpUtils(dexKitBridge))
     }
 
     @Obfuscate

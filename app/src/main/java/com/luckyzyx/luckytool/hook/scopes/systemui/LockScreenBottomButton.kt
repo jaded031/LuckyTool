@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -24,9 +25,9 @@ import org.lsposed.lsparanoid.Obfuscate
 object LockScreenBottomButton : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 37) loadHooker(FlashlightQuickCloseScreen)
-        else if (osCode >= 30) loadHooker(LockScreenBottomButtonV14)
-        else loadHooker(LockScreenBottomButtonV13)
+        if (osCode >= 37) loadHookerSafe(FlashlightQuickCloseScreen)
+        else if (osCode >= 30) loadHookerSafe(LockScreenBottomButtonV14)
+        else loadHookerSafe(LockScreenBottomButtonV13)
     }
 
     @Obfuscate

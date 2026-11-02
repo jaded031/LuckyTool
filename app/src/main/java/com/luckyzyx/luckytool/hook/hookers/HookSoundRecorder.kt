@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.globals.HookGlobalSystemProperties
 import com.luckyzyx.luckytool.hook.scopes.soundrecorder.HookBaseUtil
@@ -10,14 +11,14 @@ import org.lsposed.lsparanoid.Obfuscate
 @Obfuscate
 object HookSoundRecorder : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookGlobalSystemProperties)
+        loadHookerSafe(HookGlobalSystemProperties)
 
         val osCode = getOSVersionCode
 
 
         //启用三方应用通话录音
         if (preferences(ModulePrefs).getBoolean("enable_record_calls_on_third_party_apps", false)) {
-            if (osCode == 30) loadHooker(HookBaseUtil)
+            if (osCode == 30) loadHookerSafe(HookBaseUtil)
         }
     }
 }

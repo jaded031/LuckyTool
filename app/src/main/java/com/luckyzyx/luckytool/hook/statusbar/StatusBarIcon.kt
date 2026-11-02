@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.BluetoothIconRelated
 import com.luckyzyx.luckytool.hook.scopes.systemui.CustomFluidCloudIconBackgroundTransparency
@@ -23,38 +24,38 @@ object StatusBarIcon : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //WiFi图标相关
-        loadHooker(WiFiDataIconRelated)
+        loadHookerSafe(WiFiDataIconRelated)
         //移动数据图标相关
-        loadHooker(MobileDataIconRelated)
+        loadHookerSafe(MobileDataIconRelated)
         //未连接蓝牙时隐藏图标
-        loadHooker(BluetoothIconRelated)
+        loadHookerSafe(BluetoothIconRelated)
 
         //移除状态栏支付保护图标
         if (preferences(ModulePrefs).getBoolean("remove_statusbar_securepayment_icon", false)) {
-            loadHooker(RemoveStatusBarSecurePayment)
+            loadHookerSafe(RemoveStatusBarSecurePayment)
         }
         //移除高性能模式图标
         if (preferences(ModulePrefs).getBoolean("remove_high_performance_mode_icon", false)) {
-            loadHooker(RemoveHighPerformanceModeIcon)
+            loadHookerSafe(RemoveHighPerformanceModeIcon)
         }
         //移除绿点隐私提示
         if (preferences(ModulePrefs).getBoolean("remove_green_dot_privacy_prompt", false)) {
-            loadHooker(RemoveGreenDotPrivacyPrompt)
+            loadHookerSafe(RemoveGreenDotPrivacyPrompt)
         }
         //移除系统提示图标
         if (preferences(ModulePrefs).getBoolean("remove_system_prompt_icon", false)) {
-            loadHooker(RemoveSystemPromptIcon)
+            loadHookerSafe(RemoveSystemPromptIcon)
         }
         //状态栏图标垂直居中
         if (preferences(ModulePrefs).getBoolean("status_bar_icon_vertical_center", false)) {
-            if (SDK <= A13) loadHooker(StatusBarIconVerticalCenter)
+            if (SDK <= A13) loadHookerSafe(StatusBarIconVerticalCenter)
         }
         //隐藏未使用信号标签
         if (preferences(ModulePrefs).getBoolean("hide_inactive_signal_labels_gen2x2", false)) {
-            loadHooker(HideInActiveSignalLabelsGen2x2)
+            loadHookerSafe(HideInActiveSignalLabelsGen2x2)
         }
         //自定义流体云图标背景透明度
-        if (osCode in 30..33) loadHooker(CustomFluidCloudIconBackgroundTransparency)
+        if (osCode in 30..33) loadHookerSafe(CustomFluidCloudIconBackgroundTransparency)
 
     }
 }

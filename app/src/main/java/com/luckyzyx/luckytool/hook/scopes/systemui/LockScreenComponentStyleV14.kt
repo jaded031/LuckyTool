@@ -2,6 +2,7 @@
 
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import com.highcapable.betterandroid.ui.extension.view.layoutInflater
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
@@ -24,10 +25,10 @@ import java.util.function.Supplier
 @Obfuscate
 object LockScreenComponentStyle : YukiBaseHooker() {
     override fun onHook() {
-        if (SDK == A14) loadHooker(LockScreenComponentStyleV14)
-        if (SDK < A14) loadHooker(LockScreenComponentStyleV13)
+        if (SDK == A14) loadHookerSafe(LockScreenComponentStyleV14)
+        if (SDK < A14) loadHookerSafe(LockScreenComponentStyleV13)
         if (preferences(ModulePrefs).getBoolean("force_display_clock_style_options", false)) {
-            if (SDK == A13) loadHooker(ForceDisplayClockStyleOptionsV13)
+            if (SDK == A13) loadHookerSafe(ForceDisplayClockStyleOptionsV13)
         }
     }
 

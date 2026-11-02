@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.securitypermission
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.Activity
 import android.content.ComponentCallbacks
 import android.content.DialogInterface
@@ -18,8 +19,8 @@ import org.luckypray.dexkit.DexKitBridge
 @Obfuscate
 class EnableAlwaysAllowAppStartDialog(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookAlwaysAllowButton(dexKitBridge))
-        loadHooker(HookValidTime(dexKitBridge))
+        loadHookerSafe(HookAlwaysAllowButton(dexKitBridge))
+        loadHookerSafe(HookValidTime(dexKitBridge))
     }
 
     @Obfuscate

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Intent
 import android.os.Handler
 import android.telephony.SubscriptionManager
@@ -16,10 +17,10 @@ import java.lang.ref.WeakReference
 @Obfuscate
 object LongPressTileOpenThePage : YukiBaseHooker() {
     override fun onHook() {
-        if (SDK == A13) loadHooker(LongPressTileV13)
-        else loadHooker(LongPressTile)
+        if (SDK == A13) loadHookerSafe(LongPressTileV13)
+        else loadHookerSafe(LongPressTile)
 
-        loadHooker(HookCellularTileIntent)
+        loadHookerSafe(HookCellularTileIntent)
     }
 
     @Obfuscate

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArraySet
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -15,10 +16,10 @@ object MultiAppConfig : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
 
-        loadHooker(MultiAppAllowList(osCode))
+        loadHookerSafe(MultiAppAllowList(osCode))
 
         if (preferences(ModulePrefs).getBoolean("remove_multi_app_blacklist", false)) {
-            if (osCode >= 31) loadHooker(MultiAppBlackList)
+            if (osCode >= 31) loadHookerSafe(MultiAppBlackList)
         }
     }
 

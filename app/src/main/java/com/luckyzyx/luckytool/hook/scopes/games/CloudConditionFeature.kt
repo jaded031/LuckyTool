@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.games
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -19,9 +20,9 @@ class CloudConditionFeature(
     override fun onHook() {
         val versionCode = appVer?.versionCode?.takeIf { it > 80130000 } ?: 0
 
-        loadHooker(HookOplusFeature)
-        loadHooker(HookCloudCondition)
-        if (versionCode > 80130000) loadHooker(HookCloudApiImpl(dexKitBridge))
+        loadHookerSafe(HookOplusFeature)
+        loadHookerSafe(HookCloudCondition)
+        if (versionCode > 80130000) loadHookerSafe(HookCloudApiImpl(dexKitBridge))
     }
 
     @Obfuscate

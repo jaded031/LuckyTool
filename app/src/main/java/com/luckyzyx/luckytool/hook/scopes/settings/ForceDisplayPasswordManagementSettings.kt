@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -12,8 +13,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object ForceDisplayPasswordManagementSettings : YukiBaseHooker() {
 
     override fun onHook() {
-        if (getOSVersionCode >= 30) loadHooker(PasswordManagementSettings)
-        else loadHooker(PasswordManagementSettingsV13)
+        if (getOSVersionCode >= 30) loadHookerSafe(PasswordManagementSettings)
+        else loadHookerSafe(PasswordManagementSettingsV13)
     }
 
     @Obfuscate

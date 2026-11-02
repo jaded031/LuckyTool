@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.ControllerCenterSliderTransparency
 import com.luckyzyx.luckytool.utils.getOSVersionCode
@@ -11,7 +12,7 @@ object StatusBarSilder : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //控制中心滑动条透明度
-        if (osCode in 26..33) loadHooker(ControllerCenterSliderTransparency)
+        if (osCode in 26..33) loadHookerSafe(ControllerCenterSliderTransparency)
 
     }
 }

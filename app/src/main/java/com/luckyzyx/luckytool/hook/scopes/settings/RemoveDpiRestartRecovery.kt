@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -13,7 +14,7 @@ import org.luckypray.dexkit.DexKitBridge
 @Obfuscate
 class RemoveDpiRestartRecovery(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookSettingsUtils(dexKitBridge))
+        loadHookerSafe(HookSettingsUtils(dexKitBridge))
     }
 
     @Obfuscate

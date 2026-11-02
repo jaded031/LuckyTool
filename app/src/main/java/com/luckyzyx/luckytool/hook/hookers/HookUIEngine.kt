@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.uiengine.EnableRandomTextOnAod
 import com.luckyzyx.luckytool.hook.scopes.uiengine.RemoveAodNotificationWhitelist
@@ -18,17 +19,17 @@ object HookUIEngine : YukiBaseHooker() {
 
         //移除通知图标白名单
         if (preferences(ModulePrefs).getBoolean("remove_aod_notification_icon_whitelist", false)) {
-            if (SDK == A13) loadHooker(RemoveAodNotificationWhitelist)
+            if (SDK == A13) loadHookerSafe(RemoveAodNotificationWhitelist)
         }
 
         //设置息屏样式模式
-        if (SDK >= A13) loadHooker(SetAodNotificationIconStyle)
+        if (SDK >= A13) loadHookerSafe(SetAodNotificationIconStyle)
 
         //启用息屏随机一言
-        if (osCode >= 26) loadHooker(EnableRandomTextOnAod)
+        if (osCode >= 26) loadHookerSafe(EnableRandomTextOnAod)
 
         //设置息屏字体模式
-        if (osCode >= 26) loadHooker(SetAodTypefaceMode)
+        if (osCode >= 26) loadHookerSafe(SetAodTypefaceMode)
 
     }
 }

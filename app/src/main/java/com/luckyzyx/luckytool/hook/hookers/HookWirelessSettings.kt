@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.wirelesssettings.EnableWifiDetailsDisplayGateway
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -14,7 +15,7 @@ object HookWirelessSettings : YukiBaseHooker() {
 
             //启用WiFi详情显示网关
             if (preferences(ModulePrefs).getBoolean("enable_wifi_details_display_gateway", false)) {
-                loadHooker(EnableWifiDetailsDisplayGateway(dexKitBridge))
+                loadHookerSafe(EnableWifiDetailsDisplayGateway(dexKitBridge))
             }
 
         }

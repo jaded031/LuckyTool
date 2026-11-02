@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.camera
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import android.util.ArraySet
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -154,7 +155,7 @@ object HookCameraConfig : YukiBaseHooker() {
                 put("com.oplus.feature.temperature.protection.support", false)
             }
         }
-        loadHooker(HookCameraVendorTag(list))
+        loadHookerSafe(HookCameraVendorTag(list))
     }
 
     @Obfuscate

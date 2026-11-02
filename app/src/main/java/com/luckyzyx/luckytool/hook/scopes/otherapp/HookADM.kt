@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.otherapp
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
@@ -19,10 +20,10 @@ object HookADM : YukiBaseHooker() {
     override fun onHook() {
         //解锁Pro
         if (preferences(ModulePrefs).getBoolean("adm_unlock_pro", false)) {
-            loadHooker(UnlockAdmPro)
+            loadHookerSafe(UnlockAdmPro)
         }
         //解锁线程数
-        loadHooker(UnlockAdmThreads)
+        loadHookerSafe(UnlockAdmThreads)
     }
 
     @Obfuscate

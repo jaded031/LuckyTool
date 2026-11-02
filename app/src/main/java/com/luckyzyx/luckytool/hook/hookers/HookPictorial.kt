@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.pictorial.RemoveImageSaveWaterMark
 import com.luckyzyx.luckytool.hook.scopes.pictorial.RemoveVideoSaveWaterMark
@@ -13,12 +14,12 @@ object HookPictorial : YukiBaseHooker() {
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //移除图片保存水印
             if (preferences(ModulePrefs).getBoolean("remove_image_save_watermark", false)) {
-                loadHooker(RemoveImageSaveWaterMark(dexKitBridge))
+                loadHookerSafe(RemoveImageSaveWaterMark(dexKitBridge))
             }
         }
         //移除视频保存水印
         if (preferences(ModulePrefs).getBoolean("remove_video_save_watermark", false)) {
-            loadHooker(RemoveVideoSaveWaterMark)
+            loadHookerSafe(RemoveVideoSaveWaterMark)
         }
     }
 }

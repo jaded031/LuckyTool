@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.utils.ModulePrefs
@@ -138,6 +139,6 @@ class HookGlobalFeatureProvider(val dexKitBridge: DexKitBridge) : YukiBaseHooker
 //            put("com.oplus.battery.customize_charge_mode", true)
 
         }
-        loadHooker(HookAppFeatureProvider(dexKitBridge, list))
+        loadHookerSafe(HookAppFeatureProvider(dexKitBridge, list))
     }
 }

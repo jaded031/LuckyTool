@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.FingerPrintIconAnim
 import org.lsposed.lsparanoid.Obfuscate
@@ -8,6 +9,6 @@ import org.lsposed.lsparanoid.Obfuscate
 object HookSystemUIFingerPrint : YukiBaseHooker() {
     override fun onHook() {
         //指纹图标
-        loadHooker(FingerPrintIconAnim)
+        loadHookerSafe(FingerPrintIconAnim)
     }
 }

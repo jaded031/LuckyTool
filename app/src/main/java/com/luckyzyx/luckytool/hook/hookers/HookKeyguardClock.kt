@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.keyguardclock.KeyGuardcLockRedMode
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -13,7 +14,7 @@ object HookKeyguardClock : YukiBaseHooker() {
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //锁屏时钟
-            if (osCode < 40) loadHooker(KeyGuardcLockRedMode(dexKitBridge))
+            if (osCode < 40) loadHookerSafe(KeyGuardcLockRedMode(dexKitBridge))
         }
 
     }

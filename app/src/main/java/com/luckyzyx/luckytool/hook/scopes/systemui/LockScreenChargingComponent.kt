@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -35,10 +36,10 @@ import java.util.Properties
 object LockScreenChargingComponent : YukiBaseHooker() {
     override fun onHook() {
         when (getOSVersionCode) {
-            in 34..Int.MAX_VALUE -> loadHooker(ChargingComponent)
-            in 30..33 -> loadHooker(ChargingComponentC14)
-            in 26..29 -> loadHooker(ChargingComponentC13)
-            else -> loadHooker(ChargingComponentC12)
+            in 34..Int.MAX_VALUE -> loadHookerSafe(ChargingComponent)
+            in 30..33 -> loadHookerSafe(ChargingComponentC14)
+            in 26..29 -> loadHookerSafe(ChargingComponentC13)
+            else -> loadHookerSafe(ChargingComponentC12)
         }
     }
 

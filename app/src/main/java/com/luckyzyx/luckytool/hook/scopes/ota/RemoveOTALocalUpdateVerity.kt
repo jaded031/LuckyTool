@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.ota
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.os.PowerManager
 import android.os.SystemProperties
@@ -16,9 +17,9 @@ import java.io.File
 @Obfuscate
 class RemoveOTALocalUpdateVerity(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookABUpdateUtils(dexKitBridge))
-        loadHooker(HookLocalPcakgeInfoUtil(dexKitBridge))
-        loadHooker(HookPayloadProperties(dexKitBridge))
+        loadHookerSafe(HookABUpdateUtils(dexKitBridge))
+        loadHookerSafe(HookLocalPcakgeInfoUtil(dexKitBridge))
+        loadHookerSafe(HookPayloadProperties(dexKitBridge))
     }
 
     @Obfuscate

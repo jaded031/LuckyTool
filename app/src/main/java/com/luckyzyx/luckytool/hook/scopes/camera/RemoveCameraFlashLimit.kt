@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.camera
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -12,7 +13,7 @@ import org.luckypray.dexkit.DexKitBridge
 @Obfuscate
 class RemoveCameraFlashLimit(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        loadHooker(HookLowPowerFlashLimit(dexKitBridge))
+        loadHookerSafe(HookLowPowerFlashLimit(dexKitBridge))
     }
 
     @Obfuscate

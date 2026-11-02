@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.settings
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -24,8 +25,8 @@ import org.luckypray.dexkit.DexKitBridge
 @Obfuscate
 class EnableGoogleAutoFill(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
-        if (getOSVersionCode >= 30) loadHooker(GoogleAutoFill)
-        else loadHooker(GoogleAutoFillV13(dexKitBridge))
+        if (getOSVersionCode >= 30) loadHookerSafe(GoogleAutoFill)
+        else loadHookerSafe(GoogleAutoFillV13(dexKitBridge))
     }
 
     @Obfuscate

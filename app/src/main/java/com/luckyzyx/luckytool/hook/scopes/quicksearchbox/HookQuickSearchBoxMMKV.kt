@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.quicksearchbox
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -22,7 +23,7 @@ class HookQuickSearchBoxMMKV(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
                 put("new_suggest_app_card", false)
             }
         }
-        loadHooker(HookMMKVManager(dexKitBridge, map))
+        loadHookerSafe(HookMMKVManager(dexKitBridge, map))
     }
 
     @Obfuscate

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.globals
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.ArrayMap
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.utils.ModulePrefs
@@ -140,6 +141,6 @@ object HookGlobalSystemProperties : YukiBaseHooker() {
 //                put("ro.product.brand", "realme")
 //            }
         }
-        loadHooker(HookSystemProperties(list))
+        loadHookerSafe(HookSystemProperties(list))
     }
 }

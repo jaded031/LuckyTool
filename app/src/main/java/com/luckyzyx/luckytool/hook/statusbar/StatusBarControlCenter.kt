@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.statusbar
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.ControlCenterBackgroundTransParency
 import com.luckyzyx.luckytool.hook.scopes.systemui.ControlCenterClockStyle
@@ -21,31 +22,31 @@ object StatusBarControlCenter : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //控制中心时钟样式
-        loadHooker(ControlCenterClockStyle)
+        loadHookerSafe(ControlCenterClockStyle)
 
         //控制中心日期样式
-        loadHooker(ControlCenterDateStyle)
+        loadHookerSafe(ControlCenterDateStyle)
 
         //自定义通知两侧间距
         if (preferences(ModulePrefs).getBoolean("enable_notification_side_spacing", false)) {
-            if (osCode >= 23) loadHooker(EnableNotificationSideSpacing)
+            if (osCode >= 23) loadHookerSafe(EnableNotificationSideSpacing)
         }
         //移除控制中心多用户
         if (preferences(ModulePrefs).getBoolean("remove_control_center_user_switcher", false)) {
-            if (osCode < 26) loadHooker(RemoveControlCenterUserSwitcher)
+            if (osCode < 26) loadHookerSafe(RemoveControlCenterUserSwitcher)
         }
         //控制中心底部网络警告
-        loadHooker(RemoveStatusBarBottomNetworkWarn)
+        loadHookerSafe(RemoveStatusBarBottomNetworkWarn)
 
         //通知背景透明度
-//        loadHooker(CustomNotificationBackgroundTransparency)
-        if (osCode in 30..33) loadHooker(NotificationBackgroundBlurAlpha)
+//        loadHookerSafe(CustomNotificationBackgroundTransparency)
+        if (osCode in 30..33) loadHookerSafe(NotificationBackgroundBlurAlpha)
 
         //控制中心背景透明度
-        if (osCode < 34) loadHooker(ControlCenterBackgroundTransParency)
+        if (osCode < 34) loadHookerSafe(ControlCenterBackgroundTransParency)
 
         //移除分离式控制中心按钮
-        if (osCode >= 34) loadHooker(RemoveSeparateControlCenterButton)
+        if (osCode >= 34) loadHookerSafe(RemoveSeparateControlCenterButton)
 
         //启用控制中心进度条百分比显示
         val enableProgressPercent =
@@ -54,12 +55,12 @@ object StatusBarControlCenter : YukiBaseHooker() {
                 false
             )
         if (enableProgressPercent) {
-            loadHooker(EnableControlCenterProgressPercentDisplay)
+            loadHookerSafe(EnableControlCenterProgressPercentDisplay)
         }
 
         //移除控制中心运营商
         if (preferences(ModulePrefs).getBoolean("remove_control_center_carriers", false)) {
-            loadHooker(RemoveControlCenterCarriers)
+            loadHookerSafe(RemoveControlCenterCarriers)
         }
     }
 }

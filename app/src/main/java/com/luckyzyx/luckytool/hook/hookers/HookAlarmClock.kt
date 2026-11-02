@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.alarmclock.AlarmClockWidget
 import com.luckyzyx.luckytool.utils.DexkitUtils
@@ -11,7 +12,7 @@ object HookAlarmClock : YukiBaseHooker() {
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //桌面时钟组件红一
-            loadHooker(AlarmClockWidget(dexKitBridge))
+            loadHookerSafe(AlarmClockWidget(dexKitBridge))
         }
 
     }

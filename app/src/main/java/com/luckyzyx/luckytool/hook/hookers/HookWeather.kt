@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.weather.Enable15DayWeatherExpandList
 import com.luckyzyx.luckytool.hook.scopes.weather.RestoreRainfallCloudMapPage
@@ -18,16 +19,16 @@ object HookWeather : YukiBaseHooker() {
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //天气广告与跳转浏览器
-            loadHooker(WeatherAdsAndJumpBrowser(appVer, dexKitBridge))
+            loadHookerSafe(WeatherAdsAndJumpBrowser(appVer, dexKitBridge))
         }
 
         //启用15日天气展开列表
         if (preferences(ModulePrefs).getBoolean("enable_15_day_weather_expand_list", false)) {
-            loadHooker(Enable15DayWeatherExpandList)
+            loadHookerSafe(Enable15DayWeatherExpandList)
         }
         //恢复降雨云图页面
         if (preferences(ModulePrefs).getBoolean("restore_rainfall_cloud_map_page", false)) {
-            if (osCode < 34) loadHooker(RestoreRainfallCloudMapPage)
+            if (osCode < 34) loadHookerSafe(RestoreRainfallCloudMapPage)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.luckyzyx.luckytool.hook.scopes.opluskeyboard.ForceEnableOplusKeyboardBlur
@@ -19,7 +20,7 @@ object HookOplusKeyboard : YukiBaseHooker() {
             tag = "LuckyTool"
         )
         if (forceEnableBlur) {
-            DexkitUtils.create(appInfo.sourceDir) { loadHooker(ForceEnableOplusKeyboardBlur(it)) }
+            DexkitUtils.create(appInfo.sourceDir) { loadHookerSafe(ForceEnableOplusKeyboardBlur(it)) }
         }
     }
 }

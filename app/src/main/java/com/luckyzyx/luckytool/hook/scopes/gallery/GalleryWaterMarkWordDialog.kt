@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.gallery
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.text.Spanned
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
@@ -15,8 +16,8 @@ import org.luckypray.dexkit.DexKitBridge
 class GalleryWaterMarkWordDialog(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 30) loadHooker(WaterMarkWordDialog(dexKitBridge))
-        else loadHooker(WaterMarkWordLimit(dexKitBridge))
+        if (osCode >= 30) loadHookerSafe(WaterMarkWordDialog(dexKitBridge))
+        else loadHookerSafe(WaterMarkWordLimit(dexKitBridge))
     }
 
     @Obfuscate

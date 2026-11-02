@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.alarmclock
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.content.Context
 import android.os.Handler
 import android.text.SpannableStringBuilder
@@ -68,7 +69,7 @@ class AlarmClockWidget(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
         //先找宿主的红一开关：找到说明该版本有红 layout，拦开关即可，不需要替换 layout
         val gates = dexKitBridge.findRedOneGates()
         if (gates.isNotEmpty()) {
-            loadHooker(RedOneSwitch(gates))
+            loadHookerSafe(RedOneSwitch(gates))
             return
         }
         //找不到开关说明该版本没有红 layout，退回文本上色
@@ -86,11 +87,11 @@ class AlarmClockWidget(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
             onePlusWidget.firstMethodOrNull {
                 parameters(String::class, String::class)
                 returnType = CharSequence::class
-            } != null -> loadHooker(AlarmClock12)
+            } != null -> loadHookerSafe(AlarmClock12)
 
             onePlusWidget.firstMethodOrNull {
                 returnType = RemoteViews::class
-            } != null -> loadHooker(AlarmClock130(dexKitBridge))
+            } != null -> loadHookerSafe(AlarmClock130(dexKitBridge))
         }
     }
 

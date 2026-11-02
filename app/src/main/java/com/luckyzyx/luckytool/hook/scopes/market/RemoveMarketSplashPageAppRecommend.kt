@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.market
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -15,8 +16,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 class RemoveMarketSplashPageAppRecommend(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
         val isV4 = "com.heytap.cdo.splash.domain.dto.v4.SplashDtoV4".toClassOrNull() != null
-        if (isV4) loadHooker(MarketSplashPageV4(dexKitBridge))
-        else loadHooker(MarketSplashPageV2(dexKitBridge))
+        if (isV4) loadHookerSafe(MarketSplashPageV4(dexKitBridge))
+        else loadHookerSafe(MarketSplashPageV2(dexKitBridge))
     }
 
     @Obfuscate

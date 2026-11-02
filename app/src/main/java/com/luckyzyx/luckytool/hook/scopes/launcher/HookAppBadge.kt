@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.graphics.drawable.Drawable
 import android.os.UserHandle
 import com.highcapable.kavaref.KavaRef.Companion.resolve
@@ -17,8 +18,8 @@ import org.luckypray.dexkit.DexKitBridge
 class HookAppBadge(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 30) loadHooker(AppBadge(dexKitBridge))
-        else loadHooker(AppBadgeC13)
+        if (osCode >= 30) loadHookerSafe(AppBadge(dexKitBridge))
+        else loadHookerSafe(AppBadgeC13)
     }
 
     @Obfuscate

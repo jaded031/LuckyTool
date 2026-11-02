@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.util.SparseArray
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -17,10 +18,10 @@ object HookGMSRestrict : YukiBaseHooker() {
         val isEnable = preferences(ModulePrefs).getBoolean("remove_gms_usage_restrictions", false)
         if (!isEnable) return
 
-        loadHooker(GMSRestrictCommon)
+        loadHookerSafe(GMSRestrictCommon)
 
-        if (osCode > 30) loadHooker(GMSRestrict)
-        else loadHooker(GMSRestrictV13)
+        if (osCode > 30) loadHookerSafe(GMSRestrict)
+        else loadHookerSafe(GMSRestrictV13)
     }
 
     @Obfuscate

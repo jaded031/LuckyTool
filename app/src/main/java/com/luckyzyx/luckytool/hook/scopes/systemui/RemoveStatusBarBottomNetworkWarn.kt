@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.VariousClass
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -13,8 +14,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveStatusBarBottomNetworkWarn : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 34) loadHooker(StatusBarBottomNetworkWarn)
-        else loadHooker(StatusBarBottomNetworkWarnOld)
+        if (osCode >= 34) loadHookerSafe(StatusBarBottomNetworkWarn)
+        else loadHookerSafe(StatusBarBottomNetworkWarnOld)
     }
 
     @Obfuscate

@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.systemui.CustomMusicFluidCloudWhitelist
 import com.luckyzyx.luckytool.hook.scopes.systemui.DisableMediaMusicFluidCloudBlacklist
@@ -26,48 +27,48 @@ class HookSystemUIStatusBar(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
         val osCode = getOSVersionCode
 
         //状态栏
-        loadHooker(StatusBarUI)
+        loadHookerSafe(StatusBarUI)
 
         //状态栏时钟
-        loadHooker(StatusBarClock())
+        loadHookerSafe(StatusBarClock())
 
         //状态栏网速
-        loadHooker(StatusBarNetWorkSpeed)
+        loadHookerSafe(StatusBarNetWorkSpeed)
 
         //状态栏通知
-        loadHooker(StatusBarNotify)
+        loadHookerSafe(StatusBarNotify)
 
         //状态栏通知限制
-        loadHooker(StatusBarNotifiyLimit)
+        loadHookerSafe(StatusBarNotifiyLimit)
 
         //状态栏图标
-        loadHooker(StatusBarIcon)
+        loadHookerSafe(StatusBarIcon)
 
         //状态栏图标位置排序（始终加载：运行期由 dataChannel 推送新顺序）
-        loadHooker(StatusBarIconOrder)
+        loadHookerSafe(StatusBarIconOrder)
 
         //状态栏控制中心
-        loadHooker(StatusBarControlCenter)
+        loadHookerSafe(StatusBarControlCenter)
 
         //状态栏磁贴
-        loadHooker(StatusBarTile(dexKitBridge))
+        loadHookerSafe(StatusBarTile(dexKitBridge))
 
         //状态栏滑动条
-        loadHooker(StatusBarSilder)
+        loadHookerSafe(StatusBarSilder)
 
         //状态栏布局
-        loadHooker(StatusBarLayout)
+        loadHookerSafe(StatusBarLayout)
 
         //状态栏电池
-        loadHooker(StatusBarBattery)
+        loadHookerSafe(StatusBarBattery)
 
         //自定义音乐流体云白名单
         if (osCode >= 33) {
             if (preferences(ModulePrefs).getBoolean("custom_music_fluid_cloud_whitelist", false)) {
-                loadHooker(CustomMusicFluidCloudWhitelist)
+                loadHookerSafe(CustomMusicFluidCloudWhitelist)
             }
             if (preferences(ModulePrefs).getBoolean("disable_media_music_fluid_cloud_blacklist", false)) {
-                if (osCode >= 35) loadHooker(DisableMediaMusicFluidCloudBlacklist)
+                if (osCode >= 35) loadHookerSafe(DisableMediaMusicFluidCloudBlacklist)
             }
         }
 

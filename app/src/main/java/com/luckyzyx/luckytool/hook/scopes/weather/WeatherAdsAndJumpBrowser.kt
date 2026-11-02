@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.weather
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -27,8 +28,8 @@ class WeatherAdsAndJumpBrowser(
 ) : YukiBaseHooker() {
     override fun onHook() {
         val isNew = appVer?.versionCode?.let { it >= 13000000 } ?: return
-        if (isNew) loadHooker(HookWeatherAdsAndJump)
-        else loadHooker(HookWeatherAdsAndJumpC12(dexKitBridge))
+        if (isNew) loadHookerSafe(HookWeatherAdsAndJump)
+        else loadHookerSafe(HookWeatherAdsAndJumpC12(dexKitBridge))
     }
 
     @Obfuscate

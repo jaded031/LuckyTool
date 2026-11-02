@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.view.View
 import androidx.core.view.isVisible
 import com.highcapable.kavaref.KavaRef.Companion.asResolver
@@ -14,8 +15,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveLauncherCardName : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 30) loadHooker(LauncherCardName)
-        else loadHooker(LauncherCardNameV13)
+        if (osCode >= 30) loadHookerSafe(LauncherCardName)
+        else loadHookerSafe(LauncherCardNameV13)
     }
 
     @Obfuscate

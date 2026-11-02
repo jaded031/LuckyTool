@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.filemanager
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.extension.kavaref.hook
@@ -14,8 +15,8 @@ import org.luckypray.dexkit.DexKitBridge
 class RemoveWordLimitForSavingFiles(val dexKitBridge: DexKitBridge) : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 40) loadHooker(WordLimitForSavingFiles(dexKitBridge))
-        else loadHooker(WordLimitForSavingFilesV16(dexKitBridge))
+        if (osCode >= 40) loadHookerSafe(WordLimitForSavingFiles(dexKitBridge))
+        else loadHookerSafe(WordLimitForSavingFilesV16(dexKitBridge))
 
     }
 

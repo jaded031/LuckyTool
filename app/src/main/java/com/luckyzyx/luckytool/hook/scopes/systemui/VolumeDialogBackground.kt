@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
@@ -29,9 +30,9 @@ class VolumeDialogBackground(val dexKitBridge: DexKitBridge) : YukiBaseHooker() 
 
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 37) loadHooker(VolumeDialog)
-        else if (osCode >= 35) loadHooker(VolumeDialogV15(dexKitBridge))
-        else loadHooker(VolumeDialogV14)
+        if (osCode >= 37) loadHookerSafe(VolumeDialog)
+        else if (osCode >= 35) loadHookerSafe(VolumeDialogV15(dexKitBridge))
+        else loadHookerSafe(VolumeDialogV14)
     }
 
     @Obfuscate

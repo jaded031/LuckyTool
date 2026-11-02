@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.launcher
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.extension.kavaref.hook
 import com.highcapable.yukihookapi.extension.kavaref.hookAll
@@ -14,8 +15,8 @@ import org.lsposed.lsparanoid.Obfuscate
 object RemoveFolderPreviewBackground : YukiBaseHooker() {
     override fun onHook() {
         val osCode = getOSVersionCode
-        if (osCode >= 34) loadHooker(FolderPreviewBackground)
-        else loadHooker(FolderPreviewBackgroundV14)
+        if (osCode >= 34) loadHookerSafe(FolderPreviewBackground)
+        else loadHookerSafe(FolderPreviewBackgroundV14)
     }
 
     @Obfuscate

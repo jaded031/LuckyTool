@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.audiomonitor.HookVoipRecorderService
 import com.luckyzyx.luckytool.hook.scopes.audiomonitor.VoipRecorderWhitelist
@@ -15,13 +16,13 @@ object HookAudioMonitor : YukiBaseHooker() {
 
         //启用三方应用通话录音
         if (preferences(ModulePrefs).getBoolean("enable_record_calls_on_third_party_apps", false)) {
-            if (osCode == 30) loadHooker(HookVoipRecorderService)
+            if (osCode == 30) loadHookerSafe(HookVoipRecorderService)
         }
 
         DexkitUtils.create(appInfo.sourceDir) { dexKitBridge ->
             //扩展第三方通话录音白名单
             if (preferences(ModulePrefs).getBoolean("expand_voip_recorder_whitelist", false)) {
-                if (osCode >= 31) loadHooker(VoipRecorderWhitelist(dexKitBridge))
+                if (osCode >= 31) loadHookerSafe(VoipRecorderWhitelist(dexKitBridge))
             }
         }
     }

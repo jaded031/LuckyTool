@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.android
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.os.Message
 import android.util.ArraySet
 import com.android.internal.os.SystemServerClassLoaderFactory
@@ -79,10 +80,10 @@ object HookOplusWifiService : YukiBaseHooker() {
                 false
             )
         ) {
-            loadHooker(HookOplusSoftAp(loader))
+            loadHookerSafe(HookOplusSoftAp(loader))
         }
         //Source_ext oplus-wifi-service OplusWifiRomUpdateHelper getSlaWhiteListApps
-        loadHooker(HookSlaAppList(loader))
+        loadHookerSafe(HookSlaAppList(loader))
     }
 
     @Obfuscate

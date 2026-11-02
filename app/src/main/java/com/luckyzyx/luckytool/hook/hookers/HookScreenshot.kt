@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.hookers
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.luckyzyx.luckytool.hook.scopes.screenshot.CustomizeLongScreenshotMaxCapturedPages
 import com.luckyzyx.luckytool.hook.scopes.screenshot.DisableScreenshotPackageNameMd5Encrypt
@@ -18,17 +19,17 @@ object HookScreenshot : YukiBaseHooker() {
             //移除长截图页数限制
             if (preferences(ModulePrefs).getBoolean("remove_page_limit_for_long_screenshots", false)) {
                 val exist = appVer?.versionCode?.let { it > 130005000 } ?: false
-                if (exist) loadHooker(CustomizeLongScreenshotMaxCapturedPages(dexKitBridge))
+                if (exist) loadHookerSafe(CustomizeLongScreenshotMaxCapturedPages(dexKitBridge))
             }
             //启用PNG保存格式
             if (preferences(ModulePrefs).getBoolean("enable_png_save_format", false)) {
-                loadHooker(EnablePNGSaveFormat(dexKitBridge))
+                loadHookerSafe(EnablePNGSaveFormat(dexKitBridge))
             }
             //禁用截图包名MD5加密
             val disableMd5 =
                 preferences(ModulePrefs).getBoolean("disable_screenshot_packagename_md5_encrypt", false)
             if (disableMd5) {
-                loadHooker(DisableScreenshotPackageNameMd5Encrypt(dexKitBridge))
+                loadHookerSafe(DisableScreenshotPackageNameMd5Encrypt(dexKitBridge))
             }
         }
     }

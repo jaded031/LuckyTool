@@ -1,5 +1,6 @@
 package com.luckyzyx.luckytool.hook.scopes.systemui
 
+import com.luckyzyx.luckytool.hook.utils.loadHookerSafe
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.widget.ImageButton
@@ -31,12 +32,12 @@ object MediaPlayerPanel : YukiBaseHooker() {
             it.resolve().firstMethodOrNull { name = "setMediaMode" } != null
         } ?: true
 
-        if (isAutoDisplay) loadHooker(MediaPlayerDisplayMode)
-        else loadHooker(MediaPlayerDisplayModePermanent)
+        if (isAutoDisplay) loadHookerSafe(MediaPlayerDisplayMode)
+        else loadHookerSafe(MediaPlayerDisplayModePermanent)
 
         //强制开启媒体切换按钮
         if (preferences(ModulePrefs).getBoolean("force_enable_media_toggle_button", false)) {
-            if (SDK == A13) loadHooker(ForceEnableMediaToggleButton)
+            if (SDK == A13) loadHookerSafe(ForceEnableMediaToggleButton)
         }
     }
 
